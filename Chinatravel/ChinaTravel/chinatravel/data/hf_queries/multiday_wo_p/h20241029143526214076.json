@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143526214076",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "苏州",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置苏州,旅行人数3,旅行天数3] 我和两个同学想从北京出发去苏州旅行，3天左右，想要多去一些当地著名的景点，并且品尝特色美食，不知道有哪些地方可以去",
+  "nature_language_en": "[Current location: Beijing, Destination: Suzhou, Number of travelers: 3, Duration of travel: 3 days] My two classmates and I want to travel from Beijing to Suzhou for about 3 days. We would like to visit many famous local attractions and taste the local specialties. We are not sure which places we should visit."
+}

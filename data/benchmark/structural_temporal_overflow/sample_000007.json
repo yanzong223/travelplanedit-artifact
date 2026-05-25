@@ -1,0 +1,746 @@
+{
+  "sample_id": "sample_000007",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置深圳。我一个人想去上海玩2天，想去人民公园，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "m20241028164859295493",
+    "tag": "easy",
+    "start_city": "深圳",
+    "target_city": "上海",
+    "days": 2,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==1)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'人民公园'}<=attraction_name_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置深圳。我一个人想去上海玩2天，想去人民公园，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Shenzhen. I want to travel alone to Shanghai for 2 days and visit People's Park. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "深圳",
+    "target_city": "上海",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "06:45",
+            "end_time": "08:16",
+            "start": "深圳宝安国际机场",
+            "end": "上海虹桥国际机场",
+            "price": 636.61,
+            "cost": 636.61,
+            "tickets": 1,
+            "transports": [],
+            "FlightID": "FL165",
+            "type": "airplane"
+          },
+          {
+            "position": "咏心·上海点心(静安大悦城店)",
+            "type": "lunch",
+            "price": 82,
+            "cost": 82,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "上海虹桥国际机场",
+                "end": "虹桥1号航站楼-地铁站",
+                "mode": "walk",
+                "start_time": "08:16",
+                "end_time": "08:25",
+                "cost": 0,
+                "distance": 0.78,
+                "price": 0
+              },
+              {
+                "start": "虹桥1号航站楼-地铁站",
+                "end": "曲阜路-地铁站",
+                "mode": "metro",
+                "start_time": "08:25",
+                "end_time": "08:51",
+                "cost": 4,
+                "distance": 13.11,
+                "price": 4,
+                "tickets": 1
+              },
+              {
+                "start": "曲阜路-地铁站",
+                "end": "咏心·上海点心(静安大悦城店)",
+                "mode": "walk",
+                "start_time": "08:51",
+                "end_time": "08:52",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "人民公园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:08",
+            "end_time": "13:38",
+            "transports": [
+              {
+                "start": "咏心·上海点心(静安大悦城店)",
+                "end": "曲阜路-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:01",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              },
+              {
+                "start": "曲阜路-地铁站",
+                "end": "南京东路-地铁站",
+                "mode": "metro",
+                "start_time": "12:01",
+                "end_time": "12:03",
+                "cost": 2,
+                "distance": 1.33,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "南京东路-地铁站",
+                "end": "人民公园",
+                "mode": "walk",
+                "start_time": "12:03",
+                "end_time": "12:08",
+                "cost": 0,
+                "distance": 0.47,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "上海王宝和大酒店·上海餐厅",
+            "type": "dinner",
+            "price": 290,
+            "cost": 290,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "人民公园",
+                "end": "南京东路-地铁站",
+                "mode": "walk",
+                "start_time": "13:38",
+                "end_time": "13:43",
+                "cost": 0,
+                "distance": 0.47,
+                "price": 0
+              },
+              {
+                "start": "南京东路-地铁站",
+                "end": "人民广场-地铁站",
+                "mode": "metro",
+                "start_time": "13:43",
+                "end_time": "13:45",
+                "cost": 2,
+                "distance": 1.09,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "人民广场-地铁站",
+                "end": "上海王宝和大酒店·上海餐厅",
+                "mode": "walk",
+                "start_time": "13:45",
+                "end_time": "13:51",
+                "cost": 0,
+                "distance": 0.55,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "上海静安昆仑大酒店",
+            "type": "accommodation",
+            "price": 939,
+            "cost": 939,
+            "start_time": "18:16",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "上海王宝和大酒店·上海餐厅",
+                "end": "人民广场-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:06",
+                "cost": 0,
+                "distance": 0.55,
+                "price": 0
+              },
+              {
+                "start": "人民广场-地铁站",
+                "end": "静安寺-地铁站",
+                "mode": "metro",
+                "start_time": "18:06",
+                "end_time": "18:11",
+                "cost": 2,
+                "distance": 2.92,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "静安寺-地铁站",
+                "end": "上海静安昆仑大酒店",
+                "mode": "walk",
+                "start_time": "18:11",
+                "end_time": "18:16",
+                "cost": 0,
+                "distance": 0.45,
+                "price": 0
+              }
+            ],
+            "room_type": 1,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "上海静安昆仑大酒店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "老外街101",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:49",
+            "end_time": "10:19",
+            "transports": [
+              {
+                "start": "上海静安昆仑大酒店",
+                "end": "静安寺-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:35",
+                "cost": 0,
+                "distance": 0.45,
+                "price": 0
+              },
+              {
+                "start": "静安寺-地铁站",
+                "end": "水城路-地铁站",
+                "mode": "metro",
+                "start_time": "08:35",
+                "end_time": "08:46",
+                "cost": 3,
+                "distance": 5.8,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "水城路-地铁站",
+                "end": "老外街101",
+                "mode": "walk",
+                "start_time": "08:46",
+                "end_time": "08:49",
+                "cost": 0,
+                "distance": 0.3,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "start_time": "11:31",
+            "end_time": "13:02",
+            "start": "上海虹桥国际机场",
+            "end": "深圳宝安国际机场",
+            "price": 623.22,
+            "cost": 623.22,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "老外街101",
+                "end": "水城路-地铁站",
+                "mode": "walk",
+                "start_time": "10:19",
+                "end_time": "10:22",
+                "cost": 0,
+                "distance": 0.3,
+                "price": 0
+              },
+              {
+                "start": "水城路-地铁站",
+                "end": "虹桥1号航站楼-地铁站",
+                "mode": "metro",
+                "start_time": "10:22",
+                "end_time": "10:30",
+                "cost": 3,
+                "distance": 4.37,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "虹桥1号航站楼-地铁站",
+                "end": "上海虹桥国际机场",
+                "mode": "walk",
+                "start_time": "10:30",
+                "end_time": "10:39",
+                "cost": 0,
+                "distance": 0.78,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL012",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "人民公园"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'人民公园'}<=attraction_name_set)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把滨江大道加进行程里，而且每个景点之间路上别超过25分钟",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "滨江大道",
+        "type": "attraction",
+        "city": "上海"
+      }
+    ],
+    "spatial": {
+      "city": "上海"
+    },
+    "temporal": [
+      {
+        "max_duration": "25分钟"
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "adjacent_travel_time_cap",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_types": [
+          "attraction"
+        ]
+      },
+      "operator": "<=",
+      "value": 25,
+      "params": {
+        "unit": "minute",
+        "day": "all",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "滨江大道"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [
+    {
+      "id": "edit_pref_route_compactness_travel_time",
+      "source": "edit",
+      "family": "route_compactness",
+      "facet": "transport_time_minimize",
+      "direction": "minimize",
+      "anchor": "滨江大道",
+      "edit_mode": "addition",
+      "params": {
+        "canonical_facet": "travel_time",
+        "intensity": "medium"
+      },
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "travel_time_constraint",
+        "template_text": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}"
+      }
+    }
+  ],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [
+    {
+      "family": "route_compactness",
+      "facet": "travel_time",
+      "edit_mode": "addition",
+      "anchor": "滨江大道",
+      "intensity": "medium",
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "travel_time_constraint",
+        "template_text": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}"
+      }
+    }
+  ],
+  "conflict_set": [
+    [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "temporal",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "travel_time_constraint",
+    "template": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}",
+    "template_id": "structural_temporal_overflow__travel_time_constraint__01",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [
+        "poi"
+      ],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "duration_limit_min"
+      ],
+      "relation_slots": [
+        "adjacent_edge_scope"
+      ],
+      "ir_outputs": [
+        "required_attraction_name",
+        "adjacent_travel_time_cap"
+      ],
+      "hard_axes": [
+        "travel_time"
+      ],
+      "soft_axes": [
+        "travel_time"
+      ],
+      "entity_slots_hard_policy": "keep_if_explicit",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_keep_entity",
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "composite",
+      "constraint_type": "travel_time_constraint",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "travel_time_constraint",
+      "baseline_max_transport_duration_min": 26,
+      "chosen_transport_duration_limit_min": 25
+    },
+    "rendered_params": {
+      "start_city": "深圳",
+      "target_city": "上海",
+      "day_count": 2,
+      "duration": "25分钟"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "travel_time_constraint",
+      "anchor_poi": "滨江大道",
+      "duration_limit_min": 25
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "travel_time_constraint",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "滨江大道",
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": 25,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "baseline": 26,
+      "threshold": 25
+    },
+    "soft_target_family": "route_compactness",
+    "soft_target_facet": "travel_time",
+    "soft_target_mode": "addition",
+    "soft_target_intensity": "medium",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "travel_time_constraint",
+      "anchor_poi": "滨江大道",
+      "duration_limit_min": 25
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "travel_time_constraint",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "滨江大道",
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": 25,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "baseline": 26,
+      "threshold": 25
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    "target_city": "上海",
+    "start_city": "深圳",
+    "is_single_day": false,
+    "day_count": 2,
+    "origin_plan_file": "m20241028164859295493.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_temporal_overflow"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T14:15:07.610246",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000042",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_temporal_overflow/_validation_split/passed/sample_000042.json",
+    "template_diversity_selected": true
+  }
+}

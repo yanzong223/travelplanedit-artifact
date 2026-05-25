@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143622387332",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "上海",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "go_start_time = 0\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train','airplane'] and intercity_transport_origin(activity) == start_city(plan): go_start_time = activity_start_time(activity)\nresult=(go_start_time<='08:00')",
+    "back_end_time = 24\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train','airplane'] and intercity_transport_destination(activity) == start_city(plan): back_end_time = activity_end_time(activity)\nresult=(back_end_time<='17:00')",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置上海,旅行人数1,旅行天数1] 当前位置苏州，想去上海玩一天，往返高铁(G)，早上8点前去，下午5点前回，请问可以帮忙规划吗",
+  "nature_language_en": "[Current location: Suzhou, Destination: Shanghai, Number of travelers: 1, Number of travel days: 1] The current location is Suzhou, and I want to go to Shanghai for a day trip. I plan to take a round-trip high-speed train (G), leaving before 8 AM and returning before 5 PM. Could you help me with the planning?"
+}

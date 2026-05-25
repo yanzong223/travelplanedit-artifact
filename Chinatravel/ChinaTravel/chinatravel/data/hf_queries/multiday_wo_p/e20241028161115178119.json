@@ -1,0 +1,21 @@
+{
+  "uid": "e20241028161115178119",
+  "tag": "medium",
+  "start_city": "深圳",
+  "target_city": "杭州",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置深圳。我一个人计划去杭州玩两天，预算2000元，想吃江浙菜，开一间房。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Shenzhen. I am planning to travel alone to Hangzhou for two days with a budget of 2000 RMB. I want to try Jiangsu and Zhejiang cuisine and book a room. Please provide me with a travel plan."
+}

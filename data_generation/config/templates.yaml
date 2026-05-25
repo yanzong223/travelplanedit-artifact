@@ -1,0 +1,762 @@
+# Query Templates Configuration
+# Query模板配置，用于生成edit query
+# 重要约束：
+# 1. 模板必须聚焦于target_city，不提出更换城市
+# 2. {poi}占位符将从POI数据库中采样真实POI
+# 3. 至少包含一个可判定的硬约束
+# Parameter模板准入规则：
+# 1. 仅允许约束单个activity/poi的单一属性（例如duration、单段交通时长、单项费用）
+# 2. 出现全局词（如所有/总计/整天/任意两个/之前结束/安排在...之间）应归为structural
+# 3. 出现结构动作词（如增加/删除/替换/重排/安排/改为交通方式）应归为structural
+
+# =========================
+# Parameter-level templates
+# =========================
+
+(parameter, temporal, overflow):
+  eligible_for_edit: true
+  templates:
+    - template: "把{poi}的游玩时间限制在{duration}以内"
+      params:
+        duration: ["1小时", "2小时", "3小时"]
+      poi_source: "attractions"
+      constraint_type: "duration_limit"
+      city_constraint: "target_city_only"
+      description: "限制单个景点的游玩时长"
+
+(parameter, resource, overflow):
+  eligible_for_edit: true
+  templates:
+    - template: "预算上限可以放宽到{budget}元左右，尽量充分利用这部分预算来优化体验"
+      params:
+        budget: [500, 800, 1000, 1200, 1500, 2000, 2500, 3000]
+      constraint_type: "budget_cap_preference"
+      city_constraint: "target_city_only"
+      description: "上调预算上限，并鼓励充分利用新增预算优化体验"
+
+    - template: "如果更好安排的话，总预算上调到{budget}元也可以，尽量把预算用足一点"
+      params:
+        budget: [500, 800, 1000, 1200, 1500, 2000, 2500, 3000]
+      constraint_type: "budget_target_update"
+      city_constraint: "target_city_only"
+      description: "上调预算目标，并强调充分利用预算"
+
+# =========================
+# Structural-level templates
+# =========================
+
+(structural, temporal, overflow):
+  eligible_for_edit: true
+  templates:
+    - template: "确保{day}在{time}前结束所有活动"
+      params:
+        day: ["第一天", "第二天"]
+        time: ["18:00", "19:00", "20:00"]
+      constraint_type: "time_limit"
+      city_constraint: "target_city_only"
+      description: "限制某一天的结束时间（通常触发重排）"
+
+    - template: "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}"
+      params:
+        duration: ["30分钟", "1小时", "1.5小时"]
+      poi_source: "attractions"
+      constraint_type: "travel_time_constraint"
+      city_constraint: "target_city_only"
+      description: "交通时间约束过紧（可达性）"
+      soft_family: "route_compactness"
+      soft_facet: "travel_time"
+      supported_edit_modes: ["addition"]
+      soft_intensity: "medium"
+      origin_requirement: "absent"
+      surface_variants:
+        - "想把{poi}也加进行程里，但路上别花太多时间，景点之间的交通最好别超过{duration}"
+        - "把{poi}安排进去可以，不过我希望各个景点之间通勤快一点，尽量控制在{duration}内"
+        - "想去{poi}，同时也想让景点之间少折腾，交通时间最好压到{duration}以内"
+        - "把{poi}加进来吧，但我不想把时间都耗在路上，景点之间通勤别超过{duration}"
+
+    - template: "增加{poi}到行程中，同时希望所有景点之间的交通时间尽可能少，最好不超过{duration}"
+      params:
+        duration: ["30分钟", "1小时", "1.5小时"]
+      poi_source: "attractions"
+      constraint_type: "travel_time_constraint"
+      city_constraint: "target_city_only"
+      description: "更强的交通时间压缩偏好"
+      soft_family: "route_compactness"
+      soft_facet: "travel_time"
+      supported_edit_modes: ["strengthen"]
+      soft_intensity: "strong"
+      origin_requirement: "present"
+      surface_variants:
+        - "想把{poi}也安排上，而且最好别来回折腾，景点之间的交通时间尽量压到{duration}以内"
+        - "把{poi}加进来没问题，但我更希望行程紧凑点，路上的时间最好别超过{duration}"
+        - "如果把{poi}放进行程，我希望各个景点之间通勤再省时一点，尽量控制在{duration}内"
+
+(structural, temporal, infeasible):
+  eligible_for_edit: false
+  templates:
+    - template: "在{time}到{end_time}之间安排{poi}的参观"
+      params:
+        time: ["09:00", "10:00"]
+        end_time: ["17:00", "18:00"]
+      poi_source: "attractions"
+      constraint_type: "time_window_infeasible"
+      city_constraint: "target_city_only"
+      description: "时间窗口约束冲突（依赖景点开放时间）"
+
+(structural, temporal, overlap):
+  eligible_for_edit: true
+  templates:
+    - template: "{leg}最晚{time}{action}"
+      params:
+        leg: ["去程", "返程"]
+        time: ["10:00", "18:30"]
+        action: ["出发", "到达"]
+      constraint_type: "transport_time_window"
+      city_constraint: "target_city_only"
+      description: "约束去程或返程跨城交通的出发/到达时间"
+      domain_scope: "transport"
+      require_natural_surface: true
+      surface_variants:
+        - "{leg}这段最好最晚{time}{action}"
+        - "{leg}交通时间帮我卡一下，最晚{time}{action}"
+        - "我希望{leg}不要太拖，最晚{time}{action}"
+        - "{leg}按最晚{time}{action}来排"
+        - "{leg}这班交通尽量别晚于{time}{action}"
+
+    - template: "把{poi}的时间安排在{time_period}"
+      params:
+        time_period: ["上午", "下午", "晚上"]
+      poi_source: "existing_attractions"
+      constraint_type: "time_window"
+      city_constraint: "target_city_only"
+      description: "指定景点的时间段"
+
+    - template: "调整行程顺序，先去{poi1}再去{poi2}"
+      params: {}
+      poi_source: "existing_attractions"
+      poi_count: 2
+      constraint_type: "order_constraint"
+      city_constraint: "target_city_only"
+      description: "指定景点访问顺序"
+
+    - template: "我想在{day}把{poi1}和{poi2}安排得更紧凑：同一天都去，但不要出现时间重叠"
+      params:
+        day: ["第一天", "第二天"]
+      poi_source: "existing_attractions"
+      poi_count: 2
+      constraint_type: "same_day_no_overlap_compact"
+      city_constraint: "target_city_only"
+      description: "同日双景点，要求不重叠且尽量紧凑"
+
+    - template: "把{poi1}和{poi2}安排在同一{time_period}，但要能顺序游玩，不要时间重叠"
+      params:
+        time_period: ["上午", "下午", "晚上"]
+      poi_source: "existing_attractions"
+      poi_count: 2
+      constraint_type: "same_time_period_no_overlap"
+      city_constraint: "target_city_only"
+      description: "同一时段内顺序游玩（不重叠）"
+
+(structural, structural, incompatibility):
+  eligible_for_edit: true
+  templates:
+    - template: "把{poi}从行程中删除"
+      params: {}
+      poi_source: "existing_attractions"
+      constraint_type: "remove_poi"
+      city_constraint: "target_city_only"
+      description: "删除指定景点"
+
+    - template: "把跨城交通方式改成{transport_mode}"
+      params:
+        transport_mode: ["高铁", "飞机"]
+      constraint_type: "required_intercity_transport_type"
+      city_constraint: "target_city_only"
+      description: "指定去返程跨城交通方式"
+      domain_scope: "transport"
+      require_natural_surface: true
+      surface_variants:
+        - "这趟跨城交通想改坐{transport_mode}"
+        - "往返路上尽量安排{transport_mode}吧"
+        - "城市之间的交通我想换成{transport_mode}"
+        - "去返程都优先按{transport_mode}来安排"
+        - "跨城这段别按原来的走了，改成{transport_mode}"
+
+(structural, spatial, overflow):
+  eligible_for_edit: true
+  templates:
+    - template: "把{poi}周边活动半径限制为{walk_dist}公里"
+      params:
+        walk_dist: [2, 3, 5]
+      poi_source: "existing_attractions"
+      constraint_type: "poi_local_radius_limit"
+      city_constraint: "target_city_only"
+      description: "限制单个景点周边活动半径（常需替换/删除远距离活动）"
+      soft_family: "anchor_proximity"
+      soft_facet: "poi_anchor"
+      supported_edit_modes: ["addition"]
+      soft_intensity: "medium"
+      origin_requirement: "absent"
+      surface_variants:
+        - "想把{poi}附近的活动安排得更集中，相关通勤距离尽量控制在{walk_dist}公里内"
+        - "希望围着{poi}玩，周边活动别散得太开，最好都在{walk_dist}公里范围内"
+        - "我想以{poi}为中心安排活动，附近通勤尽量别超过{walk_dist}公里"
+        - "围着{poi}玩就行，活动范围最好压在{walk_dist}公里内"
+
+    - template: "以{poi}为中心的周边活动半径尽量控制在{walk_dist}公里内"
+      params:
+        walk_dist: [2, 3, 5]
+      poi_source: "existing_attractions"
+      constraint_type: "poi_local_radius_limit"
+      city_constraint: "target_city_only"
+      description: "更强的核心锚点聚拢"
+      soft_family: "anchor_proximity"
+      soft_facet: "poi_anchor"
+      supported_edit_modes: ["strengthen"]
+      soft_intensity: "strong"
+      origin_requirement: "present"
+      surface_variants:
+        - "我更想围着{poi}安排活动，相关通勤距离最好都控制在{walk_dist}公里内"
+        - "希望以{poi}为中心玩得更集中一些，周边活动范围尽量别超过{walk_dist}公里"
+        - "这次就围着{poi}玩吧，活动半径最好尽量压到{walk_dist}公里内"
+
+    - template: "所有景点之间的距离都不能超过{walk_dist}公里"
+      params:
+        walk_dist: [3, 5, 10]
+      constraint_type: "max_distance_constraint"
+      city_constraint: "target_city_only"
+      description: "全局距离约束"
+
+    - template: "我想在{day}游玩{poi}，但不想走太远，景点间的距离控制在{walk_dist}公里内"
+      params:
+        day: ["第一天", "第二天"]
+        walk_dist: [2, 3, 5]
+      poi_source: "attractions"
+      constraint_type: "spatial_overflow"
+      city_constraint: "target_city_only"
+      description: "空间约束溢出"
+
+(structural, spatial, infeasible):
+  eligible_for_edit: true
+  templates:
+    - template: "把{poi1}和{poi2}之间的交通方式改为步行，不要超过{walk_dist}公里"
+      params:
+        walk_dist: [1, 2, 3]
+      poi_source: "existing_attractions"
+      poi_count: 2
+      constraint_type: "walking_distance_limit"
+      city_constraint: "target_city_only"
+      description: "交通方式替换与可达性约束"
+
+    - template: "把{poi}安排到行程中，但从出发点到{poi}的交通时间不能超过{duration}"
+      params:
+        duration: ["30分钟", "1小时"]
+      poi_source: "attractions"
+      constraint_type: "access_time_infeasible"
+      city_constraint: "target_city_only"
+      description: "可达性约束不可行"
+
+(structural, resource, overflow):
+  eligible_for_edit: true
+  templates:
+    - template: "总预算不能超过{budget}元"
+      params:
+        budget: [500, 800, 1000, 1500]
+      constraint_type: "budget_limit"
+      city_constraint: "target_city_only"
+      description: "限制总预算"
+
+    - template: "所有门票总价不超过{budget}元"
+      params:
+        budget: [200, 300, 500]
+      constraint_type: "ticket_budget_limit"
+      city_constraint: "target_city_only"
+      description: "限制门票预算"
+      surface_variants:
+        - "门票这部分我想再省一点，总价最好控制在{budget}元以内"
+        - "这趟行程的门票预算别太高，全部门票加起来尽量别超过{budget}元"
+        - "景点门票花费我想压一压，总价控制在{budget}元就行"
+        - "门票别买得太贵，所有景点门票加起来最好别高于{budget}元"
+
+(structural, resource, overlap):
+  eligible_for_edit: true
+  templates:
+    - template: "我想在{day}去{poi}，但如果门票超过{budget}元，就把它换成{target_city}门票不超过{budget}元的同类型景点"
+      params:
+        day: ["第一天", "第二天"]
+        budget: [50, 100, 200]
+      poi_source: "existing_attractions"
+      constraint_type: "ticket_price_cap_or_substitute"
+      city_constraint: "target_city_only"
+      description: "单景点票价上限，超出则替换为同类低价景点"
+
+    - template: "安排{poi}和附近的餐厅，但总花费（门票+餐费）不能超过{budget}元"
+      params:
+        budget: [200, 300, 500]
+      poi_source: "existing_attractions"
+      poi_count: 1
+      constraint_type: "resource_overlap"
+      city_constraint: "target_city_only"
+      description: "多个资源约束叠加"
+      domain_scope: "attraction_meal"
+      require_natural_surface: true
+      surface_variants:
+        - "{poi}附近想顺便吃一顿，景点加用餐这一组最好控制在{budget}元以内"
+        - "去{poi}的时候帮我安排附近的餐厅吧，这组活动总花费别超过{budget}元"
+        - "{poi}加上附近一顿饭控制在{budget}元以内就行"
+        - "想把{poi}和周边用餐放在一起安排，这一组预算最好不超过{budget}元"
+
+    - template: "把每人每顿餐饮预算控制在{budget}元以内"
+      params:
+        budget: [80, 120, 150]
+      constraint_type: "activity_budget_limit"
+      city_constraint: "target_city_only"
+      description: "餐饮人均单餐预算上限"
+      domain_scope: "meal"
+      require_natural_surface: true
+      surface_variants:
+        - "吃饭别安排太贵的，每人每顿餐饮预算控制在{budget}元以内"
+        - "餐饮这块想省一点，每人每顿餐饮预算不超过{budget}元"
+        - "每人每顿用餐预算控制在{budget}元吧，别选太贵的餐厅"
+        - "用餐按人均每顿{budget}元以内来安排"
+
+    - template: "把每人每晚住宿预算控制在{budget}元以内"
+      params:
+        budget: [200, 300, 500]
+      constraint_type: "activity_budget_limit"
+      city_constraint: "target_city_only"
+      description: "住宿人均每晚预算上限"
+      domain_scope: "accommodation"
+      require_natural_surface: true
+      surface_variants:
+        - "住宿别太贵，人均每晚住宿预算控制在{budget}元以内"
+        - "酒店这块按每人每晚住宿预算不超过{budget}元来安排"
+        - "每人每晚住宿预算控制在{budget}元吧，尽量选实惠一点的"
+        - "住的地方不用太贵，每人每晚酒店预算不超过{budget}元"
+
+(structural, resource, infeasible):
+  eligible_for_edit: false
+  templates:
+    - template: "我想在{day}游玩{poi}，但总预算（含交通、门票、餐饮）不超过{budget}元"
+      params:
+        day: ["第一天", "第二天"]
+        budget: [300, 500, 800]
+      poi_source: "attractions"
+      constraint_type: "daily_budget_infeasible"
+      city_constraint: "target_city_only"
+      description: "每日预算限制过紧"
+
+(structural, semantic, incompatibility):
+  eligible_for_edit: true
+  templates:
+    - template: "去{poi}用餐"
+      params: {}
+      poi_source: "restaurants"
+      constraint_type: "required_restaurant_name"
+      city_constraint: "target_city_only"
+      description: "指定餐厅用餐"
+      domain_scope: "meal"
+      require_natural_surface: true
+      surface_variants:
+        - "有一顿想安排在{poi}用餐"
+        - "这趟想去{poi}吃一顿"
+        - "帮我把{poi}这家餐厅安排进去用餐"
+        - "吃饭想试试{poi}，把它加进行程里"
+
+    - template: "我想吃{poi_type}"
+      params:
+        poi_type: ["川菜", "粤菜", "湘菜"]
+      constraint_type: "required_restaurant_type"
+      city_constraint: "target_city_only"
+      description: "指定餐饮类型"
+      domain_scope: "meal"
+      require_natural_surface: true
+      surface_variants:
+        - "用餐想吃{poi_type}，餐厅按这个口味来选"
+        - "这趟吃饭想安排{poi_type}餐厅"
+        - "有一顿想吃{poi_type}，帮我换成合适的餐厅"
+        - "餐饮方面更想吃{poi_type}"
+
+    - template: "住{poi}"
+      params: {}
+      poi_source: "accommodations"
+      constraint_type: "required_hotel_name"
+      city_constraint: "target_city_only"
+      description: "指定住宿"
+      domain_scope: "accommodation"
+      require_natural_surface: true
+      surface_variants:
+        - "住宿想订在{poi}"
+        - "这晚想住在{poi}"
+        - "帮我把酒店换成{poi}"
+        - "住处就安排{poi}吧"
+
+    - template: "我想住{hotel_feature}酒店"
+      params:
+        hotel_feature: ["江景", "亲子", "温泉"]
+      constraint_type: "required_hotel_feature"
+      city_constraint: "target_city_only"
+      description: "指定酒店特征"
+      domain_scope: "accommodation"
+      require_natural_surface: true
+      surface_variants:
+        - "住宿想住{hotel_feature}酒店"
+        - "酒店希望选{hotel_feature}酒店"
+        - "这晚想住{hotel_feature}酒店，其他安排可以顺着调"
+        - "住处想换成{hotel_feature}酒店"
+
+    - template: "把房型改成{room_type}"
+      params:
+        room_type: ["大床房", "双床房", "单床房", "标间"]
+      constraint_type: "required_room_type"
+      city_constraint: "target_city_only"
+      description: "指定真实房型"
+      domain_scope: "accommodation"
+      require_natural_surface: true
+      surface_variants:
+        - "酒店房型改成{room_type}"
+        - "住宿这边想要{room_type}"
+        - "订房时房型调整为{room_type}"
+        - "住处帮我按{room_type}来安排"
+
+    - template: "订{room_count}间房"
+      params:
+        room_count: [1, 2, 3]
+      constraint_type: "required_room_count"
+      city_constraint: "target_city_only"
+      description: "指定房间数量"
+      domain_scope: "accommodation"
+      require_natural_surface: true
+      surface_variants:
+        - "住宿需要订{room_count}间房"
+        - "酒店房间帮我改成{room_count}间"
+        - "这次住处要{room_count}间客房"
+        - "订房按{room_count}间房来安排"
+
+    - template: "把{poi}换成{target_city}的类似景点"
+      params: {}
+      poi_source: "existing_attractions"
+      constraint_type: "substitute_poi"
+      city_constraint: "target_city_only"
+      description: "替换景点"
+
+    - template: "我想{poi_type}类型的景点"
+      params:
+        poi_type: ["自然风光", "公园", "园林"]
+      constraint_type: "type_filter"
+      city_constraint: "target_city_only"
+      description: "按自然主题过滤景点"
+      soft_family: "theme_alignment"
+      soft_facet: "nature"
+      supported_edit_modes: ["addition"]
+      soft_intensity: "medium"
+      origin_requirement: "absent"
+      surface_variants:
+        - "这次更想多看看{poi_type}一点的地方，其他类型少放一些就行"
+        - "行程里想多安排点{poi_type}，整体风格尽量往这边靠"
+        - "这趟更想主打{poi_type}，别塞太多不相关的景点"
+
+    - template: "我想{poi_type}类型的景点，而且这次行程更偏向这种风格，尽量别放其他不相关类型"
+      params:
+        poi_type: ["自然风光", "公园", "园林"]
+      constraint_type: "type_filter"
+      city_constraint: "target_city_only"
+      description: "更强的自然主题偏向"
+      soft_family: "theme_alignment"
+      soft_facet: "nature"
+      supported_edit_modes: ["strengthen"]
+      soft_intensity: "strong"
+      origin_requirement: "present"
+      surface_variants:
+        - "这次就想重点看{poi_type}，其他类型尽量少一点"
+        - "行程风格更偏{poi_type}一些，别再放太多别的类型"
+        - "这趟还是想把重心放在{poi_type}上，不相关的景点少安排点"
+
+    - template: "我想{poi_type}类型的景点"
+      params:
+        poi_type: ["历史古迹", "博物馆/纪念馆", "文化旅游区", "人文景观", "美术馆/艺术馆", "红色景点", "大学校园"]
+      constraint_type: "type_filter"
+      city_constraint: "target_city_only"
+      description: "按文化主题过滤景点"
+      soft_family: "theme_alignment"
+      soft_facet: "culture"
+      supported_edit_modes: ["addition"]
+      soft_intensity: "medium"
+      origin_requirement: "absent"
+      surface_variants:
+        - "这次更想多看看{poi_type}一点的地方，其他类型少放一些就行"
+        - "行程里想多安排点{poi_type}，整体风格尽量往这边靠"
+        - "这趟更想主打{poi_type}，别塞太多不相关的景点"
+
+    - template: "我想{poi_type}类型的景点，而且这次行程更偏向这种风格，尽量别放其他不相关类型"
+      params:
+        poi_type: ["历史古迹", "博物馆/纪念馆", "文化旅游区", "人文景观", "美术馆/艺术馆", "红色景点", "大学校园"]
+      constraint_type: "type_filter"
+      city_constraint: "target_city_only"
+      description: "更强的文化主题偏向"
+      soft_family: "theme_alignment"
+      soft_facet: "culture"
+      supported_edit_modes: ["strengthen"]
+      soft_intensity: "strong"
+      origin_requirement: "present"
+      surface_variants:
+        - "这次就想重点看{poi_type}，其他类型尽量少一点"
+        - "行程风格更偏{poi_type}一些，别再放太多别的类型"
+        - "这趟还是想把重心放在{poi_type}上，不相关的景点少安排点"
+
+    - template: "把{poi}改成{target_city}更有名的{poi_type}"
+      params:
+        poi_type: ["地标建筑", "热门景点"]
+      poi_source: "existing_attractions"
+      constraint_type: "famous_substitution"
+      city_constraint: "target_city_only"
+      description: "要求更知名的同类景点"
+
+    - template: "我想去{poi_type}，但不要太{adjective}的"
+      params:
+        poi_type: ["历史古迹", "博物馆/纪念馆", "文化旅游区", "自然风光", "公园", "商业街区"]
+        adjective: ["商业化", "拥挤", "偏僻"]
+      poi_source: "attractions"
+      constraint_type: "preference_constraint"
+      city_constraint: "target_city_only"
+      description: "语义偏好约束"
+      surface_variants:
+        - "想去{poi_type}一点的地方，不过别太{adjective}"
+        - "这次还是想看{poi_type}，但不想要太{adjective}的那种"
+        - "更想安排些{poi_type}相关的景点，只是别太{adjective}"
+
+(structural, semantic, overlap):
+  eligible_for_edit: true
+  templates:
+    - template: "我想{poi_type}类型的景点，特别是{poi}"
+      params:
+        poi_type: ["历史古迹", "自然风光", "主题乐园"]
+      poi_source: "attractions"
+      constraint_type: "semantic_and_specific"
+      city_constraint: "target_city_only"
+      description: "语义类型和具体景点重叠"
+
+    - template: "我想去{poi}这样的{poi_type}，另外还要去类似的景点"
+      params:
+        poi_type: ["历史景点", "现代景点", "文化景点"]
+      poi_source: "attractions"
+      poi_count: 1
+      constraint_type: "category_overlap"
+      city_constraint: "target_city_only"
+      description: "景点类别语义重叠"
+
+(structural, semantic, discontinuity):
+  eligible_for_edit: true
+  templates:
+    - template: "把{poi}改成{poi_type}类型的其他景点，但风格要相似"
+      params:
+        poi_type: ["历史古迹", "自然风光", "博物馆"]
+      poi_source: "existing_attractions"
+      constraint_type: "semantic_substitution"
+      city_constraint: "target_city_only"
+      description: "语义替换造成的不连续"
+
+    - template: "去掉{poi}，换成{target_city}同类型的{poi_type}"
+      params:
+        poi_type: ["历史文化景点", "自然景观"]
+      poi_source: "existing_attractions"
+      constraint_type: "type_replacement"
+      city_constraint: "target_city_only"
+      description: "按类型替换景点"
+
+# =========================
+# Compositional-level templates
+# =========================
+
+(compositional, structural, incompatibility):
+  eligible_for_edit: true
+  templates:
+    - template: "我想在{target_city}多玩几天，不要当天往返"
+      params: {}
+      constraint_type: "multi_day_requirement"
+      city_constraint: "target_city_only"
+      description: "将单日行程改为多日"
+      force_multi_day: true
+
+    - template: "把行程改成在{target_city}玩{day_count}天"
+      params:
+        day_count: [2, 3]
+      constraint_type: "multi_day_requirement"
+      city_constraint: "target_city_only"
+      description: "指定多日行程天数"
+      force_multi_day: true
+
+(compositional, structural, discontinuity):
+  eligible_for_edit: true
+  templates:
+    - template: "把单日往返改成{day_count}天行程，第一天去{poi1}，第二天去{poi2}"
+      params:
+        day_count: [2, 3]
+      poi_source: "attractions"
+      poi_count: 2
+      constraint_type: "cross_day_restructure"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "跨日重构"
+
+    - template: "增加{day_count}天行程，安排{target_city}的{poi_type}"
+      params:
+        day_count: [1, 2]
+        poi_type: ["历史古迹", "自然风光"]
+      constraint_type: "add_days"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "增加天数"
+
+(compositional, spatial, discontinuity):
+  eligible_for_edit: true
+  templates:
+    - template: "把行程拆分成两个城市，{target_city}和{nearby_city}"
+      params:
+        nearby_city: ["附近的另一个城市"]
+      constraint_type: "multi_city_split"
+      city_constraint: "allow_nearby_city"
+      description: "多城市拆分"
+      force_multi_day: true
+
+(compositional, structural, overflow):
+  eligible_for_edit: true
+  templates:
+    - template: "把{target_city}的行程扩展到{day_count}天，每天只安排{poi_count}个景点"
+      params:
+        day_count: [3, 4]
+        poi_count: [1, 2]
+      constraint_type: "extend_with_pacing"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "扩展行程并控制节奏"
+      soft_family: "burden_reduction"
+      soft_facet: "pace"
+      supported_edit_modes: ["addition"]
+      soft_intensity: "medium"
+      origin_requirement: "absent"
+      requires_day_extension: true
+      suppress_edit_soft_when_day_extension: true
+      surface_variants:
+        - "想把{target_city}这趟行程拉长到{day_count}天，节奏轻松点，每天最多安排{poi_count}个景点"
+        - "我想在{target_city}多玩到{day_count}天，每天安排{poi_count}个景点就够了"
+        - "把{target_city}的行程放慢一点，改成{day_count}天吧，而且每天只安排{poi_count}个景点"
+        - "想把{target_city}玩得从容些，行程改到{day_count}天，每天最多放{poi_count}个景点"
+
+    - template: "把{target_city}的行程安排得轻松一些，每天只安排{poi_count}个景点"
+      params:
+        poi_count: [1, 2]
+      constraint_type: "extend_with_pacing"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "不扩天数，仅降低每日景点负担"
+      soft_family: "burden_reduction"
+      soft_facet: "pace"
+      supported_edit_modes: ["addition"]
+      soft_intensity: "medium"
+      origin_requirement: "absent"
+      requires_day_extension: false
+      surface_variants:
+        - "想把{target_city}这趟行程放轻松一点，每天最多安排{poi_count}个景点"
+        - "希望{target_city}的行程别太赶，每天安排{poi_count}个景点就好"
+        - "{target_city}这次我想慢慢玩，每天只放{poi_count}个景点就够了"
+        - "把{target_city}的节奏放缓一点吧，每天最多去{poi_count}个景点"
+
+    - template: "把{target_city}的行程扩展到{day_count}天，尽量轻松不要太赶，每天只安排{poi_count}个景点"
+      params:
+        day_count: [3, 4]
+        poi_count: [1, 2]
+      constraint_type: "extend_with_pacing"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "更强的轻松节奏要求"
+      soft_family: "burden_reduction"
+      soft_facet: "pace"
+      supported_edit_modes: ["strengthen"]
+      soft_intensity: "strong"
+      origin_requirement: "present"
+      requires_day_extension: true
+      suppress_edit_soft_when_day_extension: true
+
+    - template: "把{target_city}的行程安排得更轻松一些，尽量不要太赶，每天只安排{poi_count}个景点"
+      params:
+        poi_count: [1, 2]
+      constraint_type: "extend_with_pacing"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "不扩天数的更强节奏约束"
+      soft_family: "burden_reduction"
+      soft_facet: "pace"
+      supported_edit_modes: ["strengthen"]
+      soft_intensity: "strong"
+      origin_requirement: "present"
+      requires_day_extension: false
+
+(compositional, semantic, discontinuity):
+  eligible_for_edit: true
+  templates:
+    - template: "我想{day}去{poi1}（偏{poi_type1}），{day2}去{poi2}（偏{poi_type2}），两天风格要明显不同"
+      params:
+        day: ["第一天"]
+        day2: ["第二天"]
+        poi_type1: ["历史古迹", "博物馆", "城市地标"]
+        poi_type2: ["自然风光", "主题乐园", "人文街区"]
+      poi_source: "attractions"
+      poi_count: 2
+      constraint_type: "cross_day_variety_by_types"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "跨日类型多样性：两天分别偏向不同类型"
+
+(compositional, resource, overflow):
+  eligible_for_edit: true
+  templates:
+    - template: "在{day_count}天内游览{target_city}的主要景点，总预算不超过{budget}元"
+      params:
+        day_count: [3, 4]
+        budget: [1000, 1500, 2000]
+      constraint_type: "multi_day_budget_overflow"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "多日总预算溢出"
+
+(compositional, semantic, incompatibility):
+  eligible_for_edit: false
+  templates:
+    - template: "把行程分成{poi_type1}和{poi_type2}两种风格，{day1}安排{poi_type1}，{day2}安排{poi_type2}"
+      params:
+        poi_type1: ["历史文化"]
+        poi_type2: ["自然风光"]
+        day1: ["第一天"]
+        day2: ["第二天"]
+      constraint_type: "thematic_split"
+      city_constraint: "target_city_only"
+      force_multi_day: true
+      description: "主题化分组的语义冲突"
+
+# =========================
+# Common configuration
+# =========================
+
+poi_source_types:
+  attractions: "从attractions数据库采样"
+  existing_attractions: "从origin plan中已有的景点选择"
+  restaurants: "从restaurants数据库采样"
+  accommodations: "从accommodations数据库采样"
+  all: "从所有POI类型采样"
+
+city_constraint_types:
+  target_city_only: "只能使用origin plan的target_city的POI"
+  allow_nearby_city: "允许使用target_city附近的城市POI"
+
+template_instructions: |
+  1. {poi}: 从POI数据库中随机采样一个景点
+  2. {poi1}, {poi2}: 采样多个不同的景点
+  3. {target_city}: 自动填充为origin plan的target_city
+  4. {start_city}: 自动填充为origin plan的start_city
+  5. {day}: 填充为"第一天"、"第二天"等
+  6. {time}: 填充为具体时间（如"18:00"）
+  7. {duration}: 填充为时长（如"2小时"）
+  8. {budget}: 填充为预算金额
+  9. {poi_type}: 填充为景点类型
+  10. {day_count}: 填充为天数

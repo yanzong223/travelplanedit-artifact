@@ -1,0 +1,22 @@
+{
+  "uid": "e20241028161039320663",
+  "tag": "medium",
+  "start_city": "深圳",
+  "target_city": "成都",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=9400)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'川菜'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置深圳。我们四个人计划去成都玩三天，想吃川菜，预算9400元，开两间双床房。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Shenzhen. Four of us are planning to visit Chengdu for three days. We want to try Sichuan cuisine, and our budget is 9,400 RMB. We need to book two twin rooms. Please provide a travel itinerary."
+}

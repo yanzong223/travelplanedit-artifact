@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143830714886",
+  "tag": "human",
+  "start_city": "广州",
+  "target_city": "上海",
+  "days": 5,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'商业街区'}<=attraction_type_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置广州,目标位置上海,旅行人数2,旅行天数5] 我和女友准备从广州出发，去上海，计划游玩5天，除来回机票，预算在10000元左右。我们喜欢时尚和美食，想去一些热门的打卡地点。",
+  "nature_language_en": "[Current location: Guangzhou, Destination: Shanghai, Number of travelers: 2, Travel days: 5] My girlfriend and I are planning to travel from Guangzhou to Shanghai for a 5-day trip. Excluding round-trip airfare, our budget is around 10,000 RMB. We enjoy fashion and food, and we want to visit some popular spots."
+}

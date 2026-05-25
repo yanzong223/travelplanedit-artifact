@@ -1,0 +1,26 @@
+{
+  "uid": "e20241028161353723055",
+  "tag": "medium",
+  "start_city": "武汉",
+  "target_city": "广州",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=5000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'taxi'}<=innercity_transport_set)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光'}<=attraction_type_set)",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'智能客控'}<=accommodation_type_set)",
+    "food_cost,food_count=0,0\nfor activity in allactivities(plan):\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner']:\n        food_cost+=activity_cost(activity)\n        food_count+=1\nresult=(food_cost/food_count/people_count(plan)<=80)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置武汉。我两个人想坐火车去广州玩3天，预算5000人民币，喜欢自然风光，住一间有智能客控的大床房，市内打车，人均吃饭每顿不超过80，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Wuhan. Two of us want to take a train to Guangzhou for a 3-day trip with a budget of 5,000 RMB. We enjoy natural scenery and would like to stay in a hotel with a smart control system in a room with a large bed. We plan to take taxis within the city, and our meal budget is no more than 80 RMB per person per meal. Please provide a travel itinerary."
+}

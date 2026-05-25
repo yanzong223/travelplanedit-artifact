@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143644154862",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "苏州",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置苏州,旅行人数3,旅行天数3] 来一个最省钱的计划",
+  "nature_language_en": "[Current location: Nanjing, Destination: Suzhou, Number of travelers: 3, Number of travel days: 3] Please provide the most cost-effective plan."
+}

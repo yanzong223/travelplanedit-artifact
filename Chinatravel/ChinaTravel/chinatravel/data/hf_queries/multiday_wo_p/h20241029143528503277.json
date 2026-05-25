@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143528503277",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "重庆",
+  "days": 4,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'小吃'}<=restaurant_type_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置重庆,旅行人数4,旅行天数4] 过阵子我们宿舍四人想去重庆参加valse会议，提供四天，想去热门景点逛一逛想吃一些重庆小吃，另外就是希望交通尽量方便，因为我们有一个同学前阵子打球脚崴了",
+  "nature_language_en": "[Current location: Wuhan, Destination: Chongqing, Number of travelers: 4, Travel days: 4] A while later, the four of us from the dormitory want to go to Chongqing to attend the VALSE conference. We have four days and would like to visit popular attractions and try some Chongqing snacks. Additionally, we hope for convenient transportation because one of our classmates sprained their ankle playing basketball recently."
+}

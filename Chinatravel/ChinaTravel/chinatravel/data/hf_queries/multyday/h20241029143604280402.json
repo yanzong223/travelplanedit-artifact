@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143604280402",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "return_start_time = 0\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train','airplane'] and intercity_transport_origin(activity) == target_city(plan): return_start_time = activity_start_time(activity)\nresult=(return_start_time<='19:00')",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'商业街区'}<=attraction_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置上海,旅行人数1,旅行天数3] 端午假期三天，我想一个人从杭州到上海玩，想去购物，然后希望在第三天晚上19点前回去",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Shanghai, Number of travelers: 1, Travel days: 3] During the three-day Dragon Boat Festival holiday, I want to travel alone from Hangzhou to Shanghai for some shopping, and I hope to return by 7 PM on the third day."
+}

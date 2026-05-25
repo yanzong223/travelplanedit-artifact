@@ -1,0 +1,496 @@
+{
+  "sample_id": "sample_000007",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置重庆。我一个人想去成都玩一天，预算1200人民币，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028160253742452",
+    "tag": "easy",
+    "start_city": "重庆",
+    "target_city": "成都",
+    "days": 1,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==1)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1200)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置重庆。我一个人想去成都玩一天，预算1200人民币，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Chongqing. I want to travel to Chengdu alone for one day with a budget of 1200 RMB. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "重庆",
+    "target_city": "成都",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "05:15",
+            "end_time": "08:58",
+            "start": "重庆北站",
+            "end": "成都西站",
+            "price": 105.66,
+            "cost": 105.66,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "K1256",
+            "type": "train"
+          },
+          {
+            "position": "成都大熊猫繁育研究基地",
+            "type": "attraction",
+            "price": 55,
+            "cost": 55,
+            "start_time": "10:08",
+            "end_time": "11:38",
+            "transports": [
+              {
+                "start": "成都西站",
+                "end": "成都西站-地铁站",
+                "mode": "walk",
+                "start_time": "08:58",
+                "end_time": "09:01",
+                "cost": 0,
+                "distance": 0.28,
+                "price": 0
+              },
+              {
+                "start": "成都西站-地铁站",
+                "end": "植物园-地铁站",
+                "mode": "metro",
+                "start_time": "09:01",
+                "end_time": "09:33",
+                "cost": 5,
+                "distance": 16.45,
+                "price": 5,
+                "tickets": 1
+              },
+              {
+                "start": "植物园-地铁站",
+                "end": "成都大熊猫繁育研究基地",
+                "mode": "walk",
+                "start_time": "09:33",
+                "end_time": "10:08",
+                "cost": 0,
+                "distance": 2.95,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "鹤鸣茶社(人民公园店)",
+            "type": "lunch",
+            "price": 45,
+            "cost": 45,
+            "start_time": "12:42",
+            "end_time": "13:42",
+            "transports": [
+              {
+                "start": "成都大熊猫繁育研究基地",
+                "end": "植物园-地铁站",
+                "mode": "walk",
+                "start_time": "11:38",
+                "end_time": "12:13",
+                "cost": 0,
+                "distance": 2.95,
+                "price": 0
+              },
+              {
+                "start": "植物园-地铁站",
+                "end": "人民公园-地铁站",
+                "mode": "metro",
+                "start_time": "12:13",
+                "end_time": "12:39",
+                "cost": 4,
+                "distance": 13.09,
+                "price": 4,
+                "tickets": 1
+              },
+              {
+                "start": "人民公园-地铁站",
+                "end": "鹤鸣茶社(人民公园店)",
+                "mode": "walk",
+                "start_time": "12:39",
+                "end_time": "12:42",
+                "cost": 0,
+                "distance": 0.32,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "味之绝美蛙鱼头(东升店)",
+            "type": "dinner",
+            "price": 79,
+            "cost": 79,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "鹤鸣茶社(人民公园店)",
+                "end": "人民公园-地铁站",
+                "mode": "walk",
+                "start_time": "13:42",
+                "end_time": "13:45",
+                "cost": 0,
+                "distance": 0.32,
+                "price": 0
+              },
+              {
+                "start": "人民公园-地铁站",
+                "end": "东升-地铁站",
+                "mode": "metro",
+                "start_time": "13:45",
+                "end_time": "14:16",
+                "cost": 5,
+                "distance": 15.95,
+                "price": 5,
+                "tickets": 1
+              },
+              {
+                "start": "东升-地铁站",
+                "end": "味之绝美蛙鱼头(东升店)",
+                "mode": "walk",
+                "start_time": "14:16",
+                "end_time": "14:27",
+                "cost": 0,
+                "distance": 0.98,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "19:00",
+            "end_time": "19:19",
+            "start": "成都双流国际机场",
+            "end": "重庆江北国际机场",
+            "price": 238.86,
+            "cost": 238.86,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "味之绝美蛙鱼头(东升店)",
+                "end": "东升-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:11",
+                "cost": 0,
+                "distance": 0.98,
+                "price": 0
+              },
+              {
+                "start": "东升-地铁站",
+                "end": "双流机场2航站楼东-地铁站",
+                "mode": "metro",
+                "start_time": "18:11",
+                "end_time": "18:17",
+                "cost": 2,
+                "distance": 3.09,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "双流机场2航站楼东-地铁站",
+                "end": "成都双流国际机场",
+                "mode": "walk",
+                "start_time": "18:17",
+                "end_time": "18:32",
+                "cost": 0,
+                "distance": 1.25,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL445",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 1200.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1200)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把成都大熊猫繁育研究基地从行程里去掉",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "成都"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [
+      "成都大熊猫繁育研究基地"
+    ],
+    "semantic": {
+      "replace_from": "成都大熊猫繁育研究基地"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "forbidden_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_none",
+      "value": [
+        "成都大熊猫繁育研究基地"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "structural",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "structural",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "remove_poi",
+    "template": "把{poi}从行程中删除",
+    "template_id": "structural_structural_incompatibility__remove_poi__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [
+        "source_poi"
+      ],
+      "bound_slots": [],
+      "relation_slots": [],
+      "ir_outputs": [
+        "forbidden_attraction_name"
+      ],
+      "risk_level": "low",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "remove_poi",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "remove_poi"
+    },
+    "rendered_params": {
+      "start_city": "重庆",
+      "target_city": "成都",
+      "day_count": 1
+    },
+    "canonical_query_spec": {
+      "constraint_type": "remove_poi",
+      "source_poi": "成都大熊猫繁育研究基地"
+    },
+    "canonical_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "remove_poi",
+      "anchor_poi": "成都大熊猫繁育研究基地",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.55
+    },
+    "canonical_semantic_parse_source": "llm",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "poi": "成都大熊猫繁育研究基地"
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "remove_poi"
+    },
+    "surface_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "remove_poi",
+      "anchor_poi": "成都大熊猫繁育研究基地",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.55
+    },
+    "surface_semantic_parse_source": "llm",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "poi": "成都大熊猫繁育研究基地"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "structural",
+      "incompatibility"
+    ],
+    "target_city": "成都",
+    "start_city": "重庆",
+    "is_single_day": true,
+    "day_count": 1,
+    "origin_plan_file": "e20241028160253742452.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_structural_incompatibility"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T14:47:59.445338",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "structural",
+      "incompatibility"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000034",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_structural_incompatibility/_validation_split/passed/sample_000034.json",
+    "template_diversity_selected": true
+  }
+}

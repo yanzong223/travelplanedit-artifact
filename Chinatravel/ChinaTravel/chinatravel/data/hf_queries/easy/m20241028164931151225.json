@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164931151225",
+  "tag": "easy",
+  "start_city": "广州",
+  "target_city": "成都",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "restaurant_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_name_set.add(activity_position(activity))\nresult=({'Silver pot·银锅现代川菜(悠方店)'}<=restaurant_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置广州。我一个人想去成都玩2天，想吃Silver pot·银锅现代川菜(悠方店)，请给我一个旅行规划。",
+  "nature_language_en": "Sure! Here is the translation of your request into English:"
+}

@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028165017924681",
+  "tag": "easy",
+  "start_city": "成都",
+  "target_city": "广州",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "accommodation_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': accommodation_name_set.add(activity_position(activity))\nresult=({'广州建国酒店'}<=accommodation_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置成都。我一个人想去广州玩3天，住广州建国酒店，请给我一个旅行规划。",
+  "nature_language_en": "Sure! Here is the translation of your request into English:"
+}

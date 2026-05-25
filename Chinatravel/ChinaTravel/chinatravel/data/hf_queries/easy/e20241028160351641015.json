@@ -1,0 +1,19 @@
+{
+  "uid": "e20241028160351641015",
+  "tag": "easy",
+  "start_city": "北京",
+  "target_city": "苏州",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2300)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置北京。我一个人想去苏州玩一天，预算2300人民币，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Beijing. I want to travel alone to Suzhou for a day, with a budget of 2300 RMB. Please provide me with a travel plan."
+}

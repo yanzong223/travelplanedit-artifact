@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143539603238",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置上海,旅行人数2,旅行天数3] 当前位置南京。我们两个人想去上海玩三天，请给我拟定一个预算较少的规划。",
+  "nature_language_en": "[Current location: Nanjing, Destination: Shanghai, Number of travelers: 2, Number of travel days: 3] Current location: Nanjing. Two of us want to go to Shanghai for three days. Please help me draft a budget-friendly plan."
+}

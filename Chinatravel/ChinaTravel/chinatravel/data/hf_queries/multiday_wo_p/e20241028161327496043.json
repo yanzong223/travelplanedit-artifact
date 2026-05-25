@@ -1,0 +1,22 @@
+{
+  "uid": "e20241028161327496043",
+  "tag": "medium",
+  "start_city": "广州",
+  "target_city": "南京",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=10000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'夫子庙'}<=attraction_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置广州。我四个人想去南京玩3天，预算10000人民币，住两间房，坐火车去，想去夫子庙这样的景点，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Guangzhou. There are four of us who want to visit Nanjing for 3 days, with a budget of 10,000 RMB. We would like to stay in two rooms, travel by train, and visit attractions like the Confucius Temple. Please provide a travel plan."
+}

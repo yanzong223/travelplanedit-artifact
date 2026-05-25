@@ -1,0 +1,613 @@
+{
+  "sample_id": "sample_000013",
+  "batch_id": "benchmark",
+  "origin_query_text": "[当前位置杭州,目标位置苏州,旅行人数2,旅行天数2] 我和朋友准备晚上从杭州出发去苏州玩两天，想看苏州的园林，想品尝一些当地特色美食，希望总预算不超过两千",
+  "origin_query_structured": {
+    "uid": "h20241029143547722063",
+    "tag": "human",
+    "start_city": "杭州",
+    "target_city": "苏州",
+    "days": 2,
+    "people_number": 2,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)",
+      "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'园林'}<=attraction_type_set)",
+      "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)",
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==2)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "[当前位置杭州,目标位置苏州,旅行人数2,旅行天数2] 我和朋友准备晚上从杭州出发去苏州玩两天，想看苏州的园林，想品尝一些当地特色美食，希望总预算不超过两千",
+    "nature_language_en": "[Current location: Hangzhou, Destination: Suzhou, Number of travelers: 2, Number of travel days: 2] My friend and I are planning to leave Hangzhou for Suzhou in the evening to spend two days there. We want to visit the gardens in Suzhou and taste some local specialty foods, hoping to keep the total budget under 2000 yuan."
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "杭州",
+    "target_city": "苏州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "17:43",
+            "end_time": "19:36",
+            "start": "杭州东站",
+            "end": "苏州站",
+            "price": 78.65,
+            "cost": 157.3,
+            "tickets": 2,
+            "transports": [],
+            "TrainID": "G7310",
+            "type": "train"
+          },
+          {
+            "position": "得月楼(观前店)",
+            "type": "dinner",
+            "price": 153,
+            "cost": 306,
+            "start_time": "19:39",
+            "end_time": "20:39",
+            "transports": [
+              {
+                "start": "苏州站",
+                "end": "得月楼(观前店)",
+                "mode": "taxi",
+                "start_time": "19:36",
+                "end_time": "19:39",
+                "cost": 13.66,
+                "distance": 2.56,
+                "price": 13.66,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "盘门",
+            "type": "attraction",
+            "price": 34,
+            "cost": 68,
+            "start_time": "20:50",
+            "end_time": "21:00",
+            "transports": [
+              {
+                "start": "得月楼(观前店)",
+                "end": "察院场-地铁站",
+                "mode": "walk",
+                "start_time": "20:39",
+                "end_time": "20:43",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              },
+              {
+                "start": "察院场-地铁站",
+                "end": "南门-地铁站",
+                "mode": "metro",
+                "start_time": "20:43",
+                "end_time": "20:47",
+                "cost": 4,
+                "distance": 2.16,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "南门-地铁站",
+                "end": "盘门",
+                "mode": "walk",
+                "start_time": "20:47",
+                "end_time": "20:50",
+                "cost": 0,
+                "distance": 0.33,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "苏州花惜美拾酒店(黑曜吴江店)",
+            "type": "accommodation",
+            "price": 206,
+            "cost": 206,
+            "start_time": "21:47",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "盘门",
+                "end": "南门-地铁站",
+                "mode": "walk",
+                "start_time": "21:00",
+                "end_time": "21:03",
+                "cost": 0,
+                "distance": 0.33,
+                "price": 0
+              },
+              {
+                "start": "南门-地铁站",
+                "end": "江兴西路-地铁站",
+                "mode": "metro",
+                "start_time": "21:03",
+                "end_time": "21:30",
+                "cost": 8,
+                "distance": 13.6,
+                "price": 4,
+                "tickets": 2
+              },
+              {
+                "start": "江兴西路-地铁站",
+                "end": "苏州花惜美拾酒店(黑曜吴江店)",
+                "mode": "walk",
+                "start_time": "21:30",
+                "end_time": "21:47",
+                "cost": 0,
+                "distance": 1.47,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "苏州花惜美拾酒店(黑曜吴江店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "荣阳楼(山塘街店)",
+            "type": "dinner",
+            "price": 15,
+            "cost": 30,
+            "start_time": "17:00",
+            "end_time": "17:30",
+            "transports": [
+              {
+                "start": "苏州花惜美拾酒店(黑曜吴江店)",
+                "end": "江兴西路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:47",
+                "cost": 0,
+                "distance": 1.47,
+                "price": 0
+              },
+              {
+                "start": "江兴西路-地铁站",
+                "end": "山塘街-地铁站",
+                "mode": "metro",
+                "start_time": "08:47",
+                "end_time": "09:20",
+                "cost": 10,
+                "distance": 16.9,
+                "price": 5,
+                "tickets": 2
+              },
+              {
+                "start": "山塘街-地铁站",
+                "end": "荣阳楼(山塘街店)",
+                "mode": "walk",
+                "start_time": "09:20",
+                "end_time": "09:23",
+                "cost": 0,
+                "distance": 0.31,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "18:08",
+            "end_time": "19:39",
+            "start": "苏州站",
+            "end": "杭州东站",
+            "price": 78.65,
+            "cost": 157.3,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "荣阳楼(山塘街店)",
+                "end": "山塘街-地铁站",
+                "mode": "walk",
+                "start_time": "17:30",
+                "end_time": "17:33",
+                "cost": 0,
+                "distance": 0.31,
+                "price": 0
+              },
+              {
+                "start": "山塘街-地铁站",
+                "end": "苏州火车站-地铁站",
+                "mode": "metro",
+                "start_time": "17:33",
+                "end_time": "17:35",
+                "cost": 4,
+                "distance": 1.48,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "苏州火车站-地铁站",
+                "end": "苏州站",
+                "mode": "walk",
+                "start_time": "17:35",
+                "end_time": "17:36",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              }
+            ],
+            "TrainID": "G7535",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 2000.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "required_attraction_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "园林"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'园林'}<=attraction_type_set)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "required_restaurant_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "江浙菜"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "安排盘门和附近的餐厅，但总花费（门票+餐费）不能超过130元",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "盘门",
+        "type": "attraction",
+        "city": "苏州"
+      }
+    ],
+    "spatial": {
+      "city": "苏州"
+    },
+    "temporal": [],
+    "resource": {
+      "total_budget": 130,
+      "budget_breakdown": {
+        "attraction_ticket": 34.9,
+        "meal": 95.1
+      },
+      "max_budget": 130,
+      "nearby_meal": true,
+      "overlap_anchor_poi": "盘门",
+      "budget_scope": "anchor_bundle"
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "盘门"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "nearby_meal_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "anchor_poi": "盘门"
+      },
+      "operator": "==",
+      "value": true,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_2",
+      "source": "edit",
+      "type": "anchor_bundle_budget_limit",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "anchor_poi": "盘门"
+      },
+      "operator": "<=",
+      "value": 130.0,
+      "params": {
+        "budget_scope": "anchor_bundle",
+        "requires_nearby_meal": true,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [
+    {
+      "family": "theme_alignment",
+      "facet": "food",
+      "edit_mode": null,
+      "anchor": null,
+      "intensity": "weak",
+      "provenance": {
+        "source": "origin_query_text",
+        "is_explicit": false,
+        "evidence_span": "当地特色美食"
+      }
+    },
+    {
+      "family": "theme_alignment",
+      "facet": "nature",
+      "edit_mode": null,
+      "anchor": null,
+      "intensity": "weak",
+      "provenance": {
+        "source": "origin_query_text",
+        "is_explicit": false,
+        "evidence_span": "想看苏州的园林"
+      }
+    }
+  ],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "parameter",
+      "temporal",
+      "overflow"
+    ],
+    [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    [
+      "structural",
+      "spatial",
+      "infeasible"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overlap"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "resource",
+    "overlap"
+  ],
+  "secondary_conflicts": [
+    [
+      "parameter",
+      "temporal",
+      "overflow"
+    ],
+    [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "spatial",
+      "infeasible"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overlap"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overflow"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_resource_overlap__resource_overlap__01",
+    "template": "安排{poi}和附近的餐厅，但总花费（门票+餐费）不能超过{budget}元",
+    "template_str": "安排{poi}和附近的餐厅，但总花费（门票+餐费）不能超过{budget}元",
+    "constraint_type": "resource_overlap",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "target_city": "苏州",
+    "start_city": "杭州",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "resource_overlap"
+    ],
+    "requested_bucket_names": [
+      "structural_resource_overlap"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000050",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_resource_overflow/_validation_split/passed/sample_000050.json",
+    "diversity_augmented": true,
+    "diversity_domain": "attraction_meal",
+    "constraint_type": "resource_overlap",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 0.9429,
+    "primary_label": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000080",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000080.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000020",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_resource_overlap/_validation_split/passed/sample_000020.json",
+    "template_diversity_selected": true
+  }
+}

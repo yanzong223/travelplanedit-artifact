@@ -1,0 +1,519 @@
+{
+  "sample_id": "sample_000027",
+  "batch_id": "benchmark",
+  "origin_query_text": "我目前在武汉，计划独自前往南京游玩两天，酒店选择南京夫子庙老门东附近的花筑·僖堂民宿，请帮我制定一个旅行计划。",
+  "origin_query_structured": {
+    "uid": "m20241028165017072372",
+    "tag": "easy",
+    "start_city": "武汉",
+    "target_city": "南京",
+    "days": 2,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==1)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "accommodation_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': accommodation_name_set.add(activity_position(activity))\nresult=({'花筑·僖堂民宿(南京夫子庙老门东店)'}<=accommodation_name_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "我目前在武汉，计划独自前往南京游玩两天，酒店选择南京夫子庙老门东附近的花筑·僖堂民宿，请帮我制定一个旅行计划。",
+    "nature_language_en": "Sure! Here is the translation of your request into English:"
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "武汉",
+    "target_city": "南京",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "08:00",
+            "end_time": "10:27",
+            "start": "武汉站",
+            "end": "南京南站",
+            "price": 296.86,
+            "cost": 296.86,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G1722",
+            "type": "train"
+          },
+          {
+            "position": "花筑·南京家墅会精品民宿(秦淮河夫子庙老门东店)",
+            "type": "accommodation",
+            "price": 356,
+            "cost": 356,
+            "start_time": "10:49",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "南京南站",
+                "end": "南京南站-地铁站",
+                "mode": "walk",
+                "start_time": "10:27",
+                "end_time": "10:30",
+                "cost": 0,
+                "distance": 0.29,
+                "price": 0
+              },
+              {
+                "start": "南京南站-地铁站",
+                "end": "武定门-地铁站",
+                "mode": "metro",
+                "start_time": "10:30",
+                "end_time": "10:39",
+                "cost": 3,
+                "distance": 4.75,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "武定门-地铁站",
+                "end": "花筑·南京家墅会精品民宿(秦淮河夫子庙老门东店)",
+                "mode": "walk",
+                "start_time": "10:39",
+                "end_time": "10:49",
+                "cost": 0,
+                "distance": 0.87,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "花筑·南京家墅会精品民宿(秦淮河夫子庙老门东店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "南京大牌档(夫子庙平江府店)",
+            "type": "lunch",
+            "price": 74,
+            "cost": 74,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "花筑·南京家墅会精品民宿(秦淮河夫子庙老门东店)",
+                "end": "武定门-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:40",
+                "cost": 0,
+                "distance": 0.87,
+                "price": 0
+              },
+              {
+                "start": "武定门-地铁站",
+                "end": "夫子庙-地铁站",
+                "mode": "metro",
+                "start_time": "08:40",
+                "end_time": "08:42",
+                "cost": 2,
+                "distance": 1.2,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "夫子庙-地铁站",
+                "end": "南京大牌档(夫子庙平江府店)",
+                "mode": "walk",
+                "start_time": "08:42",
+                "end_time": "08:46",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "民国民间灶台(老虎灶)",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:18",
+            "end_time": "13:48",
+            "transports": [
+              {
+                "start": "南京大牌档(夫子庙平江府店)",
+                "end": "夫子庙-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:04",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              },
+              {
+                "start": "夫子庙-地铁站",
+                "end": "浮桥-地铁站",
+                "mode": "metro",
+                "start_time": "12:04",
+                "end_time": "12:09",
+                "cost": 2,
+                "distance": 2.77,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "浮桥-地铁站",
+                "end": "民国民间灶台(老虎灶)",
+                "mode": "walk",
+                "start_time": "12:09",
+                "end_time": "12:18",
+                "cost": 0,
+                "distance": 0.8,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "江南首寺",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "14:10",
+            "end_time": "15:40",
+            "transports": [
+              {
+                "start": "民国民间灶台(老虎灶)",
+                "end": "浮桥-地铁站",
+                "mode": "walk",
+                "start_time": "13:48",
+                "end_time": "13:57",
+                "cost": 0,
+                "distance": 0.8,
+                "price": 0
+              },
+              {
+                "start": "浮桥-地铁站",
+                "end": "武定门-地铁站",
+                "mode": "metro",
+                "start_time": "13:57",
+                "end_time": "14:04",
+                "cost": 2,
+                "distance": 3.87,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "武定门-地铁站",
+                "end": "江南首寺",
+                "mode": "walk",
+                "start_time": "14:04",
+                "end_time": "14:10",
+                "cost": 0,
+                "distance": 0.52,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "start_time": "16:54",
+            "end_time": "19:38",
+            "start": "南京南站",
+            "end": "武汉站",
+            "price": 296.86,
+            "cost": 296.86,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "江南首寺",
+                "end": "武定门-地铁站",
+                "mode": "walk",
+                "start_time": "15:40",
+                "end_time": "15:46",
+                "cost": 0,
+                "distance": 0.52,
+                "price": 0
+              },
+              {
+                "start": "武定门-地铁站",
+                "end": "南京南站-地铁站",
+                "mode": "metro",
+                "start_time": "15:46",
+                "end_time": "15:55",
+                "cost": 3,
+                "distance": 4.75,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "南京南站-地铁站",
+                "end": "南京南站",
+                "mode": "walk",
+                "start_time": "15:55",
+                "end_time": "15:58",
+                "cost": 0,
+                "distance": 0.29,
+                "price": 0
+              }
+            ],
+            "TrainID": "G1777",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "required_hotel_name",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "花筑·僖堂民宿(南京夫子庙老门东店)"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "accommodation_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': accommodation_name_set.add(activity_position(activity))\nresult=({'花筑·僖堂民宿(南京夫子庙老门东店)'}<=accommodation_name_set)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "想订南京江北万汇城智选假日酒店",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "南京江北万汇城智选假日酒店",
+        "type": "accommodation",
+        "city": "南京"
+      }
+    ],
+    "spatial": {
+      "city": "南京"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "required_hotel_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "accommodation"
+      },
+      "operator": "contains_all",
+      "value": [
+        "南京江北万汇城智选假日酒店"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_hotel_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "accommodation"
+      },
+      "operator": "contains_all",
+      "value": [
+        "南京江北万汇城智选假日酒店"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "parameter",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "parameter",
+      "temporal",
+      "overlap"
+    ],
+    [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [
+    [
+      "parameter",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "parameter",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_semantic_incompatibility__required_hotel_name__02",
+    "template": "住{poi}",
+    "template_str": "住{poi}",
+    "constraint_type": "required_hotel_name",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "target_city": "南京",
+    "start_city": "武汉",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "required_hotel_name"
+    ],
+    "requested_bucket_names": [
+      "structural_semantic_incompatibility"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000038",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_semantic_discontinuity/_validation_split/passed/sample_000038.json",
+    "diversity_augmented": true,
+    "diversity_domain": "accommodation",
+    "constraint_type": "required_hotel_name",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 0.7333,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000095",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000095.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000035",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_incompatibility/_validation_split/passed/sample_000035.json",
+    "template_diversity_selected": true
+  }
+}

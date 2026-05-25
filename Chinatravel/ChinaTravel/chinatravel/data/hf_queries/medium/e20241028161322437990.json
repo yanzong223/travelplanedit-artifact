@@ -1,0 +1,23 @@
+{
+  "uid": "e20241028161322437990",
+  "tag": "medium",
+  "start_city": "杭州",
+  "target_city": "重庆",
+  "days": 4,
+  "people_number": 3,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==3)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=9000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'博物馆/纪念馆'}<=attraction_type_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'三峡博物馆'}<=attraction_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置杭州。我三个人想去重庆玩4天，预算9000人民币，住两间房，坐火车去，想去三峡博物馆和这样的博物馆，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Hangzhou. Three of us want to visit Chongqing for 4 days with a budget of 9,000 RMB. We plan to stay in two rooms and travel by train. We would like to visit the Three Gorges Museum and similar museums. Please provide a travel itinerary."
+}

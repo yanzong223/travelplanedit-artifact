@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143536587211",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "上海",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'上海交通大学','复旦大学','同济大学'}<=attraction_name_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置上海,旅行人数1,旅行天数2] 我要去上海找我的同学玩，有什么办法能使我在两天之内游览上交、复旦、同济等学校？",
+  "nature_language_en": "[Current location: Suzhou, Destination: Shanghai, Number of travelers: 1, Number of travel days: 2] I want to go to Shanghai to visit my classmates. What are some ways I can tour universities like Shanghai Jiao Tong University, Fudan University, and Tongji University within two days?"
+}

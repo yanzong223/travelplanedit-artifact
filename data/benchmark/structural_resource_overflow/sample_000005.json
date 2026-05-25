@@ -1,0 +1,437 @@
+{
+  "sample_id": "sample_000005",
+  "batch_id": "benchmark",
+  "origin_query_text": "[当前位置南京,目标位置重庆,旅行人数2,旅行天数1] 要和对象去成都玩，中间会在重庆待一天，请推荐重庆最值得去的地方",
+  "origin_query_structured": {
+    "uid": "h20241029143538018046",
+    "tag": "human",
+    "start_city": "南京",
+    "target_city": "重庆",
+    "days": 1,
+    "people_number": 2,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==2)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "[当前位置南京,目标位置重庆,旅行人数2,旅行天数1] 要和对象去成都玩，中间会在重庆待一天，请推荐重庆最值得去的地方",
+    "nature_language_en": "[Current location: Nanjing, Destination: Chongqing, Number of travelers: 2, Travel days: 1] Planning to visit Chengdu with my partner, with a one-day stop in Chongqing. Please recommend the must-visit places in Chongqing."
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "南京",
+    "target_city": "重庆",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "08:12",
+            "end_time": "09:42",
+            "start": "南京禄口国际机场",
+            "end": "重庆江北国际机场",
+            "price": 606.29,
+            "cost": 1212.58,
+            "tickets": 2,
+            "transports": [],
+            "FlightID": "FL682",
+            "type": "airplane"
+          },
+          {
+            "position": "千佛寺",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "10:06",
+            "end_time": "11:36",
+            "transports": [
+              {
+                "start": "重庆江北国际机场",
+                "end": "千佛寺",
+                "mode": "taxi",
+                "start_time": "09:42",
+                "end_time": "10:06",
+                "cost": 69.0,
+                "distance": 16.51,
+                "price": 69.0,
+                "cars": 1
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "曹疯子老火锅(金港店)",
+            "type": "lunch",
+            "price": 85,
+            "cost": 170,
+            "start_time": "12:15",
+            "end_time": "13:15",
+            "transports": [
+              {
+                "start": "千佛寺",
+                "end": "涂山-地铁站",
+                "mode": "walk",
+                "start_time": "11:36",
+                "end_time": "11:39",
+                "cost": 0,
+                "distance": 0.29,
+                "price": 0
+              },
+              {
+                "start": "涂山-地铁站",
+                "end": "渝北广场-地铁站",
+                "mode": "metro",
+                "start_time": "11:39",
+                "end_time": "12:11",
+                "cost": 10,
+                "distance": 16.06,
+                "price": 5,
+                "tickets": 2
+              },
+              {
+                "start": "渝北广场-地铁站",
+                "end": "曹疯子老火锅(金港店)",
+                "mode": "walk",
+                "start_time": "12:11",
+                "end_time": "12:15",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "15:02",
+            "end_time": "16:32",
+            "start": "重庆江北国际机场",
+            "end": "南京禄口国际机场",
+            "price": 582.96,
+            "cost": 1165.92,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "曹疯子老火锅(金港店)",
+                "end": "渝北广场-地铁站",
+                "mode": "walk",
+                "start_time": "13:15",
+                "end_time": "13:19",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              },
+              {
+                "start": "渝北广场-地铁站",
+                "end": "江北机场T3航站楼-地铁站",
+                "mode": "metro",
+                "start_time": "13:19",
+                "end_time": "13:24",
+                "cost": 4,
+                "distance": 2.7,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "江北机场T3航站楼-地铁站",
+                "end": "重庆江北国际机场",
+                "mode": "walk",
+                "start_time": "13:24",
+                "end_time": "13:38",
+                "cost": 0,
+                "distance": 1.21,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL400",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "总预算得控制在2550元以内",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "重庆"
+    },
+    "temporal": [],
+    "resource": {
+      "total_budget": 2550,
+      "budget_cap": 2550,
+      "budget": 2550
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "budget_total",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 2550.0,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "resource",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "resource",
+    "overflow"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "budget_limit",
+    "template": "总预算不能超过{budget}元",
+    "template_id": "structural_resource_overflow__budget_limit__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "budget_cap"
+      ],
+      "relation_slots": [],
+      "ir_outputs": [
+        "budget_total"
+      ],
+      "risk_level": "low",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "budget_limit",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "budget_limit",
+      "baseline_total_cost": 2631.5,
+      "chosen_budget": 2550
+    },
+    "rendered_params": {
+      "start_city": "南京",
+      "target_city": "重庆",
+      "day_count": 1,
+      "budget": "2550"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "budget_limit",
+      "budget_cap": 2550
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "budget_limit",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": null,
+      "day_poi_pairs": [],
+      "budget_cap": 2550,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "baseline": 2631.5,
+      "threshold": 2550.0,
+      "baseline_reason": "total_cost"
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "budget_limit",
+      "budget_cap": 2550
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "budget_limit",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": null,
+      "day_poi_pairs": [],
+      "budget_cap": 2550,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "baseline": 2631.5,
+      "threshold": 2550.0,
+      "baseline_reason": "total_cost"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    "target_city": "重庆",
+    "start_city": "南京",
+    "is_single_day": true,
+    "day_count": 1,
+    "origin_plan_file": "h20241029143538018046.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_resource_overflow"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T16:40:52.433263",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000012",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_resource_overflow/_validation_split/passed/sample_000012.json",
+    "template_diversity_selected": true
+  }
+}

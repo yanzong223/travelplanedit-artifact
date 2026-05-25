@@ -1,0 +1,35 @@
+# Bucket Distribution Configuration
+# 目标conflict bucket的分布配置
+
+# Scope层级分布
+scope_distribution:
+  parameter: 0.4      # 参数级修改：单节点内部参数
+  structural: 0.4     # 结构级修改：节点增删、顺序调整
+  compositional: 0.2  # 组合级修改：多约束联动、跨天/跨城重构
+
+# Dimension维度分布
+dimension_distribution:
+  temporal: 0.3      # 时间相关冲突
+  spatial: 0.2       # 空间相关冲突
+  resource: 0.2      # 资源相关冲突（预算、步行等）
+  structural: 0.2    # 结构相关冲突
+  semantic: 0.1      # 语义相关冲突
+
+# Violation类型分布
+violation_distribution:
+  overflow: 0.3        # 超限（时间、预算等超限）
+  infeasible: 0.2      # 不可行（时间窗冲突等）
+  overlap: 0.2         # 重叠（时间、地点重叠）
+  discontinuity: 0.2   # 不连续（结构断裂）
+  incompatibility: 0.1 # 不兼容（城市、类型冲突）
+
+# Multi-label冲突配置
+multi_label_config:
+  single_conflict: 0.6   # 单一冲突标签
+  double_conflict: 0.3   # 双冲突标签
+  triple_conflict: 0.1   # 三冲突标签
+
+# Day分布（单日 vs 多日）
+day_distribution:
+  single_day: 0.7   # 单日行程
+  multi_day: 0.3    # 多日行程

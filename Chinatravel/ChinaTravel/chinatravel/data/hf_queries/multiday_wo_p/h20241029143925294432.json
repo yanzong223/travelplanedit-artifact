@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143925294432",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "北京",
+  "days": 5,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'天安门'}<=attraction_type_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置北京,旅行人数3,旅行天数5] 我和父母打算从南京去北京看升旗仪式，想住在天安门附近的酒店。",
+  "nature_language_en": "[Current location: Nanjing, Destination: Beijing, Number of travelers: 3, Number of travel days: 5] My parents and I plan to travel from Nanjing to Beijing to watch the flag-raising ceremony, and we want to stay at a hotel near Tiananmen Square."
+}

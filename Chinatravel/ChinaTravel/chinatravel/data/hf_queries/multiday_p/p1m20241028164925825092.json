@@ -1,0 +1,22 @@
+{
+  "uid": "p1m20241028164925825092",
+  "tag": "preference1_base50",
+  "start_city": "成都",
+  "target_city": "重庆",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "restaurant_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_name_set.add(activity_position(activity))\nresult=({'美丽厨餐厅(棕榈泉店)'}<=restaurant_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置成都。我一个人想去重庆玩2天，想吃棕榈泉附近的美丽厨餐厅，希望地点间交通时间尽可能少，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Chengdu. I want to travel alone to Chongqing for 2 days and would like to dine at the Beautiful Kitchen restaurant near Palm Springs. I hope to minimize the travel time between locations. Please provide me with a travel plan.",
+  "preference": "['地点间交通时间尽可能少']",
+  "preference_en": "['less inner transports time']",
+  "preference_py": "['minimize average_time_cost\\ntime_cost = 0\\ntransport_count = 0\\nfor activity in allactivities(plan):\\n    transports = activity_transports(activity)\\n    if transports!=[]:\\n        transport_count += 1\\n        time_cost += innercity_transport_time(transports)\\naverage_time_cost = time_cost / transport_count if transport_count > 0 else -1']"
+}

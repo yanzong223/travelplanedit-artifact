@@ -1,0 +1,21 @@
+{
+  "uid": "e20241028161059430567",
+  "tag": "medium",
+  "start_city": "广州",
+  "target_city": "深圳",
+  "days": 4,
+  "people_number": 3,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==3)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=6000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置广州。我们三个人计划去深圳玩四天，预算6000元，开两间双床房。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Guangzhou. Three of us are planning to go to Shenzhen for four days with a budget of 6000 RMB, booking two twin rooms. Please provide me with a travel plan."
+}

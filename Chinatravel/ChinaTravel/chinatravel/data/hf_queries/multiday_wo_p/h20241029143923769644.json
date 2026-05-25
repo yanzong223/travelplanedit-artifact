@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143923769644",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "广州",
+  "days": 5,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置广州,旅行人数2,旅行天数5] 我和朋友想去广州玩，计划5天，想要逛逛当地特色热门，怎么规划行程",
+  "nature_language_en": "[Current location: Nanjing, Destination: Guangzhou, Number of travelers: 2, Number of travel days: 5] My friend and I want to visit Guangzhou for 5 days. We want to explore popular local attractions. How should we plan our itinerary?"
+}

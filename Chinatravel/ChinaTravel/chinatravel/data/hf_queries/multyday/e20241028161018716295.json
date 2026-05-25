@@ -1,0 +1,22 @@
+{
+  "uid": "e20241028161018716295",
+  "tag": "medium",
+  "start_city": "南京",
+  "target_city": "深圳",
+  "days": 2,
+  "people_number": 4,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==4)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=7800)",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'metro'}<=innercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置南京。我们四个人计划去深圳玩两天，市内交通主要使用地铁，预算7800元，开两间双床房。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Nanjing. The four of us are planning to visit Shenzhen for two days. We will primarily use the subway for city transportation, with a budget of 7,800 RMB, and we plan to book two twin-bed rooms. Please provide a travel itinerary."
+}

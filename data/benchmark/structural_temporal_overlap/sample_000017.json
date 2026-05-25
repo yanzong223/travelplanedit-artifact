@@ -1,0 +1,659 @@
+{
+  "sample_id": "sample_000017",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置北京。我一个人想去武汉玩2天，想尝试当地的火锅，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "m20241028164738811222",
+    "tag": "easy",
+    "start_city": "北京",
+    "target_city": "武汉",
+    "days": 2,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==1)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'火锅'}<=restaurant_type_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置北京。我一个人想去武汉玩2天，想尝试当地的火锅，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Beijing. I want to travel to Wuhan alone for 2 days and try the local hotpot. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "北京",
+    "target_city": "武汉",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:05",
+            "end_time": "11:01",
+            "start": "北京西站",
+            "end": "武汉站",
+            "price": 684.27,
+            "cost": 684.27,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G71",
+            "type": "train"
+          },
+          {
+            "position": "谭鸭血老火锅（消毒安全餐厅）(杨家湾店)",
+            "type": "lunch",
+            "price": 102,
+            "cost": 102,
+            "start_time": "11:27",
+            "end_time": "12:27",
+            "transports": [
+              {
+                "start": "武汉站",
+                "end": "武汉站东广场-地铁站",
+                "mode": "walk",
+                "start_time": "11:01",
+                "end_time": "11:03",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              },
+              {
+                "start": "武汉站东广场-地铁站",
+                "end": "杨家湾-地铁站",
+                "mode": "metro",
+                "start_time": "11:03",
+                "end_time": "11:27",
+                "cost": 4,
+                "distance": 12.03,
+                "price": 4,
+                "tickets": 1
+              },
+              {
+                "start": "杨家湾-地铁站",
+                "end": "谭鸭血老火锅（消毒安全餐厅）(杨家湾店)",
+                "mode": "walk",
+                "start_time": "11:27",
+                "end_time": "11:27",
+                "cost": 0,
+                "distance": 0.06,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "L'era·有时有食(1911店)",
+            "type": "dinner",
+            "price": 204,
+            "cost": 204,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "谭鸭血老火锅（消毒安全餐厅）(杨家湾店)",
+                "end": "杨家湾-地铁站",
+                "mode": "walk",
+                "start_time": "12:27",
+                "end_time": "12:27",
+                "cost": 0,
+                "distance": 0.06,
+                "price": 0
+              },
+              {
+                "start": "杨家湾-地铁站",
+                "end": "汉口火车站-地铁站",
+                "mode": "metro",
+                "start_time": "12:27",
+                "end_time": "13:01",
+                "cost": 5,
+                "distance": 17.32,
+                "price": 5,
+                "tickets": 1
+              },
+              {
+                "start": "汉口火车站-地铁站",
+                "end": "L'era·有时有食(1911店)",
+                "mode": "walk",
+                "start_time": "13:01",
+                "end_time": "13:09",
+                "cost": 0,
+                "distance": 0.73,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "速8酒店(武汉汉口火车站泛海CBD店)",
+            "type": "accommodation",
+            "price": 169,
+            "cost": 169,
+            "start_time": "18:00",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "L'era·有时有食(1911店)",
+                "end": "速8酒店(武汉汉口火车站泛海CBD店)",
+                "mode": "taxi",
+                "start_time": "18:00",
+                "end_time": "18:00",
+                "cost": 11.0,
+                "distance": 0.47,
+                "price": 11.0,
+                "cars": 1
+              }
+            ],
+            "room_type": 1,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "速8酒店(武汉汉口火车站泛海CBD店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "黄鹤楼",
+            "type": "attraction",
+            "price": 65,
+            "cost": 65,
+            "start_time": "08:56",
+            "end_time": "10:26",
+            "transports": [
+              {
+                "start": "速8酒店(武汉汉口火车站泛海CBD店)",
+                "end": "汉口火车站-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:34",
+                "cost": 0,
+                "distance": 0.35,
+                "price": 0
+              },
+              {
+                "start": "汉口火车站-地铁站",
+                "end": "昙华林武胜门-地铁站",
+                "mode": "metro",
+                "start_time": "08:34",
+                "end_time": "08:50",
+                "cost": 3,
+                "distance": 8.33,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "昙华林武胜门-地铁站",
+                "end": "黄鹤楼",
+                "mode": "walk",
+                "start_time": "08:50",
+                "end_time": "08:56",
+                "cost": 0,
+                "distance": 0.56,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "皇冠幸福里(中商徐东店)",
+            "type": "lunch",
+            "price": 29,
+            "cost": 29,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "黄鹤楼",
+                "end": "昙华林武胜门-地铁站",
+                "mode": "walk",
+                "start_time": "10:26",
+                "end_time": "10:32",
+                "cost": 0,
+                "distance": 0.56,
+                "price": 0
+              },
+              {
+                "start": "昙华林武胜门-地铁站",
+                "end": "徐东-地铁站",
+                "mode": "metro",
+                "start_time": "10:32",
+                "end_time": "10:42",
+                "cost": 3,
+                "distance": 5.43,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "徐东-地铁站",
+                "end": "皇冠幸福里(中商徐东店)",
+                "mode": "walk",
+                "start_time": "10:42",
+                "end_time": "10:45",
+                "cost": 0,
+                "distance": 0.32,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "13:40",
+            "end_time": "17:28",
+            "start": "武汉站",
+            "end": "北京西站",
+            "price": 684.27,
+            "cost": 684.27,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "皇冠幸福里(中商徐东店)",
+                "end": "徐东-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:03",
+                "cost": 0,
+                "distance": 0.32,
+                "price": 0
+              },
+              {
+                "start": "徐东-地铁站",
+                "end": "武汉站东广场-地铁站",
+                "mode": "metro",
+                "start_time": "12:03",
+                "end_time": "12:19",
+                "cost": 3,
+                "distance": 8.01,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "武汉站东广场-地铁站",
+                "end": "武汉站",
+                "mode": "walk",
+                "start_time": "12:19",
+                "end_time": "12:21",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              }
+            ],
+            "TrainID": "G70",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "required_restaurant_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "火锅"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'火锅'}<=restaurant_type_set)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把黄鹤楼安排在下午去",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "黄鹤楼",
+        "type": "attraction",
+        "city": "武汉"
+      }
+    ],
+    "spatial": {
+      "city": "武汉"
+    },
+    "temporal": [
+      {
+        "must_visit": "黄鹤楼",
+        "time_period": "下午"
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "poi_time_window",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "poi_name": "黄鹤楼"
+      },
+      "operator": "in",
+      "value": "afternoon",
+      "params": {
+        "day": null,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "黄鹤楼"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "temporal",
+    "overlap"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "time_window",
+    "template": "把{poi}的时间安排在{time_period}",
+    "template_id": "structural_temporal_overlap__time_window__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [
+        "poi"
+      ],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "time_period"
+      ],
+      "relation_slots": [
+        "day_scope"
+      ],
+      "ir_outputs": [
+        "poi_time_window"
+      ],
+      "risk_level": "medium",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "time_window",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "time_window"
+    },
+    "rendered_params": {
+      "start_city": "北京",
+      "target_city": "武汉",
+      "day_count": 2,
+      "time_period": "下午"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "time_window",
+      "anchor_poi": "黄鹤楼",
+      "time_period": "下午"
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "time_window",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "黄鹤楼",
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "poi": "黄鹤楼",
+      "start_time": "08:56",
+      "end_time": "10:26",
+      "time_period": "下午",
+      "citation": "itinerary[1].activities[1]"
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "time_window",
+      "anchor_poi": "黄鹤楼",
+      "time_period": "下午"
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "time_window",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "黄鹤楼",
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "poi": "黄鹤楼",
+      "start_time": "08:56",
+      "end_time": "10:26",
+      "time_period": "下午",
+      "citation": "itinerary[1].activities[1]"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "temporal",
+      "overlap"
+    ],
+    "target_city": "武汉",
+    "start_city": "北京",
+    "is_single_day": false,
+    "day_count": 2,
+    "origin_plan_file": "m20241028164738811222.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_temporal_overlap"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T14:28:12.085349",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "temporal",
+      "overlap"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000046",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_temporal_overlap/_validation_split/passed/sample_000046.json",
+    "template_diversity_selected": true
+  }
+}

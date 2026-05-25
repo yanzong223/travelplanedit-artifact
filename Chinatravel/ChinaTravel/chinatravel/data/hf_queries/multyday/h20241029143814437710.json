@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143814437710",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "杭州",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=people_number*6000)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'西湖风景名胜区'}<=attraction_name_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置杭州,旅行人数2,旅行天数4] 从北京去杭州旅游，打算玩4天，我和发小两个人，预算人均6000元。我们对西湖和周边景点感兴趣，住西湖附近，给点建议",
+  "nature_language_en": "[Current location: Beijing, Destination: Hangzhou, Number of travelers: 2, Travel days: 4] Planning a trip from Beijing to Hangzhou for 4 days with my childhood friend. Our budget is 6000 RMB per person. We are interested in West Lake and the surrounding attractions, and we plan to stay near West Lake. Any suggestions?"
+}

@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143745264225",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'metro'}<=innercity_transport_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置上海,旅行人数1,旅行天数3] 当前位置苏州，想去上海玩3天，预算2000，尽量坐公共交通，怎么规划行程",
+  "nature_language_en": "[Current location: Suzhou, Destination: Shanghai, Number of travelers: 1, Travel days: 3] Currently in Suzhou, planning to visit Shanghai for 3 days with a budget of 2000. Prefer to use public transportation as much as possible. How should I plan the itinerary?"
+}

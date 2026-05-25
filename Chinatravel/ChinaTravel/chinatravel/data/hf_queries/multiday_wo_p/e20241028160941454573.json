@@ -1,0 +1,22 @@
+{
+  "uid": "e20241028160941454573",
+  "tag": "medium",
+  "start_city": "上海",
+  "target_city": "杭州",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'taxi'}<=innercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置上海。我们两个人计划去杭州玩两天，开两间双床房，预算3000元，市内交通主要使用出租车。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Shanghai. Two of us are planning to visit Hangzhou for two days. We will book two twin rooms with a budget of 3000 RMB, and mainly use taxis for transportation within the city. Please provide me with a travel plan."
+}

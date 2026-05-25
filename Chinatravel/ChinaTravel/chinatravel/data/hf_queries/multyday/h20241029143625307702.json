@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143625307702",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置上海,旅行人数1,旅行天数3] 我准备从北京前往上海，停留3天，想要品尝一下上海的比如米其林三星饭馆这样的高端餐饮，酒店就省些钱，请给我一些推荐",
+  "nature_language_en": "[Current location: Beijing, Destination: Shanghai, Number of travelers: 1, Number of travel days: 3] I am planning to travel from Beijing to Shanghai for a 3-day stay. I would like to try high-end dining options in Shanghai, such as Michelin three-star restaurants, but I want to save money on hotels. Please give me some recommendations."
+}

@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164843213370",
+  "tag": "easy",
+  "start_city": "南京",
+  "target_city": "北京",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'清晏舫'}<=attraction_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置南京。我一个人想去北京玩2天，想去清晏舫，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Nanjing. I want to travel alone to Beijing for 2 days and visit the Qingyanfang. Please provide me with a travel plan."
+}

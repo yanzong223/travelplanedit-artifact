@@ -1,0 +1,568 @@
+{
+  "sample_id": "sample_000004",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置南京。我一个人想去苏州玩一天，预算1100人民币，请给我一个旅行规划。我希望地点间交通时间尽可能少，以便能参观更多的景点。",
+  "origin_query_structured": {
+    "uid": "p1e20241028160410629558",
+    "tag": "preference1_base50",
+    "start_city": "南京",
+    "target_city": "苏州",
+    "days": 1,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==1)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1100)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置南京。我一个人想去苏州玩一天，预算1100人民币，请给我一个旅行规划。我希望地点间交通时间尽可能少，以便能参观更多的景点。",
+    "nature_language_en": "Current location: Nanjing. I want to visit Suzhou alone for a day with a budget of 1100 RMB. Please provide me with a travel plan. I hope to minimize the travel time between locations so that I can visit more attractions.",
+    "preference": "['地点间交通时间尽可能少']",
+    "preference_en": "['less inner transports time']",
+    "preference_py": "['minimize average_time_cost\\ntime_cost = 0\\ntransport_count = 0\\nfor activity in allactivities(plan):\\n    transports = activity_transports(activity)\\n    if transports!=[]:\\n        transport_count += 1\\n        time_cost += innercity_transport_time(transports)\\naverage_time_cost = time_cost / transport_count if transport_count > 0 else -1']"
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "南京",
+    "target_city": "苏州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "04:20",
+            "end_time": "07:42",
+            "start": "南京站",
+            "end": "苏州站",
+            "price": 75.63,
+            "cost": 75.63,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "K1101",
+            "type": "train"
+          },
+          {
+            "start_time": "09:16",
+            "end_time": "10:37",
+            "start": "苏州站",
+            "end": "南京南站",
+            "price": 122.9,
+            "cost": 122.9,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G7084",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 1100.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1100)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把单日往返改成2天行程，第一天去退思园，第二天去怡园",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "退思园",
+        "type": "attraction",
+        "city": "苏州"
+      },
+      {
+        "name": "怡园",
+        "type": "attraction",
+        "city": "苏州"
+      }
+    ],
+    "spatial": {
+      "city": "苏州"
+    },
+    "temporal": [
+      {
+        "day": 1,
+        "must_visit": [
+          "退思园"
+        ]
+      },
+      {
+        "day": 2,
+        "must_visit": [
+          "怡园"
+        ]
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "day_count",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "poi_day_binding",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "poi_name": "退思园"
+      },
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_2",
+      "source": "edit",
+      "type": "poi_day_binding",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "poi_name": "怡园"
+      },
+      "operator": "==",
+      "value": 2,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_3",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "退思园"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_4",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "怡园"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [
+    {
+      "family": "experience_richness",
+      "facet": "attraction_count",
+      "edit_mode": null,
+      "anchor": null,
+      "intensity": "medium",
+      "provenance": {
+        "source": "origin_query_en",
+        "is_explicit": false,
+        "evidence_span": "more attractions"
+      }
+    },
+    {
+      "family": "route_compactness",
+      "facet": "travel_time",
+      "edit_mode": null,
+      "anchor": null,
+      "intensity": "strong",
+      "provenance": {
+        "source": "explicit_preference+origin_query_text",
+        "is_explicit": true,
+        "evidence_span": "当前位置南京。我一个人想去苏州玩一天，预算1100人民币，请给我一个旅行规划。我希望地点间交通时间尽可能少，以便能参观更多的景点。"
+      }
+    }
+  ],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "compositional",
+      "structural",
+      "discontinuity"
+    ],
+    [
+      "compositional",
+      "structural",
+      "infeasible"
+    ],
+    [
+      "compositional",
+      "structural",
+      "overflow"
+    ],
+    [
+      "compositional",
+      "temporal",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "compositional",
+    "structural",
+    "discontinuity"
+  ],
+  "secondary_conflicts": [
+    [
+      "compositional",
+      "structural",
+      "infeasible"
+    ],
+    [
+      "compositional",
+      "structural",
+      "overflow"
+    ],
+    [
+      "compositional",
+      "temporal",
+      "overflow"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "cross_day_restructure",
+    "template": "把单日往返改成{day_count}天行程，第一天去{poi1}，第二天去{poi2}",
+    "template_id": "compositional_structural_discontinuity__cross_day_restructure__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [
+        "poi1",
+        "poi2"
+      ],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "day_count"
+      ],
+      "relation_slots": [
+        "day_poi_pairs"
+      ],
+      "ir_outputs": [
+        "day_count",
+        "poi_day_binding"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "composite",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "cross_day_restructure",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "cross_day_restructure"
+    },
+    "rendered_params": {
+      "start_city": "南京",
+      "target_city": "苏州",
+      "day_count": 2
+    },
+    "canonical_query_spec": {
+      "constraint_type": "cross_day_restructure",
+      "day_poi_pairs": [
+        [
+          1,
+          "退思园"
+        ],
+        [
+          2,
+          "怡园"
+        ]
+      ]
+    },
+    "canonical_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "cross_day_restructure",
+      "anchor_poi": "退思园",
+      "day_poi_pairs": [
+        [
+          1,
+          "退思园"
+        ],
+        [
+          2,
+          "怡园"
+        ]
+      ],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": 2,
+      "parse_confidence": 0.67
+    },
+    "canonical_semantic_parse_source": "llm",
+    "canonical_semantic_parse_confidence": 0.67,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "pairs": [
+        [
+          1,
+          "退思园"
+        ],
+        [
+          2,
+          "怡园"
+        ]
+      ]
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "template_fallback",
+    "surface_quality_pass": false,
+    "surface_reject_reason": "spec_drift:day_poi_pairs changed: expected [[1, '退思园'], [2, '怡园']], got [(1, '退思园'), (2, '怡园')]",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "cross_day_restructure",
+      "day_poi_pairs": [
+        [
+          1,
+          "退思园"
+        ],
+        [
+          2,
+          "怡园"
+        ]
+      ]
+    },
+    "surface_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "cross_day_restructure",
+      "anchor_poi": "退思园",
+      "day_poi_pairs": [
+        [
+          1,
+          "退思园"
+        ],
+        [
+          2,
+          "怡园"
+        ]
+      ],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": 2,
+      "parse_confidence": 0.67
+    },
+    "surface_semantic_parse_source": "llm",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "pairs": [
+        [
+          1,
+          "退思园"
+        ],
+        [
+          2,
+          "怡园"
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "compositional",
+      "structural",
+      "discontinuity"
+    ],
+    "target_city": "苏州",
+    "start_city": "南京",
+    "is_single_day": true,
+    "day_count": 1,
+    "origin_plan_file": "p1e20241028160410629558.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "compositional_structural_discontinuity"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T15:40:27.783451",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "compositional",
+      "structural",
+      "discontinuity"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000015",
+    "source_sample_path": "./data/data/batches/batch005/batches/compositional_structural_discontinuity/_validation_split/passed/sample_000015.json",
+    "template_diversity_selected": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143633338303",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "南京",
+  "days": 5,
+  "people_number": 5,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=20000)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==5)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置南京,旅行人数5,旅行天数5] 南京五天旅行五个人预算2万给我个例子",
+  "nature_language_en": "[Current location: Beijing, Destination: Nanjing, Number of travelers: 5, Number of travel days: 5] Please provide an example of a budget of 20,000 for a five-day trip in Nanjing for five people."
+}

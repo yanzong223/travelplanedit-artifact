@@ -1,0 +1,40 @@
+# TPE 批量处理配置文件
+# 定义LLM模型配置，用于批量实验
+
+# 模型配置列表
+models:
+  # DeepSeek 系列
+  deepseek-v3:
+    name: "deepseek-ai/DeepSeek-V3"
+    provider: "siliconcloud"
+    description: "DeepSeek V3 大模型"
+
+# 批量处理配置
+batch_configs:
+  # 快速测试配置
+  quick_test:
+    max_episodes: 5
+    start_index: 0
+    models: ["deepseek-v3"]
+    description: "快速测试少量数据"
+
+  # 中等规模测试
+  medium_test:
+    max_episodes: 20
+    start_index: 0
+    models: ["deepseek-v3"]
+    description: "中等规模测试"
+
+  # 完整测试
+  full_test:
+    max_episodes: null  # 处理所有数据
+    start_index: 0
+    models: ["deepseek-v3"]
+    description: "完整数据集测试"
+
+# 默认设置
+defaults:
+  verbose: false
+  skip_existing: true
+  data_dir: "data/tpe_dataset"
+  results_dir: "results/batch_processing"

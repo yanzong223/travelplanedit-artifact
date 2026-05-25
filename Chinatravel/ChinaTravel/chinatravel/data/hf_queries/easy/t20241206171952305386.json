@@ -1,0 +1,19 @@
+{
+  "uid": "t20241206171952305386",
+  "tag": "easy",
+  "start_city": "深圳",
+  "target_city": "北京",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置深圳。我们三个人计划去北京玩两天，选择飞机出行。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Shenzhen. The three of us are planning to go to Beijing for two days. We will travel by plane. Please provide me with a travel itinerary."
+}

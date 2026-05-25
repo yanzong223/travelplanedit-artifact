@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143909714190",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "广州",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'长隆野生动物世界'}<=attraction_name_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置广州,旅行人数1,旅行天数3] 我想去广州玩3天，想去玩野生动物世界玩，旅程轻松一些。请问我应当如何规划行程？",
+  "nature_language_en": "[Current location: Nanjing, Destination: Guangzhou, Number of travelers: 1, Number of travel days: 3] I want to go to Guangzhou for 3 days and visit the Safari Park. I prefer a relaxed trip. How should I plan my itinerary?"
+}

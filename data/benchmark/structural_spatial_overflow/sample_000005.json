@@ -1,0 +1,487 @@
+{
+  "sample_id": "sample_000005",
+  "batch_id": "benchmark",
+  "origin_query_text": "[当前位置南京,目标位置重庆,旅行人数2,旅行天数1] 要和对象去成都玩，中间会在重庆待一天，请推荐重庆最值得去的地方",
+  "origin_query_structured": {
+    "uid": "h20241029143538018046",
+    "tag": "human",
+    "start_city": "南京",
+    "target_city": "重庆",
+    "days": 1,
+    "people_number": 2,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==2)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "[当前位置南京,目标位置重庆,旅行人数2,旅行天数1] 要和对象去成都玩，中间会在重庆待一天，请推荐重庆最值得去的地方",
+    "nature_language_en": "[Current location: Nanjing, Destination: Chongqing, Number of travelers: 2, Travel days: 1] Planning to visit Chengdu with my partner, with a one-day stop in Chongqing. Please recommend the must-visit places in Chongqing."
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "南京",
+    "target_city": "重庆",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "08:12",
+            "end_time": "09:42",
+            "start": "南京禄口国际机场",
+            "end": "重庆江北国际机场",
+            "price": 606.29,
+            "cost": 1212.58,
+            "tickets": 2,
+            "transports": [],
+            "FlightID": "FL682",
+            "type": "airplane"
+          },
+          {
+            "position": "千佛寺",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "10:06",
+            "end_time": "11:36",
+            "transports": [
+              {
+                "start": "重庆江北国际机场",
+                "end": "千佛寺",
+                "mode": "taxi",
+                "start_time": "09:42",
+                "end_time": "10:06",
+                "cost": 69.0,
+                "distance": 16.51,
+                "price": 69.0,
+                "cars": 1
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "曹疯子老火锅(金港店)",
+            "type": "lunch",
+            "price": 85,
+            "cost": 170,
+            "start_time": "12:15",
+            "end_time": "13:15",
+            "transports": [
+              {
+                "start": "千佛寺",
+                "end": "涂山-地铁站",
+                "mode": "walk",
+                "start_time": "11:36",
+                "end_time": "11:39",
+                "cost": 0,
+                "distance": 0.29,
+                "price": 0
+              },
+              {
+                "start": "涂山-地铁站",
+                "end": "渝北广场-地铁站",
+                "mode": "metro",
+                "start_time": "11:39",
+                "end_time": "12:11",
+                "cost": 10,
+                "distance": 16.06,
+                "price": 5,
+                "tickets": 2
+              },
+              {
+                "start": "渝北广场-地铁站",
+                "end": "曹疯子老火锅(金港店)",
+                "mode": "walk",
+                "start_time": "12:11",
+                "end_time": "12:15",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "15:02",
+            "end_time": "16:32",
+            "start": "重庆江北国际机场",
+            "end": "南京禄口国际机场",
+            "price": 582.96,
+            "cost": 1165.92,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "曹疯子老火锅(金港店)",
+                "end": "渝北广场-地铁站",
+                "mode": "walk",
+                "start_time": "13:15",
+                "end_time": "13:19",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              },
+              {
+                "start": "渝北广场-地铁站",
+                "end": "江北机场T3航站楼-地铁站",
+                "mode": "metro",
+                "start_time": "13:19",
+                "end_time": "13:24",
+                "cost": 4,
+                "distance": 2.7,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "江北机场T3航站楼-地铁站",
+                "end": "重庆江北国际机场",
+                "mode": "walk",
+                "start_time": "13:24",
+                "end_time": "13:38",
+                "cost": 0,
+                "distance": 1.21,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL400",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把千佛寺周边活动半径限制为5公里",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "千佛寺",
+        "type": "attraction",
+        "city": "重庆"
+      }
+    ],
+    "spatial": {
+      "city": "重庆",
+      "local_radius_km": 5.0,
+      "anchor_poi": "千佛寺",
+      "max_walking_distance": 5.0
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "anchor_proximity": "poi_anchor:addition"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "anchor_neighbor_commute_distance_cap",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "anchor_name": "千佛寺"
+      },
+      "operator": "<=",
+      "value": 5.0,
+      "params": {
+        "unit": "km",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "千佛寺"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [
+    {
+      "id": "edit_pref_anchor_proximity_poi_anchor",
+      "source": "edit",
+      "family": "anchor_proximity",
+      "facet": "distance_to_poi_minimize",
+      "direction": "minimize",
+      "anchor": "千佛寺",
+      "edit_mode": "addition",
+      "params": {
+        "canonical_facet": "poi_anchor",
+        "intensity": "medium"
+      },
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "poi_local_radius_limit",
+        "template_text": "把{poi}周边活动半径限制为{walk_dist}公里"
+      }
+    }
+  ],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [
+    {
+      "family": "anchor_proximity",
+      "facet": "poi_anchor",
+      "edit_mode": "addition",
+      "anchor": "千佛寺",
+      "intensity": "medium",
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "poi_local_radius_limit",
+        "template_text": "把{poi}周边活动半径限制为{walk_dist}公里"
+      }
+    }
+  ],
+  "conflict_set": [
+    [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "spatial",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "poi_local_radius_limit",
+    "template": "把{poi}周边活动半径限制为{walk_dist}公里",
+    "template_id": "structural_spatial_overflow__poi_local_radius_limit__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [
+        "anchor_poi"
+      ],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "distance_km"
+      ],
+      "relation_slots": [
+        "anchor_scope"
+      ],
+      "ir_outputs": [
+        "anchor_neighbor_commute_distance_cap"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "poi_local_radius_limit",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "poi_local_radius_limit",
+      "anchor_poi": "千佛寺",
+      "anchor_duration_min": 90,
+      "baseline_max_distance_km": 16.51,
+      "chosen_walk_dist_km": 5.0
+    },
+    "rendered_params": {
+      "start_city": "南京",
+      "target_city": "重庆",
+      "day_count": 1,
+      "walk_dist": "5"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "poi_local_radius_limit",
+      "anchor_poi": "千佛寺",
+      "distance_km": 5.0
+    },
+    "canonical_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "poi_local_radius_limit",
+      "specific_poi": "千佛寺",
+      "anchor_poi": "千佛寺",
+      "distance_km": 5.0,
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.55
+    },
+    "canonical_semantic_parse_source": "llm",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "poi": "千佛寺",
+      "baseline": 16.51,
+      "threshold": 5.0
+    },
+    "soft_target_family": "anchor_proximity",
+    "soft_target_facet": "poi_anchor",
+    "soft_target_mode": "addition",
+    "soft_target_intensity": "medium",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "template_fallback",
+    "surface_quality_pass": false,
+    "surface_reject_reason": "soft_drift:soft target missing in query: anchor_proximity:poi_anchor",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "poi_local_radius_limit",
+      "anchor_poi": "千佛寺",
+      "distance_km": 5.0
+    },
+    "surface_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "poi_local_radius_limit",
+      "specific_poi": "千佛寺",
+      "anchor_poi": "千佛寺",
+      "distance_km": 5.0,
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.55
+    },
+    "surface_semantic_parse_source": "llm",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "poi": "千佛寺",
+      "baseline": 16.51,
+      "threshold": 5.0
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    "target_city": "重庆",
+    "start_city": "南京",
+    "is_single_day": true,
+    "day_count": 1,
+    "origin_plan_file": "h20241029143538018046.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_spatial_overflow"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T14:05:02.465505",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000014",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_spatial_overflow/_validation_split/passed/sample_000014.json",
+    "template_diversity_selected": true
+  }
+}

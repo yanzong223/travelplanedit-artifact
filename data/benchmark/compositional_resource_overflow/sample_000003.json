@@ -1,0 +1,730 @@
+{
+  "sample_id": "sample_000003",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置苏州。我两个人想去杭州玩2天，预算4000人民币，住一间大床房，期间打车，酒店最好有窗外好景，想去雷峰塔看一下，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028161241981481",
+    "tag": "medium",
+    "start_city": "苏州",
+    "target_city": "杭州",
+    "days": 2,
+    "people_number": 2,
+    "limit_rooms": true,
+    "limits_room_type": true,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==2)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=4000)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+      "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'taxi'}<=innercity_transport_set)",
+      "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'窗外好景'}<=accommodation_type_set)",
+      "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'雷峰塔'}<=attraction_name_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置苏州。我两个人想去杭州玩2天，预算4000人民币，住一间大床房，期间打车，酒店最好有窗外好景，想去雷峰塔看一下，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Suzhou. Two of us want to visit Hangzhou for 2 days with a budget of 4000 RMB. We would like to stay in a hotel with a large bed and preferably a nice view from the window. We plan to take taxis during our stay and would like to visit Leifeng Pagoda. Please provide a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "苏州",
+    "target_city": "杭州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "09:54",
+            "end_time": "11:32",
+            "start": "苏州北站",
+            "end": "杭州东站",
+            "price": 78.65,
+            "cost": 157.3,
+            "tickets": 2,
+            "transports": [],
+            "TrainID": "G7589",
+            "type": "train"
+          },
+          {
+            "position": "杭州西子湖四季酒店·金沙厅",
+            "type": "lunch",
+            "price": 873,
+            "cost": 1746,
+            "start_time": "11:46",
+            "end_time": "12:46",
+            "transports": [
+              {
+                "start": "杭州东站",
+                "end": "杭州西子湖四季酒店·金沙厅",
+                "mode": "taxi",
+                "start_time": "11:32",
+                "end_time": "11:46",
+                "cost": 39.66,
+                "distance": 9.99,
+                "price": 39.66,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "雷峰塔",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:50",
+            "end_time": "14:20",
+            "transports": [
+              {
+                "start": "杭州西子湖四季酒店·金沙厅",
+                "end": "雷峰塔",
+                "mode": "taxi",
+                "start_time": "12:46",
+                "end_time": "12:50",
+                "cost": 15.13,
+                "distance": 2.98,
+                "price": 15.13,
+                "cars": 1
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "杭州西湖湖滨平海路亚朵酒店",
+            "type": "accommodation",
+            "price": 482,
+            "cost": 482,
+            "start_time": "14:23",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "雷峰塔",
+                "end": "杭州西湖湖滨平海路亚朵酒店",
+                "mode": "taxi",
+                "start_time": "14:20",
+                "end_time": "14:23",
+                "cost": 13.06,
+                "distance": 2.39,
+                "price": 13.06,
+                "cars": 1
+              }
+            ],
+            "room_type": 1,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "杭州西湖湖滨平海路亚朵酒店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "西湖风景名胜区",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:37",
+            "end_time": "10:07",
+            "transports": [
+              {
+                "start": "杭州西湖湖滨平海路亚朵酒店",
+                "end": "西湖风景名胜区",
+                "mode": "taxi",
+                "start_time": "08:30",
+                "end_time": "08:37",
+                "cost": 21.92,
+                "distance": 4.92,
+                "price": 21.92,
+                "cars": 1
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "杭州君悦酒店·湖滨28中餐厅",
+            "type": "lunch",
+            "price": 498,
+            "cost": 996,
+            "start_time": "11:30",
+            "end_time": "12:30",
+            "transports": [
+              {
+                "start": "西湖风景名胜区",
+                "end": "杭州君悦酒店·湖滨28中餐厅",
+                "mode": "taxi",
+                "start_time": "10:07",
+                "end_time": "10:13",
+                "cost": 19.9,
+                "distance": 4.34,
+                "price": 19.9,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "西湖游船",
+            "type": "attraction",
+            "price": 55,
+            "cost": 110,
+            "start_time": "12:30",
+            "end_time": "14:00",
+            "transports": [
+              {
+                "start": "杭州君悦酒店·湖滨28中餐厅",
+                "end": "西湖游船",
+                "mode": "taxi",
+                "start_time": "12:30",
+                "end_time": "12:30",
+                "cost": 11.0,
+                "distance": 0.6,
+                "price": 11.0,
+                "cars": 1
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "初食聚场日式料理(西湖天地店)",
+            "type": "dinner",
+            "price": 90,
+            "cost": 180,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "西湖游船",
+                "end": "初食聚场日式料理(西湖天地店)",
+                "mode": "taxi",
+                "start_time": "14:00",
+                "end_time": "14:01",
+                "cost": 11.0,
+                "distance": 0.81,
+                "price": 11.0,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "start_time": "18:28",
+            "end_time": "19:53",
+            "start": "杭州东站",
+            "end": "苏州北站",
+            "price": 78.65,
+            "cost": 157.3,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "初食聚场日式料理(西湖天地店)",
+                "end": "杭州东站",
+                "mode": "taxi",
+                "start_time": "18:00",
+                "end_time": "18:11",
+                "cost": 32.4,
+                "distance": 7.91,
+                "price": 32.4,
+                "cars": 1
+              }
+            ],
+            "TrainID": "G1378",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 4000.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=4000)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_6",
+      "source": "origin",
+      "type": "required_innercity_transport_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "taxi"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'taxi'}<=innercity_transport_set)"
+      }
+    },
+    {
+      "id": "origin_logic_7",
+      "source": "origin",
+      "type": "required_hotel_feature",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "窗外好景"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'窗外好景'}<=accommodation_type_set)"
+      }
+    },
+    {
+      "id": "origin_logic_8",
+      "source": "origin",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "雷峰塔"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'雷峰塔'}<=attraction_name_set)"
+      }
+    },
+    {
+      "id": "origin_logic_9",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "3天玩遍杭州主要景点，预算得控制在5300元以内",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "杭州"
+    },
+    "temporal": [
+      {
+        "day_count": 3
+      }
+    ],
+    "resource": {
+      "total_budget": 5300
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "budget_total",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 5300.0,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "day_count",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "compositional",
+      "resource",
+      "discontinuity"
+    ],
+    [
+      "compositional",
+      "resource",
+      "overflow"
+    ],
+    [
+      "compositional",
+      "structural",
+      "overflow"
+    ],
+    [
+      "compositional",
+      "temporal",
+      "discontinuity"
+    ],
+    [
+      "compositional",
+      "temporal",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "compositional",
+    "resource",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "compositional",
+      "resource",
+      "discontinuity"
+    ],
+    [
+      "compositional",
+      "structural",
+      "overflow"
+    ],
+    [
+      "compositional",
+      "temporal",
+      "discontinuity"
+    ],
+    [
+      "compositional",
+      "temporal",
+      "overflow"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "multi_day_budget_overflow",
+    "template": "在{day_count}天内游览{target_city}的主要景点，总预算不超过{budget}元",
+    "template_id": "compositional_resource_overflow__multi_day_budget_overflow__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "day_count",
+        "budget_cap"
+      ],
+      "relation_slots": [],
+      "ir_outputs": [
+        "day_count",
+        "budget_total"
+      ],
+      "risk_level": "medium",
+      "decision": "keep",
+      "root_node_type": "composite",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "multi_day_budget_overflow",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "multi_day_budget_overflow",
+      "baseline_projected_multi_day_local_cost": 5517.105000000001,
+      "requested_day_count": 3,
+      "chosen_budget": 5300
+    },
+    "rendered_params": {
+      "start_city": "苏州",
+      "target_city": "杭州",
+      "day_count": 3,
+      "budget": "5300"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "multi_day_budget_overflow",
+      "day_count": 3
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "multi_day_budget_overflow",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": null,
+      "day_poi_pairs": [],
+      "budget_cap": 5300,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": 3,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "baseline": 5517.105000000001,
+      "threshold": 5300.0,
+      "baseline_reason": "projected_transferable_local_cost"
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "multi_day_budget_overflow",
+      "day_count": 3
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "multi_day_budget_overflow",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": null,
+      "day_poi_pairs": [],
+      "budget_cap": 5300,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": 3,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "baseline": 5517.105000000001,
+      "threshold": 5300.0,
+      "baseline_reason": "projected_transferable_local_cost"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "compositional",
+      "resource",
+      "overflow"
+    ],
+    "target_city": "杭州",
+    "start_city": "苏州",
+    "is_single_day": false,
+    "day_count": 2,
+    "origin_plan_file": "e20241028161241981481.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "compositional_resource_overflow"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T16:33:55.795553",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "compositional",
+      "resource",
+      "overflow"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000005",
+    "source_sample_path": "./data/data/batches/batch005/batches/compositional_resource_overflow/_validation_split/passed/sample_000005.json",
+    "template_diversity_selected": true
+  }
+}

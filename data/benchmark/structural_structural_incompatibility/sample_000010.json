@@ -1,0 +1,575 @@
+{
+  "sample_id": "sample_000010",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置重庆。我计划去苏州玩两天，想吃江浙菜，预算2500元，开一间单人房。请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028161034674798",
+    "tag": "medium",
+    "start_city": "重庆",
+    "target_city": "苏州",
+    "days": 2,
+    "people_number": 1,
+    "limit_rooms": true,
+    "limits_room_type": true,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==1)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2500)",
+      "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置重庆。我计划去苏州玩两天，想吃江浙菜，预算2500元，开一间单人房。请给我一个旅行规划。",
+    "nature_language_en": "Current location: Chongqing. I plan to visit Suzhou for two days and would like to try Jiangsu and Zhejiang cuisine. My budget is 2500 RMB, and I need a single room. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "重庆",
+    "target_city": "苏州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:51",
+            "end_time": "17:50",
+            "start": "重庆北站",
+            "end": "苏州站",
+            "price": 814.87,
+            "cost": 814.87,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "D958",
+            "type": "train"
+          },
+          {
+            "position": "得月楼(观前店)",
+            "type": "dinner",
+            "price": 153,
+            "cost": 153,
+            "start_time": "17:59",
+            "end_time": "18:59",
+            "transports": [
+              {
+                "start": "苏州站",
+                "end": "苏州火车站-地铁站",
+                "mode": "walk",
+                "start_time": "17:50",
+                "end_time": "17:51",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              },
+              {
+                "start": "苏州火车站-地铁站",
+                "end": "察院场-地铁站",
+                "mode": "metro",
+                "start_time": "17:51",
+                "end_time": "17:55",
+                "cost": 2,
+                "distance": 2.4,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "察院场-地铁站",
+                "end": "得月楼(观前店)",
+                "mode": "walk",
+                "start_time": "17:55",
+                "end_time": "17:59",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "鹤园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "19:08",
+            "end_time": "20:38",
+            "transports": [
+              {
+                "start": "得月楼(观前店)",
+                "end": "察院场-地铁站",
+                "mode": "walk",
+                "start_time": "18:59",
+                "end_time": "19:03",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              },
+              {
+                "start": "察院场-地铁站",
+                "end": "悬桥巷-地铁站",
+                "mode": "metro",
+                "start_time": "19:03",
+                "end_time": "19:04",
+                "cost": 2,
+                "distance": 0.8,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "悬桥巷-地铁站",
+                "end": "鹤园",
+                "mode": "walk",
+                "start_time": "19:04",
+                "end_time": "19:08",
+                "cost": 0,
+                "distance": 0.38,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "花筑·栖云心舍花园酒店(苏州观前街平江路店)",
+            "type": "accommodation",
+            "price": 284,
+            "cost": 284,
+            "start_time": "20:47",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "鹤园",
+                "end": "悬桥巷-地铁站",
+                "mode": "walk",
+                "start_time": "20:38",
+                "end_time": "20:42",
+                "cost": 0,
+                "distance": 0.38,
+                "price": 0
+              },
+              {
+                "start": "悬桥巷-地铁站",
+                "end": "临顿路-地铁站",
+                "mode": "metro",
+                "start_time": "20:42",
+                "end_time": "20:43",
+                "cost": 2,
+                "distance": 0.51,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "临顿路-地铁站",
+                "end": "花筑·栖云心舍花园酒店(苏州观前街平江路店)",
+                "mode": "walk",
+                "start_time": "20:43",
+                "end_time": "20:47",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              }
+            ],
+            "room_type": 1,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "花筑·栖云心舍花园酒店(苏州观前街平江路店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "start_time": "10:00",
+            "end_time": "20:05",
+            "start": "苏州站",
+            "end": "重庆北站",
+            "price": 814.87,
+            "cost": 814.87,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "花筑·栖云心舍花园酒店(苏州观前街平江路店)",
+                "end": "临顿路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:34",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              },
+              {
+                "start": "临顿路-地铁站",
+                "end": "苏州火车站-地铁站",
+                "mode": "metro",
+                "start_time": "08:34",
+                "end_time": "08:40",
+                "cost": 2,
+                "distance": 3.03,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "苏州火车站-地铁站",
+                "end": "苏州站",
+                "mode": "walk",
+                "start_time": "08:40",
+                "end_time": "08:41",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              }
+            ],
+            "TrainID": "D956",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 2500.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2500)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "required_restaurant_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "江浙菜"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_6",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_7",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把鹤园从行程里去掉",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "苏州"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [
+      "鹤园"
+    ],
+    "semantic": {
+      "replace_from": "鹤园"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "forbidden_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_none",
+      "value": [
+        "鹤园"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "structural",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "structural",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "remove_poi",
+    "template": "把{poi}从行程中删除",
+    "template_id": "structural_structural_incompatibility__remove_poi__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [
+        "source_poi"
+      ],
+      "bound_slots": [],
+      "relation_slots": [],
+      "ir_outputs": [
+        "forbidden_attraction_name"
+      ],
+      "risk_level": "low",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "remove_poi",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "remove_poi"
+    },
+    "rendered_params": {
+      "start_city": "重庆",
+      "target_city": "苏州",
+      "day_count": 2
+    },
+    "canonical_query_spec": {
+      "constraint_type": "remove_poi",
+      "source_poi": "鹤园"
+    },
+    "canonical_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "remove_poi",
+      "anchor_poi": "鹤园",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.55
+    },
+    "canonical_semantic_parse_source": "llm",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "poi": "鹤园"
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "remove_poi"
+    },
+    "surface_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "remove_poi",
+      "anchor_poi": "鹤园",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.55
+    },
+    "surface_semantic_parse_source": "llm",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "poi": "鹤园"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "structural",
+      "incompatibility"
+    ],
+    "target_city": "苏州",
+    "start_city": "重庆",
+    "is_single_day": false,
+    "day_count": 2,
+    "origin_plan_file": "e20241028161034674798.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_structural_incompatibility"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T14:47:59.451191",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "structural",
+      "incompatibility"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000039",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_structural_incompatibility/_validation_split/passed/sample_000039.json",
+    "template_diversity_selected": true
+  }
+}

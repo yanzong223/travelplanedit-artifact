@@ -1,0 +1,22 @@
+{
+  "uid": "p4m20241028164641561951",
+  "tag": "preference4_base50",
+  "start_city": "武汉",
+  "target_city": "重庆",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'火锅'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置武汉。我一个人想去重庆玩2天，想尝试当地的火锅，同时希望尽量降低住宿费用，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Wuhan. I want to travel to Chongqing alone for 2 days and try the local hotpot, while hoping to minimize accommodation costs. Please provide me with a travel plan.",
+  "preference": "['最小化 住宿费用']",
+  "preference_en": "['minimize accommodation_cost']",
+  "preference_py": "[\"minimize accommodation_cost\\naccommodation_cost = 0\\nfor activity in allactivities(plan):\\n    if activity_type(activity) == 'accommodation':\\n        accommodation_cost += activity_cost(activity)\"]"
+}

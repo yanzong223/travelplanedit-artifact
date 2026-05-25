@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143606240237",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "北京",
+  "days": 4,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'历史古迹','红色景点'}<=attraction_type_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置北京,旅行人数3,旅行天数4] 我们三个计划坐高铁(G)或者动车(D)去北京玩四天，预算比较足，尽可能多看一些历史和红色资源相关的内容，其他的景点都无所谓的",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Beijing, Number of travelers: 3, Number of travel days: 4] The three of us plan to take either a high-speed train (G) or a bullet train (D) to Beijing for a four-day trip. Our budget is quite sufficient, and we aim to see as many historical and revolutionary sites as possible. Other attractions are not a priority."
+}

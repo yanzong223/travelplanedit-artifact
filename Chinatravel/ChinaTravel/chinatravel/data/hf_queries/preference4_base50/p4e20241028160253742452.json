@@ -1,0 +1,22 @@
+{
+  "uid": "p4e20241028160253742452",
+  "tag": "preference4_base50",
+  "start_city": "重庆",
+  "target_city": "成都",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1200)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置重庆。我一个人想去成都玩一天，预算1200人民币，请给我一个旅行规划。我希望能尽量减少住宿费用，同时尽可能多地参观景点。",
+  "nature_language_en": "Current location: Chongqing. I want to travel to Chengdu alone for one day with a budget of 1200 RMB. Please provide me with a travel plan. I hope to minimize accommodation costs while visiting as many attractions as possible.",
+  "preference": "['最小化 住宿费用']",
+  "preference_en": "['minimize accommodation_cost']",
+  "preference_py": "[\"minimize accommodation_cost\\naccommodation_cost = 0\\nfor activity in allactivities(plan):\\n    if activity_type(activity) == 'accommodation':\\n        accommodation_cost += activity_cost(activity)\"]"
+}

@@ -1,0 +1,638 @@
+{
+  "sample_id": "sample_000009",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置杭州。我和三个朋友计划去北京玩两天，选择火车出行，市内交通方式选择打车。请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "t20241206211714065305",
+    "tag": "easy",
+    "start_city": "杭州",
+    "target_city": "北京",
+    "days": 2,
+    "people_number": 4,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==4)",
+      "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False",
+      "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'taxi'})"
+    ],
+    "nature_language": "当前位置杭州。我和三个朋友计划去北京玩两天，选择火车出行，市内交通方式选择打车。请给我一个旅行规划。",
+    "nature_language_en": "Current location: Hangzhou. My three friends and I are planning to visit Beijing for two days. We have chosen to travel by train and use taxis for intra-city transportation. Please provide me with a travel itinerary."
+  },
+  "origin_plan": {
+    "people_number": 4,
+    "start_city": "杭州",
+    "target_city": "北京",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:48",
+            "end_time": "12:20",
+            "start": "杭州东站",
+            "end": "北京南站",
+            "price": 730.27,
+            "cost": 2921.08,
+            "tickets": 4,
+            "transports": [],
+            "TrainID": "G32",
+            "type": "train"
+          },
+          {
+            "position": "故宫博物院",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:30",
+            "end_time": "14:00",
+            "transports": [
+              {
+                "start": "北京南站",
+                "end": "故宫博物院",
+                "mode": "taxi",
+                "start_time": "12:20",
+                "end_time": "12:30",
+                "cost": 28.83,
+                "distance": 6.9,
+                "price": 28.83,
+                "cars": 1
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "大董(木樨园桥店)",
+            "type": "dinner",
+            "price": 442,
+            "cost": 1768,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "故宫博物院",
+                "end": "大董(木樨园桥店)",
+                "mode": "taxi",
+                "start_time": "14:00",
+                "end_time": "14:11",
+                "cost": 31.44,
+                "distance": 7.64,
+                "price": 31.44,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "颐和园",
+            "type": "attraction",
+            "price": 30,
+            "cost": 120,
+            "start_time": "18:29",
+            "end_time": "19:59",
+            "transports": [
+              {
+                "start": "大董(木樨园桥店)",
+                "end": "颐和园",
+                "mode": "taxi",
+                "start_time": "18:00",
+                "end_time": "18:29",
+                "cost": 83.69,
+                "distance": 19.77,
+                "price": 83.69,
+                "cars": 1
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "赛特饭店",
+            "type": "accommodation",
+            "price": 678,
+            "cost": 2712,
+            "start_time": "20:25",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "颐和园",
+                "end": "赛特饭店",
+                "mode": "taxi",
+                "start_time": "19:59",
+                "end_time": "20:25",
+                "cost": 75.06,
+                "distance": 17.86,
+                "price": 75.06,
+                "cars": 1
+              }
+            ],
+            "room_type": 1,
+            "rooms": 4
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "赛特饭店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "八达岭长城",
+            "type": "attraction",
+            "price": 40,
+            "cost": 160,
+            "start_time": "10:02",
+            "end_time": "11:32",
+            "transports": [
+              {
+                "start": "赛特饭店",
+                "end": "八达岭长城",
+                "mode": "taxi",
+                "start_time": "08:30",
+                "end_time": "10:02",
+                "cost": 273.19,
+                "distance": 61.89,
+                "price": 273.19,
+                "cars": 1
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "北京香格里拉饭店·香宫",
+            "type": "lunch",
+            "price": 424,
+            "cost": 1696,
+            "start_time": "12:50",
+            "end_time": "13:50",
+            "transports": [
+              {
+                "start": "八达岭长城",
+                "end": "北京香格里拉饭店·香宫",
+                "mode": "taxi",
+                "start_time": "11:32",
+                "end_time": "12:50",
+                "cost": 230.45,
+                "distance": 52.39,
+                "price": 230.45,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "天安门广场",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "14:03",
+            "end_time": "15:33",
+            "transports": [
+              {
+                "start": "北京香格里拉饭店·香宫",
+                "end": "天安门广场",
+                "mode": "taxi",
+                "start_time": "13:50",
+                "end_time": "14:03",
+                "cost": 36.29,
+                "distance": 9.03,
+                "price": 36.29,
+                "cars": 1
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "门框胡同褡裢火烧(赵公口店)",
+            "type": "dinner",
+            "price": 67,
+            "cost": 268,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "天安门广场",
+                "end": "门框胡同褡裢火烧(赵公口店)",
+                "mode": "taxi",
+                "start_time": "15:33",
+                "end_time": "15:42",
+                "cost": 26.03,
+                "distance": 6.09,
+                "price": 26.03,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "start_time": "19:04",
+            "end_time": "23:22",
+            "start": "北京南站",
+            "end": "杭州东站",
+            "price": 730.27,
+            "cost": 2921.08,
+            "tickets": 4,
+            "transports": [
+              {
+                "start": "门框胡同褡裢火烧(赵公口店)",
+                "end": "北京南站",
+                "mode": "taxi",
+                "start_time": "18:00",
+                "end_time": "18:04",
+                "cost": 15.73,
+                "distance": 3.15,
+                "price": 15.73,
+                "cars": 1
+              }
+            ],
+            "TrainID": "G39",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 4,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==4)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "required_intercity_transport_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "equals_set",
+      "value": [
+        "train"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 4,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'taxi'})"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'taxi'})"
+      }
+    }
+  ],
+  "edit_query": "把颐和园换成风格类似的历史古迹景点",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "北京"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [
+      "颐和园"
+    ],
+    "semantic": {
+      "replace_from": "颐和园",
+      "semantic_target": "历史古迹",
+      "preferred_type": "attraction"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "forbidden_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_none",
+      "value": [
+        "颐和园"
+      ],
+      "params": {
+        "derived_from": "query_spec",
+        "from_semantic_substitution": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "includes_type",
+      "value": "历史古迹",
+      "params": {
+        "min_count": 1,
+        "derived_from": "query_spec",
+        "replace_from": "颐和园",
+        "from_semantic_substitution": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "semantic",
+      "discontinuity"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "discontinuity"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "semantic_substitution",
+    "template": "把{poi}改成{poi_type}类型的其他景点，但风格要相似",
+    "template_id": "structural_semantic_discontinuity__semantic_substitution__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [
+        "source_poi"
+      ],
+      "bound_slots": [],
+      "relation_slots": [
+        "semantic_type",
+        "substitution"
+      ],
+      "ir_outputs": [
+        "forbidden_attraction_name",
+        "semantic_type_requirement"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "composite",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "semantic_substitution",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "semantic_substitution"
+    },
+    "rendered_params": {
+      "start_city": "杭州",
+      "target_city": "北京",
+      "day_count": 2,
+      "poi_type": "历史古迹"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "semantic_substitution",
+      "source_poi": "颐和园",
+      "semantic_target": "历史古迹"
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "semantic_substitution",
+      "specific_poi": null,
+      "preferred_type": "历史古迹",
+      "source_poi": "颐和园",
+      "semantic_target": "历史古迹",
+      "anchor_poi": null,
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.91,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.91,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "source_poi": "颐和园",
+      "semantic_target": "历史古迹"
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "semantic_substitution",
+      "source_poi": "颐和园",
+      "semantic_target": "历史古迹"
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "semantic_substitution",
+      "specific_poi": null,
+      "preferred_type": "历史古迹",
+      "source_poi": "颐和园",
+      "semantic_target": "历史古迹",
+      "anchor_poi": null,
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.91,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "source_poi": "颐和园",
+      "semantic_target": "历史古迹"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "discontinuity"
+    ],
+    "target_city": "北京",
+    "start_city": "杭州",
+    "is_single_day": false,
+    "day_count": 2,
+    "origin_plan_file": "t20241206211714065305.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_semantic_discontinuity"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T14:22:06.268705",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "discontinuity"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000041",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_discontinuity/_validation_split/passed/sample_000041.json",
+    "template_diversity_selected": true
+  }
+}

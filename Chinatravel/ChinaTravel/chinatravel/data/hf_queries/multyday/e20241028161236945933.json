@@ -1,0 +1,24 @@
+{
+  "uid": "e20241028161236945933",
+  "tag": "medium",
+  "start_city": "深圳",
+  "target_city": "广州",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2500)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'walk'}<=innercity_transport_set)",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'桑拿'}<=accommodation_type_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'白云山'}<=attraction_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置深圳。我一个人想去广州玩2天，预算2500人民币，住一间单床房，期间步行，酒店最好有桑拿，想去白云山看一下，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Shenzhen. I want to travel alone to Guangzhou for 2 days with a budget of 2500 RMB. I would like to stay in a single room, preferably in a hotel with a sauna. I want to visit Baiyun Mountain. Please provide me with a travel plan."
+}

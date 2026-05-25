@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143509607671",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "上海",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'上海世博展览馆'}<=attraction_name_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置上海,旅行人数1,旅行天数2] 我想1个人去上海参加漫展在上海世博展览馆，住附近，2天左右，怎么规划行程",
+  "nature_language_en": "[Current location: Suzhou, Destination: Shanghai, Number of travelers: 1, Number of travel days: 2] I want to go to Shanghai alone to attend a comic convention at the Shanghai World Expo Exhibition & Convention Center, stay nearby for about 2 days. How should I plan the itinerary?"
+}

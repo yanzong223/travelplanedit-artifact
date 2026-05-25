@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143902858522",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "苏州",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置苏州,旅行人数1,旅行天数2] 我想从北京坐火车去苏州玩两天,我喜欢人少的地方。请问我应当如何规划行程？",
+  "nature_language_en": "[Current location: Beijing, Destination: Suzhou, Number of travelers: 1, Number of travel days: 2] I want to take a train from Beijing to Suzhou for a two-day trip. I prefer places with fewer people. How should I plan my itinerary?"
+}

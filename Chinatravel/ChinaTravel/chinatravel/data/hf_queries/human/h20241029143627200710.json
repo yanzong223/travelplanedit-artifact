@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143627200710",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "杭州",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'博物馆/纪念馆'}<=attraction_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置杭州,旅行人数2,旅行天数3] 我和姐姐想在中秋假期从南京去杭州玩3天，我们想多逛当地的博物馆和知名景点，怎么规划行程？",
+  "nature_language_en": "[Current location: Nanjing, Destination: Hangzhou, Number of travelers: 2, Number of travel days: 3] My sister and I want to travel from Nanjing to Hangzhou for 3 days during the Mid-Autumn Festival. We would like to visit local museums and famous attractions. How should we plan our itinerary?"
+}

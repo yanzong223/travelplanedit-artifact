@@ -1,0 +1,525 @@
+{
+  "sample_id": "sample_000011",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置武汉。我们三个人想去北京玩2天，住两间双床房，酒店要可以健身，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "m20241028164705832439",
+    "tag": "easy",
+    "start_city": "武汉",
+    "target_city": "北京",
+    "days": 2,
+    "people_number": 3,
+    "limit_rooms": true,
+    "limits_room_type": true,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==3)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False",
+      "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'健身室'}<=accommodation_type_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置武汉。我们三个人想去北京玩2天，住两间双床房，酒店要可以健身，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Wuhan. The three of us want to visit Beijing for 2 days and stay in two twin rooms. The hotel should have a gym. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 3,
+    "start_city": "武汉",
+    "target_city": "北京",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:40",
+            "end_time": "11:35",
+            "start": "武汉站",
+            "end": "北京西站",
+            "price": 684.27,
+            "cost": 2052.81,
+            "tickets": 3,
+            "transports": [],
+            "TrainID": "G66",
+            "type": "train"
+          },
+          {
+            "position": "北京京都信苑饭店",
+            "type": "accommodation",
+            "price": 637,
+            "cost": 1274,
+            "start_time": "11:37",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "北京西站",
+                "end": "北京西站-地铁站",
+                "mode": "walk",
+                "start_time": "11:35",
+                "end_time": "11:35",
+                "cost": 0,
+                "distance": 0.08,
+                "price": 0
+              },
+              {
+                "start": "北京西站-地铁站",
+                "end": "莲花桥-地铁站",
+                "mode": "metro",
+                "start_time": "11:35",
+                "end_time": "11:36",
+                "cost": 6,
+                "distance": 0.99,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "莲花桥-地铁站",
+                "end": "北京京都信苑饭店",
+                "mode": "walk",
+                "start_time": "11:36",
+                "end_time": "11:37",
+                "cost": 0,
+                "distance": 0.16,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 2
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "北京京都信苑饭店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "故宫博物院",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:56",
+            "end_time": "10:26",
+            "transports": [
+              {
+                "start": "北京京都信苑饭店",
+                "end": "莲花桥-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:31",
+                "cost": 0,
+                "distance": 0.16,
+                "price": 0
+              },
+              {
+                "start": "莲花桥-地铁站",
+                "end": "中国美术馆-地铁站",
+                "mode": "metro",
+                "start_time": "08:31",
+                "end_time": "08:49",
+                "cost": 12,
+                "distance": 9.06,
+                "price": 4,
+                "tickets": 3
+              },
+              {
+                "start": "中国美术馆-地铁站",
+                "end": "故宫博物院",
+                "mode": "walk",
+                "start_time": "08:49",
+                "end_time": "08:56",
+                "cost": 0,
+                "distance": 0.63,
+                "price": 0
+              }
+            ],
+            "tickets": 3
+          },
+          {
+            "position": "大董(木樨园桥店)",
+            "type": "lunch",
+            "price": 442,
+            "cost": 1326,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "故宫博物院",
+                "end": "中国美术馆-地铁站",
+                "mode": "walk",
+                "start_time": "10:26",
+                "end_time": "10:33",
+                "cost": 0,
+                "distance": 0.63,
+                "price": 0
+              },
+              {
+                "start": "中国美术馆-地铁站",
+                "end": "海户屯-地铁站",
+                "mode": "metro",
+                "start_time": "10:33",
+                "end_time": "10:49",
+                "cost": 9,
+                "distance": 8.03,
+                "price": 3,
+                "tickets": 3
+              },
+              {
+                "start": "海户屯-地铁站",
+                "end": "大董(木樨园桥店)",
+                "mode": "walk",
+                "start_time": "10:49",
+                "end_time": "10:54",
+                "cost": 0,
+                "distance": 0.46,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "14:00",
+            "end_time": "18:11",
+            "start": "北京西站",
+            "end": "武汉站",
+            "price": 684.27,
+            "cost": 2052.81,
+            "tickets": 3,
+            "transports": [
+              {
+                "start": "大董(木樨园桥店)",
+                "end": "海户屯-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:05",
+                "cost": 0,
+                "distance": 0.46,
+                "price": 0
+              },
+              {
+                "start": "海户屯-地铁站",
+                "end": "北京西站-地铁站",
+                "mode": "metro",
+                "start_time": "12:05",
+                "end_time": "12:21",
+                "cost": 9,
+                "distance": 8.27,
+                "price": 3,
+                "tickets": 3
+              },
+              {
+                "start": "北京西站-地铁站",
+                "end": "北京西站",
+                "mode": "walk",
+                "start_time": "12:21",
+                "end_time": "12:21",
+                "cost": 0,
+                "distance": 0.08,
+                "price": 0
+              }
+            ],
+            "TrainID": "G81",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==3)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "required_hotel_feature",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "健身室"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'健身室'}<=accommodation_type_set)"
+      }
+    },
+    {
+      "id": "origin_logic_6",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "想在行程里加上鼓楼，而且希望每个景点之间坐车别太久，最好15分钟以内就能到。",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "鼓楼",
+        "type": "attraction",
+        "city": "北京"
+      }
+    ],
+    "spatial": {
+      "city": "北京"
+    },
+    "temporal": [
+      {
+        "max_duration": "15分钟"
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "adjacent_travel_time_cap",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_types": [
+          "attraction"
+        ]
+      },
+      "operator": "<=",
+      "value": 15,
+      "params": {
+        "unit": "minute",
+        "day": "all",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "鼓楼"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "parameter",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "temporal",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "parameter",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_temporal_overflow__travel_time_constraint__01",
+    "template": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}",
+    "template_str": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}",
+    "constraint_type": "travel_time_constraint",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    "target_city": "北京",
+    "start_city": "武汉",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "travel_time_constraint"
+    ],
+    "requested_bucket_names": [
+      "structural_temporal_overflow"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000003",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_temporal_overlap/_validation_split/passed/sample_000003.json",
+    "diversity_augmented": true,
+    "diversity_domain": "local_transport",
+    "constraint_type": "travel_time_constraint",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 0.8667,
+    "primary_label": [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000204",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000204.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000058",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_temporal_overflow/_validation_split/passed/sample_000058.json",
+    "template_diversity_selected": true
+  }
+}

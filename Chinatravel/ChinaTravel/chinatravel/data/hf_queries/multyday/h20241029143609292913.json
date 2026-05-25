@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143609292913",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "苏州",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1000)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置苏州,旅行人数1,旅行天数2] 我要一个人从南京去苏州穷游两天，预算一千，花不完也没关系，能省则省，如何规划",
+  "nature_language_en": "[Current location: Nanjing, Destination: Suzhou, Number of travelers: 1, Travel days: 2] I want to travel on a budget from Nanjing to Suzhou for two days by myself. My budget is 1,000 yuan, but it's okay if I don't spend it all. I want to save as much as possible. How should I plan?"
+}

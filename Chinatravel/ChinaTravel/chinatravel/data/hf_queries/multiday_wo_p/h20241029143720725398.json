@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143720725398",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "南京",
+  "days": 5,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'历史古迹'}<=attraction_type_set)",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'位置超好'}<=accommodation_type_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'博物馆/纪念馆'}<=attraction_type_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置南京,旅行人数2,旅行天数5] 当前位置杭州，两个人想去南京玩5天，希望住市中心，多游玩历史文化景点（除了博物馆），饮食没有要求，预算充裕，希望行程不要安排太紧，请帮我规划",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Nanjing, Number of travelers: 2, Travel days: 5] Currently in Hangzhou, two people want to visit Nanjing for 5 days. They hope to stay in the city center and visit many historical and cultural sites (excluding museums). There are no dietary requirements, and the budget is ample. They prefer a relaxed itinerary. Please help me plan."
+}

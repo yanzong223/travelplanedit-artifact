@@ -1,0 +1,19 @@
+{
+  "uid": "t20241206211714066996",
+  "tag": "easy",
+  "start_city": "成都",
+  "target_city": "武汉",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置成都。我和三个朋友计划去武汉玩三天，选择火车出行。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Chengdu. My three friends and I are planning to visit Wuhan for three days. We have chosen to travel by train. Please provide me with a travel itinerary."
+}

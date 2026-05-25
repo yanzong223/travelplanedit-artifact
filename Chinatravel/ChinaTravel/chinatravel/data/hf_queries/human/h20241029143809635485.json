@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143809635485",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "成都",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'川菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置成都,旅行人数1,旅行天数2] 我计划下周末从北京飞成都2日游，想品尝当地特色美食，有没有推荐？",
+  "nature_language_en": "[Current location: Beijing, Destination: Chengdu, Number of travelers: 1, Number of travel days: 2] I plan to fly from Beijing to Chengdu for a 2-day trip next weekend and want to taste the local specialties. Do you have any recommendations?"
+}

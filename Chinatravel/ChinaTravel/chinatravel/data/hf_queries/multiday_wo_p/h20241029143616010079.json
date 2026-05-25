@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143616010079",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "南京",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置南京,旅行人数3,旅行天数3] 三个人从杭州出发，去南京玩三天，要吃当地特色，特种兵一些，去热门景点",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Nanjing, Number of travelers: 3, Number of travel days: 4] Three people are departing from Hangzhou to spend three days in Nanjing. They want to try local specialties, have a bit of an adventurous experience, and visit popular attractions."
+}

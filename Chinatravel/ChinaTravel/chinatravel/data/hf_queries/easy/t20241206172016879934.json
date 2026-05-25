@@ -1,0 +1,19 @@
+{
+  "uid": "t20241206172016879934",
+  "tag": "easy",
+  "start_city": "武汉",
+  "target_city": "杭州",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置武汉。我两个人想去杭州玩3天，坐飞机往返，麻烦给我一个旅行规划。",
+  "nature_language_en": "Current location: Wuhan. Two of us want to visit Hangzhou for 3 days. We plan to travel by plane round-trip. Could you please provide a travel plan for us?"
+}

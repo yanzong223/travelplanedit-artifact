@@ -1,0 +1,21 @@
+{
+  "uid": "h20241029143646523600",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "上海",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!= 1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!= 2: result=False",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1500)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'上海迪士尼度假区'}<=attraction_name_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置上海,旅行人数2,旅行天数2] 当前位置苏州，想和朋友去上海玩两天，往返高铁，需要订一间双床房，我想要去迪士尼，预算1500元，请问可以帮忙规划吗",
+  "nature_language_en": "[Current location: Suzhou, Destination: Shanghai, Number of travelers: 2, Number of travel days: 2] Currently in Suzhou, I want to go to Shanghai with a friend for two days. We need round-trip high-speed train tickets and a twin room. I want to visit Disneyland, and my budget is 1500 RMB. Could you help me plan this trip?"
+}

@@ -1,0 +1,22 @@
+{
+  "uid": "p2m20241028164658228656",
+  "tag": "preference2_base50",
+  "start_city": "南京",
+  "target_city": "重庆",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'面包甜点'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置南京。我一个人想去重庆玩3天，喜欢吃甜食面包啥的，希望去餐厅的交通时间尽可能少，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Nanjing. I want to travel to Chongqing alone for 3 days. I like sweet foods and bread. I hope the travel time to restaurants is as short as possible. Please provide me with a travel plan.",
+  "preference": "['去餐厅的交通时间尽可能少']",
+  "preference_en": "['minimize average transport time to restaurants']",
+  "preference_py": "[\"minimize average_time_cost\\nrestaurant_count = 0\\ntime_cost = 0\\nfor activity in allactivities(plan):\\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner']:\\n        restaurant_count += 1\\n        time_cost += innercity_transport_time(activity_transports(activity))\\nif restaurant_count == 0:\\n    average_time_cost = -1\\nelse:\\n    average_time_cost = time_cost / restaurant_count\"]"
+}

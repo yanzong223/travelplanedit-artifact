@@ -1,0 +1,19 @@
+{
+  "uid": "t20241206171807314229",
+  "tag": "easy",
+  "start_city": "上海",
+  "target_city": "武汉",
+  "days": 2,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'metro'})"
+  ],
+  "nature_language": "当前位置上海。我们四个人计划去武汉玩两天，市内交通使用地铁。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Shanghai. Four of us are planning to visit Wuhan for two days. We will primarily use the subway for transportation within the city. Please provide a travel plan."
+}

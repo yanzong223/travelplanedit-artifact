@@ -1,0 +1,21 @@
+{
+  "uid": "m20241028164810563611",
+  "tag": "easy",
+  "start_city": "北京",
+  "target_city": "武汉",
+  "days": 2,
+  "people_number": 4,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'桑拿'}<=accommodation_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置北京。我们四个人想去武汉玩2天，住两间双床房，酒店要可以蒸桑拿，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Beijing. Four of us want to visit Wuhan for 2 days and stay in two twin-bed rooms. The hotel should have a sauna. Please provide me with a travel plan."
+}

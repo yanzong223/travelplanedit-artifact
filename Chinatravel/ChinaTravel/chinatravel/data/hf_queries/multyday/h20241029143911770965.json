@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143911770965",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "杭州",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'亲子主题房'}<=accommodation_type_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'大学校园'}<=attraction_type_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置杭州,旅行人数2,旅行天数2] 我想和儿子去杭州玩2天，想住在亲子房，并逛一下杭州的大学校园。请问我应当如何规划行程？",
+  "nature_language_en": "[Current location: Nanjing, Destination: Hangzhou, Number of travelers: 2, Duration of travel: 2 days] I want to go to Hangzhou with my son for 2 days. I would like to stay in a family-friendly room and visit some university campuses in Hangzhou. How should I plan the itinerary?"
+}

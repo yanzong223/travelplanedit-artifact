@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143602442546",
+  "tag": "human",
+  "start_city": "深圳",
+  "target_city": "广州",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置深圳,目标位置广州,旅行人数2,旅行天数2] 我和朋友想在周末两天从深圳出发到广州玩，想去人比较少的地方，主打一个悠闲，如何规划",
+  "nature_language_en": "[Current location: Shenzhen, Destination: Guangzhou, Number of travelers: 2, Number of travel days: 2] My friend and I want to travel from Shenzhen to Guangzhou for two days over the weekend. We are looking for less crowded places to visit, focusing on a leisurely experience. How should we plan our trip?"
+}

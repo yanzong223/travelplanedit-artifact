@@ -1,0 +1,22 @@
+{
+  "uid": "p0e20241028160445320665",
+  "tag": "preference0_base50",
+  "start_city": "广州",
+  "target_city": "南京",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置广州。我一个人想去南京玩一天，预算2000人民币，请给我一个旅行规划。我希望能参观尽可能多的景点。",
+  "nature_language_en": "Current location: Guangzhou. I want to visit Nanjing for a day by myself with a budget of 2000 RMB. Please provide me with a travel plan. I hope to visit as many attractions as possible.",
+  "preference": "去尽可能多的景点",
+  "preference_en": "more attractions",
+  "preference_py": "maximize daily_attraction_count\nattraction_count = 0\nfor activity in allactivities(plan):\n    if activity_type(activity) == 'attraction':\n        attraction_count += 1\ndaily_attraction_count = attraction_count / day_count(plan)"
+}

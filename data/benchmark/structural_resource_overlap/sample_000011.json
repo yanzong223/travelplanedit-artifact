@@ -1,0 +1,589 @@
+{
+  "sample_id": "sample_000011",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置上海。我两个人想去成都玩2天，预算5000人民币，住一间大床房，想去成都大熊猫繁育研究基地看一下，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028161307197168",
+    "tag": "medium",
+    "start_city": "上海",
+    "target_city": "成都",
+    "days": 2,
+    "people_number": 2,
+    "limit_rooms": true,
+    "limits_room_type": true,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==2)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=5000)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+      "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'成都大熊猫繁育研究基地'}<=attraction_name_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置上海。我两个人想去成都玩2天，预算5000人民币，住一间大床房，想去成都大熊猫繁育研究基地看一下，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Shanghai. Two of us want to visit Chengdu for 2 days with a budget of 5000 RMB. We would like to stay in a room with a large bed and visit the Chengdu Research Base of Giant Panda Breeding. Please provide a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "上海",
+    "target_city": "成都",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "00:14",
+            "end_time": "02:18",
+            "start": "上海浦东国际机场",
+            "end": "成都双流国际机场",
+            "price": 800.01,
+            "cost": 1600.02,
+            "tickets": 2,
+            "transports": [],
+            "FlightID": "FL041",
+            "type": "airplane"
+          },
+          {
+            "position": "成都天府高新智选假日酒店",
+            "type": "accommodation",
+            "price": 399,
+            "cost": 399,
+            "start_time": "03:04",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "成都双流国际机场",
+                "end": "双流机场2航站楼东-地铁站",
+                "mode": "walk",
+                "start_time": "02:18",
+                "end_time": "02:33",
+                "cost": 0,
+                "distance": 1.25,
+                "price": 0
+              },
+              {
+                "start": "双流机场2航站楼东-地铁站",
+                "end": "广都-地铁站",
+                "mode": "metro",
+                "start_time": "02:33",
+                "end_time": "02:59",
+                "cost": 8,
+                "distance": 13.07,
+                "price": 4,
+                "tickets": 2
+              },
+              {
+                "start": "广都-地铁站",
+                "end": "成都天府高新智选假日酒店",
+                "mode": "walk",
+                "start_time": "02:59",
+                "end_time": "03:04",
+                "cost": 0,
+                "distance": 0.43,
+                "price": 0
+              }
+            ],
+            "room_type": 1,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "成都天府高新智选假日酒店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "汉昭烈庙",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "09:19",
+            "end_time": "10:49",
+            "transports": [
+              {
+                "start": "成都天府高新智选假日酒店",
+                "end": "广都-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:35",
+                "cost": 0,
+                "distance": 0.43,
+                "price": 0
+              },
+              {
+                "start": "广都-地铁站",
+                "end": "人民公园-地铁站",
+                "mode": "metro",
+                "start_time": "08:35",
+                "end_time": "09:08",
+                "cost": 10,
+                "distance": 16.57,
+                "price": 5,
+                "tickets": 2
+              },
+              {
+                "start": "人民公园-地铁站",
+                "end": "汉昭烈庙",
+                "mode": "walk",
+                "start_time": "09:08",
+                "end_time": "09:19",
+                "cost": 0,
+                "distance": 0.94,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "成都盛美利亚酒店·盛然大堂吧及庭院酒廊",
+            "type": "lunch",
+            "price": 101,
+            "cost": 202,
+            "start_time": "11:30",
+            "end_time": "12:30",
+            "transports": [
+              {
+                "start": "汉昭烈庙",
+                "end": "人民公园-地铁站",
+                "mode": "walk",
+                "start_time": "10:49",
+                "end_time": "11:00",
+                "cost": 0,
+                "distance": 0.94,
+                "price": 0
+              },
+              {
+                "start": "人民公园-地铁站",
+                "end": "锦城大道-地铁站",
+                "mode": "metro",
+                "start_time": "11:00",
+                "end_time": "11:18",
+                "cost": 8,
+                "distance": 9.46,
+                "price": 4,
+                "tickets": 2
+              },
+              {
+                "start": "锦城大道-地铁站",
+                "end": "成都盛美利亚酒店·盛然大堂吧及庭院酒廊",
+                "mode": "walk",
+                "start_time": "11:18",
+                "end_time": "11:30",
+                "cost": 0,
+                "distance": 1.04,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "14:25",
+            "end_time": "16:29",
+            "start": "成都双流国际机场",
+            "end": "上海虹桥国际机场",
+            "price": 793.39,
+            "cost": 1586.78,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "成都盛美利亚酒店·盛然大堂吧及庭院酒廊",
+                "end": "锦城大道-地铁站",
+                "mode": "walk",
+                "start_time": "12:30",
+                "end_time": "12:42",
+                "cost": 0,
+                "distance": 1.04,
+                "price": 0
+              },
+              {
+                "start": "锦城大道-地铁站",
+                "end": "双流机场2航站楼东-地铁站",
+                "mode": "metro",
+                "start_time": "12:42",
+                "end_time": "12:59",
+                "cost": 6,
+                "distance": 8.94,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "双流机场2航站楼东-地铁站",
+                "end": "成都双流国际机场",
+                "mode": "walk",
+                "start_time": "12:59",
+                "end_time": "13:14",
+                "cost": 0,
+                "distance": 1.25,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL406",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 5000.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=5000)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_6",
+      "source": "origin",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "成都大熊猫繁育研究基地"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'成都大熊猫繁育研究基地'}<=attraction_name_set)"
+      }
+    },
+    {
+      "id": "origin_logic_7",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "安排汉昭烈庙和附近的餐厅，但总花费（门票+餐费）不能超过90元",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "汉昭烈庙",
+        "type": "attraction",
+        "city": "成都"
+      }
+    ],
+    "spatial": {
+      "city": "成都"
+    },
+    "temporal": [],
+    "resource": {
+      "total_budget": 90,
+      "budget_items": [
+        "门票",
+        "餐费"
+      ],
+      "max_budget": 90,
+      "nearby_meal": true,
+      "overlap_anchor_poi": "汉昭烈庙",
+      "budget_scope": "anchor_bundle"
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "汉昭烈庙"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "nearby_meal_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "anchor_poi": "汉昭烈庙"
+      },
+      "operator": "==",
+      "value": true,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_2",
+      "source": "edit",
+      "type": "anchor_bundle_budget_limit",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "anchor_poi": "汉昭烈庙"
+      },
+      "operator": "<=",
+      "value": 90.0,
+      "params": {
+        "budget_scope": "anchor_bundle",
+        "requires_nearby_meal": true,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "resource",
+    "overlap"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_resource_overlap__resource_overlap__01",
+    "template": "安排{poi}和附近的餐厅，但总花费（门票+餐费）不能超过{budget}元",
+    "template_str": "安排{poi}和附近的餐厅，但总花费（门票+餐费）不能超过{budget}元",
+    "constraint_type": "resource_overlap",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "target_city": "成都",
+    "start_city": "上海",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "resource_overlap"
+    ],
+    "requested_bucket_names": [
+      "structural_resource_overlap"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000035",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_resource_overflow/_validation_split/passed/sample_000035.json",
+    "diversity_augmented": true,
+    "diversity_domain": "attraction_meal",
+    "constraint_type": "resource_overlap",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000071",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000071.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000018",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_resource_overlap/_validation_split/passed/sample_000018.json",
+    "template_diversity_selected": true
+  }
+}

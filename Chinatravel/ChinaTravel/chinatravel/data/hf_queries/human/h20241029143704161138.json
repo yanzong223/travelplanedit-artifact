@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143704161138",
+  "tag": "human",
+  "start_city": "深圳",
+  "target_city": "广州",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1000)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'人文景观'}<=attraction_type_set or {'自然风光'}<=attraction_type_set)",
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置深圳,目标位置广州,旅行人数1,旅行天数1] 我准备从深圳前往广州游玩一天，来回高铁(G)，比较喜欢人文或者自然景观，预算1000元",
+  "nature_language_en": "[Current location: Shenzhen, Destination: Guangzhou, Number of travelers: 1, Travel days: 1] I am planning to travel from Shenzhen to Guangzhou for a day trip, round trip by high-speed train (G). I prefer cultural or natural attractions, with a budget of 1000 RMB."
+}

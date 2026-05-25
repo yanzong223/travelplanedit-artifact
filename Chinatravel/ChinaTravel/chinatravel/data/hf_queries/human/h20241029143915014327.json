@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143915014327",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "北京",
+  "days": 4,
+  "people_number": 3,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!= 2: result=False",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=8000)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置北京,旅行人数3,旅行天数4] 我们3人想去北京游玩，大概4天，想游行轻松一些，去人少的地方，住2间房，预算8000元。",
+  "nature_language_en": "[Current location: Nanjing, Destination: Beijing, Number of travelers: 3, Duration of travel: 4 days] The three of us want to visit Beijing for about 4 days. We prefer a relaxed trip, visiting less crowded places, staying in 2 rooms, with a budget of 8,000 RMB."
+}

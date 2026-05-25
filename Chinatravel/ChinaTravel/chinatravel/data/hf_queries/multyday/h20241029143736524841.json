@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143736524841",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "成都",
+  "days": 4,
+  "people_number": 5,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'成都大熊猫繁育研究基地'}<=attraction_name_set)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=20000)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==5)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置成都,旅行人数5,旅行天数4] 我们一家五口打算去成都看熊猫，打算坐动车往返，顺带在附近的著名景点玩一下。请帮我们规划一下行程，预算不要超过2万。",
+  "nature_language_en": "[Current location: Nanjing, Destination: Chengdu, Number of travelers: 5, Number of travel days: 4] Our family of five plans to visit Chengdu to see the pandas. We intend to travel by high-speed train round trip and also visit some famous nearby attractions. Please help us plan the itinerary, and keep the budget under 20,000 RMB."
+}

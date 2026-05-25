@@ -1,0 +1,21 @@
+{
+  "uid": "m20241028164659379868",
+  "tag": "easy",
+  "start_city": "重庆",
+  "target_city": "广州",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'江河景房'}<=accommodation_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置重庆。我们三个人想去广州玩3天，住两间双床房，酒店要能看到江河景色，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Chongqing. The three of us want to visit Guangzhou for 3 days and stay in two twin-bed rooms. The hotel should have a view of the river. Please provide us with a travel plan."
+}

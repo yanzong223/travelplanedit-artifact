@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143851561679",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "北京",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=4000)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置北京,旅行人数2,旅行天数4] 我想和同学两个人国庆假期去北京旅游，计划去4天，想去一些当地人更推荐的地方玩，预算4000元，住宿安排想要更经济划算的。",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Beijing, Number of travelers: 2, Travel days: 4] I want to travel to Beijing with a classmate during the National Day holiday for 4 days. We plan to visit places that are more recommended by locals. Our budget is 4000 RMB, and we are looking for more economical accommodation options."
+}

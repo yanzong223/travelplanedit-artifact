@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143759740039",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "成都",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置成都,旅行人数2,旅行天数4] 我和我闺蜜俩人打算报团去成都玩4天，我们都是大学生，会拍照，希望景点键嘎嘎出片，有意思",
+  "nature_language_en": "[Current location: Nanjing, Destination: Chengdu, Number of travelers: 2, Travel days: 4] My best friend and I are planning to join a tour group to visit Chengdu for 4 days. We are both university students and enjoy taking photos. We hope the attractions are photogenic and interesting."
+}

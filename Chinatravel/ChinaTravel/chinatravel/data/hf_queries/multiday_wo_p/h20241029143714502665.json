@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143714502665",
+  "tag": "human",
+  "start_city": "深圳",
+  "target_city": "广州",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=6000)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置深圳,目标位置广州,旅行人数2,旅行天数4] 当前位置深圳，两个人想去广州一共玩4天，希望多体验一下有特色的景点，住在交通方便的地方，尽量坐火车往返，预算6000，请帮忙规划",
+  "nature_language_en": "[Current location Shenzhen, destination Guangzhou, number of travelers 2, travel days 4] Current location Changsha, two people want to go to Guangzhou for a total of 4 days. They hope to experience unique attractions and stay in a place with convenient transportation. They prefer to travel by train round-trip, with a budget of 6000. Please help plan."
+}

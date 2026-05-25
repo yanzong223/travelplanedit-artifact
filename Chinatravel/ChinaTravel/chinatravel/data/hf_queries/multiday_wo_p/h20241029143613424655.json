@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143613424655",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "深圳",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'大学校园'}<=attraction_type_set)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=6000)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置深圳,旅行人数4,旅行天数3] 我们四个人要从北京去深圳玩三天，飞机出行，想去那边的大学城看看，尽可能去人少的地方，预算六千",
+  "nature_language_en": "[Current location: Beijing, Destination: Shenzhen, Number of travelers: 4, Travel days: 3] Four of us are going from Beijing to Shenzhen for a three-day trip. We plan to travel by plane and want to visit the university town there. We prefer to go to less crowded places, with a budget of 6,000 yuan."
+}

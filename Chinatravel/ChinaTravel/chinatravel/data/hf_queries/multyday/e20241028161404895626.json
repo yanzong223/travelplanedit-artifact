@@ -1,0 +1,26 @@
+{
+  "uid": "e20241028161404895626",
+  "tag": "medium",
+  "start_city": "重庆",
+  "target_city": "苏州",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=4600)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'taxi'}<=innercity_transport_set)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'人文景观'}<=attraction_type_set)",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'儿童乐园'}<=accommodation_type_set)",
+    "food_cost,food_count=0,0\nfor activity in allactivities(plan):\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner']:\n        food_cost+=activity_cost(activity)\n        food_count+=1\nresult=(food_cost/food_count/people_count(plan)<=100)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置重庆。我带我孩子想去苏州玩3天，坐火车，预算4600人民币，喜欢人文景观，住一间大床房，酒店要有儿童乐园，市内交通打车，人均一顿饭不要超过100，请给我一个旅行规划。",
+  "nature_language_en": "**Travel Plan: Chongqing to Suzhou (3 Days)**"
+}

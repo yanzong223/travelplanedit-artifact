@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143522848652",
+  "tag": "human",
+  "start_city": "深圳",
+  "target_city": "北京",
+  "days": 4,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "go_end_time = 0\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train','airplane'] and intercity_transport_origin(activity) == start_city(plan): go_end_time = activity_end_time(activity)\nresult=(go_end_time<='12:00')",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'大学校园','商业街区'}<=attraction_type_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置深圳,目标位置北京,旅行人数1,旅行天数4] 我明天要从深圳去北京出差，飞机差不多早上到达大兴机场，开会地点在王府井附近，一共四天，想要去美食广场和大学里看一看，有推荐的路线吗",
+  "nature_language_en": "[Current location: Shenzhen, Destination: Beijing, Number of travelers: 1, Travel days: 4] I am going on a business trip from Shenzhen to Beijing tomorrow. The flight will arrive at Daxing Airport in the morning. The meeting location is near Wangfujing. I will be there for a total of four days and would like to visit a food court and some universities. Do you have any recommended routes?"
+}

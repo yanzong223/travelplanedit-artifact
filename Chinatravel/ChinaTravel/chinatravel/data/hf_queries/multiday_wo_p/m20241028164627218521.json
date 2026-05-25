@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164627218521",
+  "tag": "easy",
+  "start_city": "广州",
+  "target_city": "北京",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'文化旅游区'}<=attraction_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "我目前在广州，计划和两个朋友一起去北京玩两天，我们想参观一些有文化特色的地方，请帮我们规划一个旅行方案。",
+  "nature_language_en": "Sure, here's the translation:"
+}

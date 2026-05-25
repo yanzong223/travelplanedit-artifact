@@ -1,0 +1,24 @@
+{
+  "uid": "e20241028161343498529",
+  "tag": "medium",
+  "start_city": "重庆",
+  "target_city": "杭州",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'taxi'}<=innercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光'}<=attraction_type_set)",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'泳池'}<=accommodation_type_set)",
+    "food_cost,food_count=0,0\nfor activity in allactivities(plan):\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner']:\n        food_cost+=activity_cost(activity)\n        food_count+=1\nresult=(food_cost/food_count/people_count(plan)<=100)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置重庆。我一个人想去杭州玩2天，预算3000人民币，喜欢自然风光，住一间有泳池的酒店，人均每顿饭不超过100元，市内打车，不坐地铁，请给我一个旅行规划。",
+  "nature_language_en": "**Travel Plan: Chongqing to Hangzhou (2 Days)**"
+}

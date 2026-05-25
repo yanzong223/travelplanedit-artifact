@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143611928866",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "成都",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'川菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置成都,旅行人数2,旅行天数4] 我和朋友想从武汉出发去成都玩四天，去吃当地特色美食，主打一个放松游",
+  "nature_language_en": "[Current location: Wuhan, Destination: Chengdu, Number of travelers: 2, Number of travel days: 4] My friend and I want to travel from Wuhan to Chengdu for four days to enjoy the local cuisine, focusing on a relaxing trip."
+}

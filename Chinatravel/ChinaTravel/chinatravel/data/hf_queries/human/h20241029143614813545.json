@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143614813545",
+  "tag": "human",
+  "start_city": "上海",
+  "target_city": "广州",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=4000)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置上海,目标位置广州,旅行人数1,旅行天数3] 我要一个人从上海去广州穷游三天，去不要钱的景点，交通尽可能便利，预算不超过4000",
+  "nature_language_en": "[Current location: Shanghai, Destination: Guangzhou, Number of travelers: 1, Travel days: 3] I want to travel on a budget from Shanghai to Guangzhou for three days, visiting free attractions, with transportation as convenient as possible, and a budget not exceeding 4000."
+}

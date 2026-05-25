@@ -1,0 +1,75 @@
+# Logging configuration for TPE system
+
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  json:
+    class: pythonjsonlogger.jsonlogger.JsonFormatter
+    format: "%(asctime)s %(name)s %(levelname)s %(message)s"
+    datefmt: "%Y-%m-%dT%H:%M:%S"
+
+  console:
+    class: logging.Formatter
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+filters:
+  correlation:
+    class: src.utils.logging.CorrelationFilter
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: json
+    filters: [correlation]
+    stream: ext://sys.stdout
+
+  file:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: json
+    filters: [correlation]
+    filename: logs/tpe.log
+    encoding: utf8
+
+loggers:
+  tpe:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: false
+
+  tpe.agents:
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+
+  tpe.api:
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+
+  tpe.engine:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: false
+
+  tpe.storage:
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+
+  uvicorn:
+    level: INFO
+    handlers: [console]
+    propagate: false
+
+  uvicorn.access:
+    level: INFO
+    handlers: [console]
+    propagate: false
+
+root:
+  level: INFO
+  handlers: [console]

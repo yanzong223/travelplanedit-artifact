@@ -1,0 +1,21 @@
+{
+  "uid": "h20241029143650282919",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "南京",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!= 1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!= 2: result=False",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'历史古迹','博物馆/纪念馆'}<=attraction_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置南京,旅行人数3,旅行天数3] 当前位置苏州，我们三个同学想去南京玩三天，希望多体验一些历史人文景点，比如博物馆之类的，预算3000，三个同学需要住在一间双床房",
+  "nature_language_en": "[Current location: Suzhou, Destination: Nanjing, Number of travelers: 3, Travel days: 3] We are currently in Suzhou, and the three of us classmates want to visit Nanjing for three days. We hope to experience more historical and cultural attractions, such as museums. Our budget is 3000, and the three of us need to stay in a twin room."
+}

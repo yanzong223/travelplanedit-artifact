@@ -1,0 +1,750 @@
+{
+  "sample_id": "sample_000008",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置重庆。我三个人想去苏州玩2天，预算6100人民币，坐火车往返，住两间房，麻烦给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028161156053328",
+    "tag": "medium",
+    "start_city": "重庆",
+    "target_city": "苏州",
+    "days": 2,
+    "people_number": 3,
+    "limit_rooms": true,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==3)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=6100)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+      "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置重庆。我三个人想去苏州玩2天，预算6100人民币，坐火车往返，住两间房，麻烦给我一个旅行规划。",
+    "nature_language_en": "Current location: Chongqing. Three of us want to visit Suzhou for 2 days with a budget of 6,100 RMB. We plan to travel round-trip by train and stay in two rooms. Could you please provide a travel itinerary for us?"
+  },
+  "origin_plan": {
+    "people_number": 3,
+    "start_city": "重庆",
+    "target_city": "苏州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:51",
+            "end_time": "17:50",
+            "start": "重庆北站",
+            "end": "苏州站",
+            "price": 814.87,
+            "cost": 2444.61,
+            "tickets": 3,
+            "transports": [],
+            "TrainID": "D958",
+            "type": "train"
+          },
+          {
+            "position": "老王蛋饼(书院巷店)",
+            "type": "dinner",
+            "price": 10,
+            "cost": 30,
+            "start_time": "18:01",
+            "end_time": "19:00",
+            "transports": [
+              {
+                "start": "苏州站",
+                "end": "苏州火车站-地铁站",
+                "mode": "walk",
+                "start_time": "17:50",
+                "end_time": "17:51",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              },
+              {
+                "start": "苏州火车站-地铁站",
+                "end": "三元坊-地铁站",
+                "mode": "metro",
+                "start_time": "17:51",
+                "end_time": "17:58",
+                "cost": 6,
+                "distance": 3.85,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "三元坊-地铁站",
+                "end": "老王蛋饼(书院巷店)",
+                "mode": "walk",
+                "start_time": "17:58",
+                "end_time": "18:01",
+                "cost": 0,
+                "distance": 0.3,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "山塘街",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "19:18",
+            "end_time": "20:48",
+            "transports": [
+              {
+                "start": "老王蛋饼(书院巷店)",
+                "end": "三元坊-地铁站",
+                "mode": "walk",
+                "start_time": "19:00",
+                "end_time": "19:03",
+                "cost": 0,
+                "distance": 0.3,
+                "price": 0
+              },
+              {
+                "start": "三元坊-地铁站",
+                "end": "山塘街-地铁站",
+                "mode": "metro",
+                "start_time": "19:03",
+                "end_time": "19:09",
+                "cost": 6,
+                "distance": 3.17,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "山塘街-地铁站",
+                "end": "山塘街",
+                "mode": "walk",
+                "start_time": "19:09",
+                "end_time": "19:18",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              }
+            ],
+            "tickets": 3
+          },
+          {
+            "position": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+            "type": "accommodation",
+            "price": 225,
+            "cost": 450,
+            "start_time": "21:21",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "山塘街",
+                "end": "山塘街-地铁站",
+                "mode": "walk",
+                "start_time": "20:48",
+                "end_time": "20:57",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              },
+              {
+                "start": "山塘街-地铁站",
+                "end": "西环路-地铁站",
+                "mode": "metro",
+                "start_time": "20:57",
+                "end_time": "21:03",
+                "cost": 6,
+                "distance": 3.1,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "西环路-地铁站",
+                "end": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+                "mode": "walk",
+                "start_time": "21:03",
+                "end_time": "21:21",
+                "cost": 0,
+                "distance": 1.54,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 2
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "start_time": "10:00",
+            "end_time": "20:05",
+            "start": "苏州站",
+            "end": "重庆北站",
+            "price": 814.87,
+            "cost": 2444.61,
+            "tickets": 3,
+            "transports": [
+              {
+                "start": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+                "end": "西环路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:48",
+                "cost": 0,
+                "distance": 1.54,
+                "price": 0
+              },
+              {
+                "start": "西环路-地铁站",
+                "end": "苏州火车站-地铁站",
+                "mode": "metro",
+                "start_time": "08:48",
+                "end_time": "08:57",
+                "cost": 9,
+                "distance": 4.54,
+                "price": 3,
+                "tickets": 3
+              },
+              {
+                "start": "苏州火车站-地铁站",
+                "end": "苏州站",
+                "mode": "walk",
+                "start_time": "08:57",
+                "end_time": "08:58",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              }
+            ],
+            "TrainID": "D956",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==3)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 6100.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=6100)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "required_intercity_transport_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "equals_set",
+      "value": [
+        "train"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)"
+      }
+    },
+    {
+      "id": "origin_logic_6",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "我想第一天去司徒庙（偏历史古迹），第二天去旺山风景区（偏自然风光），两天风格要明显不同",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "苏州"
+    },
+    "temporal": [
+      {
+        "day": 1,
+        "must_visit": "司徒庙"
+      },
+      {
+        "day": 2,
+        "must_visit": "旺山风景区"
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction",
+        "day": 1
+      },
+      "operator": "includes_type",
+      "value": "历史古迹",
+      "params": {
+        "day": 1,
+        "min_count": 1,
+        "strict_majority": true,
+        "derived_from": "constraints.semantic.preferred_type"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction",
+        "day": 2
+      },
+      "operator": "includes_type",
+      "value": "自然风光",
+      "params": {
+        "day": 2,
+        "min_count": 1,
+        "strict_majority": true,
+        "derived_from": "constraints.semantic.preferred_type"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_2",
+      "source": "edit",
+      "type": "poi_day_binding",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "poi_name": "司徒庙"
+      },
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_3",
+      "source": "edit",
+      "type": "poi_day_binding",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "poi_name": "旺山风景区"
+      },
+      "operator": "==",
+      "value": 2,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "compositional",
+      "semantic",
+      "discontinuity"
+    ],
+    [
+      "compositional",
+      "structural",
+      "discontinuity"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "compositional",
+    "semantic",
+    "discontinuity"
+  ],
+  "secondary_conflicts": [
+    [
+      "compositional",
+      "structural",
+      "discontinuity"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "cross_day_variety_by_types",
+    "template": "我想{day}去{poi1}（偏{poi_type1}），{day2}去{poi2}（偏{poi_type2}），两天风格要明显不同",
+    "template_id": "compositional_semantic_discontinuity__cross_day_variety_by_types__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "day_count"
+      ],
+      "relation_slots": [
+        "day_type_pairs"
+      ],
+      "ir_outputs": [
+        "day_count",
+        "poi_day_binding",
+        "semantic_type_requirement"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "composite",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "cross_day_variety_by_types",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "cross_day_variety_by_types"
+    },
+    "rendered_params": {
+      "start_city": "重庆",
+      "target_city": "苏州",
+      "day_count": 2,
+      "day": "第一天",
+      "day2": "第二天",
+      "poi_type1": "历史古迹",
+      "poi_type2": "自然风光"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "cross_day_variety_by_types",
+      "day_poi_pairs": [
+        [
+          1,
+          "司徒庙（偏历史古迹）"
+        ],
+        [
+          2,
+          "旺山风景区（偏自然风光）"
+        ]
+      ]
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "cross_day_variety_by_types",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "司徒庙（偏历史古迹）",
+      "day_poi_pairs": [
+        [
+          1,
+          "司徒庙（偏历史古迹）"
+        ],
+        [
+          2,
+          "旺山风景区（偏自然风光）"
+        ]
+      ],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": 1,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.67,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.67,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "pairs": [
+        [
+          1,
+          "司徒庙"
+        ],
+        [
+          2,
+          "旺山风景区"
+        ]
+      ]
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "template_fallback",
+    "surface_quality_pass": false,
+    "surface_reject_reason": "missing_day_binding",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "cross_day_variety_by_types",
+      "day_poi_pairs": [
+        [
+          1,
+          "司徒庙（偏历史古迹）"
+        ],
+        [
+          2,
+          "旺山风景区（偏自然风光）"
+        ]
+      ]
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "cross_day_variety_by_types",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "司徒庙（偏历史古迹）",
+      "day_poi_pairs": [
+        [
+          1,
+          "司徒庙（偏历史古迹）"
+        ],
+        [
+          2,
+          "旺山风景区（偏自然风光）"
+        ]
+      ],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": 1,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.67,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "pairs": [
+        [
+          1,
+          "司徒庙"
+        ],
+        [
+          2,
+          "旺山风景区"
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "compositional",
+      "semantic",
+      "discontinuity"
+    ],
+    "target_city": "苏州",
+    "start_city": "重庆",
+    "is_single_day": false,
+    "day_count": 2,
+    "origin_plan_file": "e20241028161156053328.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "compositional_semantic_discontinuity"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-22T08:42:10.464771",
+    "target_confirmed": true,
+    "target_confidence": 0.8667,
+    "primary_label": [
+      "compositional",
+      "semantic",
+      "discontinuity"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000013",
+    "source_sample_path": "./data/data/batches/batch005/batches/compositional_semantic_discontinuity/_validation_split/passed/sample_000013.json",
+    "template_diversity_selected": true
+  }
+}

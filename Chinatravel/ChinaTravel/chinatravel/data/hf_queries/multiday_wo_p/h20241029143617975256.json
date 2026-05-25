@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143617975256",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "杭州",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光'}<=attraction_type_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置杭州,旅行人数3,旅行天数2] 三个人从苏州出发，去杭州玩两天，去自然风光好一些的地方，预算三千",
+  "nature_language_en": "[Current location: Suzhou, Destination: Hangzhou, Number of travelers: 3, Number of travel days: 2] Three people are departing from Suzhou to spend two days in Hangzhou, aiming to visit places with beautiful natural scenery, with a budget of three thousand."
+}

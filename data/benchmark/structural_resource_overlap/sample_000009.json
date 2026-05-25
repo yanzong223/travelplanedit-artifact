@@ -1,0 +1,510 @@
+{
+  "sample_id": "sample_000009",
+  "batch_id": "benchmark",
+  "origin_query_text": "[当前位置苏州,目标位置上海,旅行人数1,旅行天数1] 当前位置苏州，想去上海玩一天，想去著名景点逛逛，希望能尽量多逛一些景点，预算2000",
+  "origin_query_structured": {
+    "uid": "h20241029143658659295",
+    "tag": "human",
+    "start_city": "苏州",
+    "target_city": "上海",
+    "days": 1,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)",
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==1)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "[当前位置苏州,目标位置上海,旅行人数1,旅行天数1] 当前位置苏州，想去上海玩一天，想去著名景点逛逛，希望能尽量多逛一些景点，预算2000",
+    "nature_language_en": "[Current location: Suzhou, Destination: Shanghai, Number of travelers: 1, Travel days: 1] Currently in Suzhou, planning to visit Shanghai for a day. I want to visit famous attractions and hope to see as many as possible. The budget is 2000."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "苏州",
+    "target_city": "上海",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "08:14",
+            "end_time": "08:39",
+            "start": "苏州站",
+            "end": "上海站",
+            "price": 55.23,
+            "cost": 55.23,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G7001",
+            "type": "train"
+          },
+          {
+            "position": "外滩",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:57",
+            "end_time": "10:27",
+            "transports": [
+              {
+                "start": "上海站",
+                "end": "上海火车站-地铁站",
+                "mode": "walk",
+                "start_time": "08:39",
+                "end_time": "08:41",
+                "cost": 0,
+                "distance": 0.21,
+                "price": 0
+              },
+              {
+                "start": "上海火车站-地铁站",
+                "end": "陆家嘴-地铁站",
+                "mode": "metro",
+                "start_time": "08:41",
+                "end_time": "08:49",
+                "cost": 3,
+                "distance": 4.39,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "陆家嘴-地铁站",
+                "end": "外滩",
+                "mode": "walk",
+                "start_time": "08:49",
+                "end_time": "08:57",
+                "cost": 0,
+                "distance": 0.74,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "咏心·上海点心(静安大悦城店)",
+            "type": "lunch",
+            "price": 82,
+            "cost": 82,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "外滩",
+                "end": "陆家嘴-地铁站",
+                "mode": "walk",
+                "start_time": "10:27",
+                "end_time": "10:35",
+                "cost": 0,
+                "distance": 0.74,
+                "price": 0
+              },
+              {
+                "start": "陆家嘴-地铁站",
+                "end": "曲阜路-地铁站",
+                "mode": "metro",
+                "start_time": "10:35",
+                "end_time": "10:40",
+                "cost": 2,
+                "distance": 2.95,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "曲阜路-地铁站",
+                "end": "咏心·上海点心(静安大悦城店)",
+                "mode": "walk",
+                "start_time": "10:40",
+                "end_time": "10:41",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "东方明珠",
+            "type": "attraction",
+            "price": 199,
+            "cost": 199,
+            "start_time": "12:16",
+            "end_time": "13:46",
+            "transports": [
+              {
+                "start": "咏心·上海点心(静安大悦城店)",
+                "end": "曲阜路-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:01",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              },
+              {
+                "start": "曲阜路-地铁站",
+                "end": "陆家嘴-地铁站",
+                "mode": "metro",
+                "start_time": "12:01",
+                "end_time": "12:06",
+                "cost": 2,
+                "distance": 2.95,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "陆家嘴-地铁站",
+                "end": "东方明珠",
+                "mode": "walk",
+                "start_time": "12:06",
+                "end_time": "12:16",
+                "cost": 0,
+                "distance": 0.89,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "豫园",
+            "type": "attraction",
+            "price": 40,
+            "cost": 40,
+            "start_time": "13:48",
+            "end_time": "15:18",
+            "transports": [
+              {
+                "start": "东方明珠",
+                "end": "豫园",
+                "mode": "taxi",
+                "start_time": "13:46",
+                "end_time": "13:48",
+                "cost": 11.0,
+                "distance": 1.6,
+                "price": 11.0,
+                "cars": 1
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "南京路步行街",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "15:38",
+            "end_time": "17:08",
+            "transports": [
+              {
+                "start": "豫园",
+                "end": "陆家嘴-地铁站",
+                "mode": "walk",
+                "start_time": "15:18",
+                "end_time": "15:26",
+                "cost": 0,
+                "distance": 0.71,
+                "price": 0
+              },
+              {
+                "start": "陆家嘴-地铁站",
+                "end": "天潼路-地铁站",
+                "mode": "metro",
+                "start_time": "15:26",
+                "end_time": "15:29",
+                "cost": 2,
+                "distance": 1.98,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "天潼路-地铁站",
+                "end": "南京路步行街",
+                "mode": "walk",
+                "start_time": "15:29",
+                "end_time": "15:38",
+                "cost": 0,
+                "distance": 0.8,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "陆家嘴",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "17:25",
+            "end_time": "18:55",
+            "transports": [
+              {
+                "start": "南京路步行街",
+                "end": "天潼路-地铁站",
+                "mode": "walk",
+                "start_time": "17:08",
+                "end_time": "17:17",
+                "cost": 0,
+                "distance": 0.8,
+                "price": 0
+              },
+              {
+                "start": "天潼路-地铁站",
+                "end": "浦东南路-地铁站",
+                "mode": "metro",
+                "start_time": "17:17",
+                "end_time": "17:22",
+                "cost": 2,
+                "distance": 2.93,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "浦东南路-地铁站",
+                "end": "陆家嘴",
+                "mode": "walk",
+                "start_time": "17:22",
+                "end_time": "17:25",
+                "cost": 0,
+                "distance": 0.27,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "start_time": "20:26",
+            "end_time": "20:58",
+            "start": "上海站",
+            "end": "苏州站",
+            "price": 55.23,
+            "cost": 55.23,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "陆家嘴",
+                "end": "浦东南路-地铁站",
+                "mode": "walk",
+                "start_time": "18:55",
+                "end_time": "18:58",
+                "cost": 0,
+                "distance": 0.27,
+                "price": 0
+              },
+              {
+                "start": "浦东南路-地铁站",
+                "end": "上海火车站-地铁站",
+                "mode": "metro",
+                "start_time": "18:58",
+                "end_time": "19:08",
+                "cost": 3,
+                "distance": 5.33,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "上海火车站-地铁站",
+                "end": "上海站",
+                "mode": "walk",
+                "start_time": "19:08",
+                "end_time": "19:10",
+                "cost": 0,
+                "distance": 0.21,
+                "price": 0
+              }
+            ],
+            "TrainID": "G7064",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 2000.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把每人每顿餐饮预算控制在80元以内",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "上海"
+    },
+    "temporal": [],
+    "resource": {
+      "meal_budget_per_person_per_meal": 80.0,
+      "budget_cap": 80,
+      "activity_type": "meal",
+      "metric": "avg_cost_per_meal_per_person"
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "activity_budget_limit",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "meal"
+      },
+      "operator": "<=",
+      "value": 80.0,
+      "params": {
+        "metric": "avg_cost_per_meal_per_person",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "parameter",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "parameter",
+    "resource",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_resource_overlap__activity_budget_limit__02",
+    "template": "把每人每顿餐饮预算控制在{budget}元以内",
+    "template_str": "把每人每顿餐饮预算控制在{budget}元以内",
+    "constraint_type": "activity_budget_limit",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "target_city": "上海",
+    "start_city": "苏州",
+    "day_count": 1,
+    "requested_constraint_type": [
+      "activity_budget_limit"
+    ],
+    "requested_bucket_names": [
+      "structural_resource_overlap"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000016",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_resource_overflow/_validation_split/passed/sample_000016.json",
+    "diversity_augmented": true,
+    "diversity_domain": "meal",
+    "constraint_type": "activity_budget_limit",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": false,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "parameter",
+      "resource",
+      "overflow"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000060",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000060.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000016",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_resource_overlap/_validation_split/passed/sample_000016.json",
+    "template_diversity_selected": true
+  }
+}

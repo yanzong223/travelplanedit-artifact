@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164840787934",
+  "tag": "easy",
+  "start_city": "深圳",
+  "target_city": "南京",
+  "days": 2,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'栖霞山'}<=attraction_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置深圳。我们四个人想去南京玩2天，想去栖霞山爬山，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Shenzhen. Four of us want to visit Nanjing for 2 days and plan to hike Qixia Mountain. Please provide us with a travel itinerary."
+}

@@ -1,0 +1,488 @@
+{
+  "sample_id": "sample_000008",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置武汉。我一个人想去杭州玩一天，预算1400人民币，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028160430652306",
+    "tag": "easy",
+    "start_city": "武汉",
+    "target_city": "杭州",
+    "days": 1,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==1)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1400)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置武汉。我一个人想去杭州玩一天，预算1400人民币，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Wuhan. I want to travel to Hangzhou alone for a day with a budget of 1,400 RMB. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "武汉",
+    "target_city": "杭州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:19",
+            "end_time": "12:54",
+            "start": "武汉站",
+            "end": "杭州西站",
+            "price": 365.22,
+            "cost": 365.22,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G3237",
+            "type": "train"
+          },
+          {
+            "position": "聞炉·港式海鲜火锅(城西店)",
+            "type": "lunch",
+            "price": 328,
+            "cost": 328,
+            "start_time": "12:58",
+            "end_time": "13:58",
+            "transports": [
+              {
+                "start": "杭州西站",
+                "end": "聞炉·港式海鲜火锅(城西店)",
+                "mode": "taxi",
+                "start_time": "12:54",
+                "end_time": "12:58",
+                "cost": 14.59,
+                "distance": 2.83,
+                "price": 14.59,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "晓书馆",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "14:36",
+            "end_time": "16:06",
+            "transports": [
+              {
+                "start": "聞炉·港式海鲜火锅(城西店)",
+                "end": "良睦路-地铁站",
+                "mode": "walk",
+                "start_time": "13:58",
+                "end_time": "14:03",
+                "cost": 0,
+                "distance": 0.49,
+                "price": 0
+              },
+              {
+                "start": "良睦路-地铁站",
+                "end": "良渚-地铁站",
+                "mode": "metro",
+                "start_time": "14:03",
+                "end_time": "14:20",
+                "cost": 3,
+                "distance": 8.77,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "良渚-地铁站",
+                "end": "晓书馆",
+                "mode": "walk",
+                "start_time": "14:20",
+                "end_time": "14:36",
+                "cost": 0,
+                "distance": 1.35,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "start_time": "18:01",
+            "end_time": "22:33",
+            "start": "杭州西站",
+            "end": "武汉站",
+            "price": 365.22,
+            "cost": 365.22,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "晓书馆",
+                "end": "良渚-地铁站",
+                "mode": "walk",
+                "start_time": "16:06",
+                "end_time": "16:22",
+                "cost": 0,
+                "distance": 1.35,
+                "price": 0
+              },
+              {
+                "start": "良渚-地铁站",
+                "end": "火车西站-地铁站",
+                "mode": "metro",
+                "start_time": "16:22",
+                "end_time": "16:39",
+                "cost": 3,
+                "distance": 8.6,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "火车西站-地铁站",
+                "end": "杭州西站",
+                "mode": "walk",
+                "start_time": "16:39",
+                "end_time": "16:40",
+                "cost": 0,
+                "distance": 0.12,
+                "price": 0
+              }
+            ],
+            "TrainID": "G3246",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 1400.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1400)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "总预算得控制在1000元以内",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "杭州"
+    },
+    "temporal": [],
+    "resource": {
+      "total_budget": 1000,
+      "budget_cap": 1000,
+      "budget": 1000
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "budget_total",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 1000.0,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "parameter",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "resource",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "resource",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "parameter",
+      "resource",
+      "overflow"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "budget_limit",
+    "template": "总预算不能超过{budget}元",
+    "template_id": "structural_resource_overflow__budget_limit__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "budget_cap"
+      ],
+      "relation_slots": [],
+      "ir_outputs": [
+        "budget_total"
+      ],
+      "risk_level": "low",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "budget_limit",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "budget_limit",
+      "baseline_total_cost": 1079.0300000000002,
+      "chosen_budget": 1000
+    },
+    "rendered_params": {
+      "start_city": "武汉",
+      "target_city": "杭州",
+      "day_count": 1,
+      "budget": "1000"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "budget_limit",
+      "budget_cap": 1000
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "budget_limit",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": null,
+      "day_poi_pairs": [],
+      "budget_cap": 1000,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "baseline": 1079.0300000000002,
+      "threshold": 1000.0,
+      "baseline_reason": "total_cost"
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "budget_limit",
+      "budget_cap": 1000
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "budget_limit",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": null,
+      "day_poi_pairs": [],
+      "budget_cap": 1000,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "baseline": 1079.0300000000002,
+      "threshold": 1000.0,
+      "baseline_reason": "total_cost"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    "target_city": "杭州",
+    "start_city": "武汉",
+    "is_single_day": true,
+    "day_count": 1,
+    "origin_plan_file": "e20241028160430652306.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_resource_overflow"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T16:40:52.442962",
+    "target_confirmed": true,
+    "target_confidence": 0.8,
+    "primary_label": [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000021",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_resource_overflow/_validation_split/passed/sample_000021.json",
+    "template_diversity_selected": true
+  }
+}

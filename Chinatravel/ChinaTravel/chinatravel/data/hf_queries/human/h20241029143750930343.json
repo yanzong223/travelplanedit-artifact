@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143750930343",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "成都",
+  "days": 5,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'人文景观'}<=attraction_type_set)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'川菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置成都,旅行人数2,旅行天数5] 我和闺蜜想去四川玩，计划5天，想要逛逛成都特色，感受当地风土人情，还有品尝成都美食，怎么规划行程",
+  "nature_language_en": "[Current location: Nanjing, Destination: Chengdu, Number of travelers: 2, Travel days: 5] My best friend and I want to visit Sichuan for 5 days. We plan to explore the unique features of Chengdu, experience the local customs and culture, and taste the local cuisine. How should we plan our itinerary?"
+}

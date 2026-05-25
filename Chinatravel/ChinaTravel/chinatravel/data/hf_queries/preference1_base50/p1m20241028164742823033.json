@@ -1,0 +1,22 @@
+{
+  "uid": "p1m20241028164742823033",
+  "tag": "preference1_base50",
+  "start_city": "广州",
+  "target_city": "北京",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'北京菜'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置广州。我们三个人想去北京玩2天，想尝试北京本地特色菜，并且希望在地点间交通时间尽可能少的情况下，参观尽可能多的景点。请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Guangzhou. The three of us want to visit Beijing for 2 days and try some local specialty dishes, while minimizing travel time between locations and visiting as many attractions as possible. Please provide us with a travel plan.",
+  "preference": "['地点间交通时间尽可能少']",
+  "preference_en": "['less inner transports time']",
+  "preference_py": "['minimize average_time_cost\\ntime_cost = 0\\ntransport_count = 0\\nfor activity in allactivities(plan):\\n    transports = activity_transports(activity)\\n    if transports!=[]:\\n        transport_count += 1\\n        time_cost += innercity_transport_time(transports)\\naverage_time_cost = time_cost / transport_count if transport_count > 0 else -1']"
+}

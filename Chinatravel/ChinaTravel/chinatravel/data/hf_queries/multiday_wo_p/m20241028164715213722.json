@@ -1,0 +1,21 @@
+{
+  "uid": "m20241028164715213722",
+  "tag": "easy",
+  "start_city": "北京",
+  "target_city": "杭州",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'民宿'}<=accommodation_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置北京。我一个人想去杭州玩3天，住一间大床房，酒店要像民宿一样温馨，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Beijing. I want to travel alone to Hangzhou for 3 days and stay in a hotel with a large bed that feels as cozy as a homestay. Please provide me with a travel plan."
+}

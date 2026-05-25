@@ -1,0 +1,22 @@
+{
+  "uid": "p1e20241028160401902010",
+  "tag": "preference1_base50",
+  "start_city": "苏州",
+  "target_city": "南京",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1200)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置苏州。我一个人想去南京玩一天，预算1200人民币，请给我一个旅行规划。我希望在景点间移动的时间尽可能少，以便能参观更多的景点。",
+  "nature_language_en": "Current location: Suzhou. I want to go to Nanjing for a day trip by myself with a budget of 1200 RMB. Please provide me with a travel plan. I hope to minimize the travel time between attractions to visit more places.",
+  "preference": "['地点间交通时间尽可能少']",
+  "preference_en": "['less inner transports time']",
+  "preference_py": "['minimize average_time_cost\\ntime_cost = 0\\ntransport_count = 0\\nfor activity in allactivities(plan):\\n    transports = activity_transports(activity)\\n    if transports!=[]:\\n        transport_count += 1\\n        time_cost += innercity_transport_time(transports)\\naverage_time_cost = time_cost / transport_count if transport_count > 0 else -1']"
+}

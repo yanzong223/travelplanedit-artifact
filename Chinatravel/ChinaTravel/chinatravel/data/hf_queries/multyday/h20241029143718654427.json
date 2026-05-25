@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143718654427",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "北京",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2500)",
+    "hotel_cost=0\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': hotel_cost+=activity_cost(activity)\nresult=(hotel_cost/people_count(plan)/(day_count(plan)-1)<= 200)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置北京,旅行人数1,旅行天数3] 当前位置南京，想一个人去北京玩三天，预算2500，酒店预算200以内（每晚），可以接受青年旅舍，行程希望安排得紧密些，代表性景点都想去，请帮我规划行程，需要列出各个景点的预约或购票方式",
+  "nature_language_en": "[Current location: Nanjing, Destination: Beijing, Number of travelers: 1, Travel days: 3] Currently in Nanjing, I want to travel alone to Beijing for three days with a budget of 2500 RMB. The hotel budget is within 200 RMB per night, and I am open to staying in hostels. I hope the itinerary is packed, and I want to visit all the representative attractions. Please help me plan the itinerary and list the reservation or ticket purchasing methods for each attraction."
+}

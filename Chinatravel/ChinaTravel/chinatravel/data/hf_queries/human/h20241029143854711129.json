@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143854711129",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "成都",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置成都,旅行人数1,旅行天数2] 位置南京 想去成都 特种兵旅游2天 给我个规划",
+  "nature_language_en": "[Current location: Nanjing, Destination: Chengdu, Number of travelers: 1, Travel days: 2] Location: Nanjing, Wants to go to Chengdu, Special forces-style travel for 2 days, Please give me a plan."
+}

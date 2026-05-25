@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143908194169",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "深圳",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置深圳,旅行人数3,旅行天数3] 我想和两个朋友去北深圳玩3天，想要坐飞机去，市内交通尽可能方便。请问我应当如何规划行程？",
+  "nature_language_en": "[Current location: Nanjing, Destination: Shenzhen, Number of travelers: 3, Duration of trip: 3 days] I want to go to Shenzhen with two friends for 3 days. We would like to fly there, and have convenient transportation within the city. How should I plan the itinerary?"
+}

@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143639901784",
+  "tag": "human",
+  "start_city": "上海",
+  "target_city": "广州",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置上海,目标位置广州,旅行人数1,旅行天数2] 本周将会前往广州出差，停留两天，请为我规划一下出行的交通和出行的日期，需求是：在交通方式不受天气影响的条件下时间越短越好。",
+  "nature_language_en": "[Current location: Shanghai, Destination: Guangzhou, Number of travelers: 1, Travel days: 2] I will be going on a business trip to Guangzhou this week, staying for two days. Please help me plan the travel transportation and dates. The requirement is: under the condition that the mode of transportation is not affected by the weather, the shorter the travel time, the better."
+}

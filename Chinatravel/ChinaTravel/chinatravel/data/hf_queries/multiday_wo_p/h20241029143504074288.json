@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143504074288",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "北京",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'历史古迹'}<=attraction_type_set or {'人文景观'}<=attraction_type_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'北京大学'}<=attraction_name_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置北京,旅行人数2,旅行天数4] 我和男朋友想从苏州出发去北京玩，大约4天，预算两个人共3000左右，希望游览历史人文相关的景点，想去看北京大学，请给我一个旅行计划",
+  "nature_language_en": "[Current location: Suzhou, Destination: Beijing, Number of travelers: 2, Number of travel days: 4] My boyfriend and I want to travel from Suzhou to Beijing for about 4 days, with a budget of around 3000 RMB for both of us. We hope to visit historical and cultural attractions and would like to see Peking University. Please provide me with a travel plan."
+}

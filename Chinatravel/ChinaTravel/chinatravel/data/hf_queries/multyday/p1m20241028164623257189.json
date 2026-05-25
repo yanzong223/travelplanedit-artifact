@@ -1,0 +1,22 @@
+{
+  "uid": "p1m20241028164623257189",
+  "tag": "preference1_base50",
+  "start_city": "武汉",
+  "target_city": "杭州",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'公园'}<=attraction_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置武汉。我和朋友两个人想去杭州玩3天，想去公园散步，希望景点间交通时间尽可能少，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Wuhan. My friend and I want to visit Hangzhou for 3 days. We would like to take walks in parks and hope to minimize the travel time between attractions. Please provide us with a travel plan.",
+  "preference": "['地点间交通时间尽可能少']",
+  "preference_en": "['less inner transports time']",
+  "preference_py": "['minimize average_time_cost\\ntime_cost = 0\\ntransport_count = 0\\nfor activity in allactivities(plan):\\n    transports = activity_transports(activity)\\n    if transports!=[]:\\n        transport_count += 1\\n        time_cost += innercity_transport_time(transports)\\naverage_time_cost = time_cost / transport_count if transport_count > 0 else -1']"
+}

@@ -1,0 +1,19 @@
+{
+  "uid": "t20241206171736098796",
+  "tag": "easy",
+  "start_city": "杭州",
+  "target_city": "北京",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置杭州。我和朋友计划去北京玩三天，选择飞机出行，开一间双床房。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Hangzhou. My friend and I are planning to visit Beijing for three days. We have chosen to travel by plane. We will book a twin room. Please provide me with a travel itinerary."
+}

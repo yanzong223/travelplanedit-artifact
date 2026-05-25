@@ -1,0 +1,22 @@
+{
+  "uid": "p5m20241028164642633824",
+  "tag": "preference5_base50",
+  "start_city": "广州",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'酒吧/酒馆'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置广州。我们四个人想去上海玩3天，想去喝酒，并且希望在上海迪士尼度假区附近游玩，距离尽可能近，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Guangzhou. Four of us want to go to Shanghai for a 3-day trip and would like to go drinking, and we prefer to stay as close as possible to Shanghai Disney Resort. Please provide us with a travel plan.",
+  "preference": "['在上海迪士尼度假区附近游玩，距离尽可能近']",
+  "preference_en": "['minimize distance to poi']",
+  "preference_py": "[\"minimize average_dist_cost\\ntarget_poi = '上海迪士尼度假区'\\npoi_list = list()\\ntotal_distance = 0\\npoi_count=0\\ncity = target_city(plan)\\nfor activity in allactivities(plan):\\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner', 'accommodation', 'attraction']:\\n        poi_list.append(activity_position(activity))\\nfor poi in poi_list:\\n    total_distance += poi_distance(city, target_poi, poi)\\n    poi_count += 1\\naverage_dist_cost = total_distance / poi_count if poi_count > 0 else -1\"]"
+}

@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143749478632",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "成都",
+  "days": 4,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置成都,旅行人数3,旅行天数4] 我们一家三人想去成都旅游，计划去4天 ，想去成都最经典的旅游景点，不知道去哪里比较好",
+  "nature_language_en": "[Current location: Nanjing, Destination: Chengdu, Number of travelers: 3, Travel days: 4] Our family of three wants to travel to Chengdu for 4 days. We plan to visit the most classic tourist attractions in Chengdu, but we're not sure where would be the best places to go."
+}

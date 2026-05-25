@@ -1,0 +1,617 @@
+{
+  "sample_id": "sample_000010",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置重庆。我们四个人想去深圳玩2天，住两间双床房，酒店要可以看到山景，请给我们一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "m20241028164710182329",
+    "tag": "easy",
+    "start_city": "重庆",
+    "target_city": "深圳",
+    "days": 2,
+    "people_number": 4,
+    "limit_rooms": true,
+    "limits_room_type": true,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==4)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False",
+      "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'山景房'}<=accommodation_type_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置重庆。我们四个人想去深圳玩2天，住两间双床房，酒店要可以看到山景，请给我们一个旅行规划。",
+    "nature_language_en": "Current location: Chongqing. Four of us want to go to Shenzhen for a 2-day trip, staying in two twin-bed rooms. The hotel should have a mountain view. Please provide us with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 4,
+    "start_city": "重庆",
+    "target_city": "深圳",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:29",
+            "end_time": "08:50",
+            "start": "重庆江北国际机场",
+            "end": "深圳宝安国际机场",
+            "price": 574.54,
+            "cost": 2298.16,
+            "tickets": 4,
+            "transports": [],
+            "FlightID": "FL342",
+            "type": "airplane"
+          },
+          {
+            "position": "gaga(中航城君尚购物中心店)",
+            "type": "lunch",
+            "price": 74,
+            "cost": 296,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "深圳宝安国际机场",
+                "end": "机场东-地铁站",
+                "mode": "walk",
+                "start_time": "08:50",
+                "end_time": "08:55",
+                "cost": 0,
+                "distance": 0.45,
+                "price": 0
+              },
+              {
+                "start": "机场东-地铁站",
+                "end": "华强路-地铁站",
+                "mode": "metro",
+                "start_time": "08:55",
+                "end_time": "09:53",
+                "cost": 28,
+                "distance": 29.46,
+                "price": 7,
+                "tickets": 4
+              },
+              {
+                "start": "华强路-地铁站",
+                "end": "gaga(中航城君尚购物中心店)",
+                "mode": "walk",
+                "start_time": "09:53",
+                "end_time": "09:56",
+                "cost": 0,
+                "distance": 0.27,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "君德假日酒店(深圳华侨城店)",
+            "type": "accommodation",
+            "price": 349,
+            "cost": 698,
+            "start_time": "12:29",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "gaga(中航城君尚购物中心店)",
+                "end": "华强路-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:03",
+                "cost": 0,
+                "distance": 0.27,
+                "price": 0
+              },
+              {
+                "start": "华强路-地铁站",
+                "end": "深康-地铁站",
+                "mode": "metro",
+                "start_time": "12:03",
+                "end_time": "12:20",
+                "cost": 12,
+                "distance": 8.9,
+                "price": 3,
+                "tickets": 4
+              },
+              {
+                "start": "深康-地铁站",
+                "end": "君德假日酒店(深圳华侨城店)",
+                "mode": "walk",
+                "start_time": "12:20",
+                "end_time": "12:29",
+                "cost": 0,
+                "distance": 0.76,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 2
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "君德假日酒店(深圳华侨城店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "世界之窗",
+            "type": "attraction",
+            "price": 115,
+            "cost": 460,
+            "start_time": "09:30",
+            "end_time": "11:00",
+            "transports": [
+              {
+                "start": "君德假日酒店(深圳华侨城店)",
+                "end": "深康-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:39",
+                "cost": 0,
+                "distance": 0.76,
+                "price": 0
+              },
+              {
+                "start": "深康-地铁站",
+                "end": "世界之窗-地铁站",
+                "mode": "metro",
+                "start_time": "08:39",
+                "end_time": "08:44",
+                "cost": 8,
+                "distance": 2.75,
+                "price": 2,
+                "tickets": 4
+              },
+              {
+                "start": "世界之窗-地铁站",
+                "end": "世界之窗",
+                "mode": "walk",
+                "start_time": "08:44",
+                "end_time": "08:52",
+                "cost": 0,
+                "distance": 0.68,
+                "price": 0
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "CoasTea手造纯茶(车公庙店)",
+            "type": "lunch",
+            "price": 45,
+            "cost": 180,
+            "start_time": "11:22",
+            "end_time": "12:22",
+            "transports": [
+              {
+                "start": "世界之窗",
+                "end": "世界之窗-地铁站",
+                "mode": "walk",
+                "start_time": "11:00",
+                "end_time": "11:08",
+                "cost": 0,
+                "distance": 0.68,
+                "price": 0
+              },
+              {
+                "start": "世界之窗-地铁站",
+                "end": "农林-地铁站",
+                "mode": "metro",
+                "start_time": "11:08",
+                "end_time": "11:17",
+                "cost": 12,
+                "distance": 4.53,
+                "price": 3,
+                "tickets": 4
+              },
+              {
+                "start": "农林-地铁站",
+                "end": "CoasTea手造纯茶(车公庙店)",
+                "mode": "walk",
+                "start_time": "11:17",
+                "end_time": "11:22",
+                "cost": 0,
+                "distance": 0.5,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "深圳平安金融中心云际观光层",
+            "type": "attraction",
+            "price": 180,
+            "cost": 720,
+            "start_time": "12:28",
+            "end_time": "13:58",
+            "transports": [
+              {
+                "start": "CoasTea手造纯茶(车公庙店)",
+                "end": "深圳平安金融中心云际观光层",
+                "mode": "taxi",
+                "start_time": "12:22",
+                "end_time": "12:28",
+                "cost": 19.77,
+                "distance": 4.31,
+                "price": 19.77,
+                "cars": 1
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "深圳宝利来国际大酒店·凤凰阁旋转餐厅",
+            "type": "dinner",
+            "price": 330,
+            "cost": 1320,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "深圳平安金融中心云际观光层",
+                "end": "市民中心-地铁站",
+                "mode": "walk",
+                "start_time": "13:58",
+                "end_time": "14:02",
+                "cost": 0,
+                "distance": 0.34,
+                "price": 0
+              },
+              {
+                "start": "市民中心-地铁站",
+                "end": "怀德-地铁站",
+                "mode": "metro",
+                "start_time": "14:02",
+                "end_time": "14:58",
+                "cost": 28,
+                "distance": 28.5,
+                "price": 7,
+                "tickets": 4
+              },
+              {
+                "start": "怀德-地铁站",
+                "end": "深圳宝利来国际大酒店·凤凰阁旋转餐厅",
+                "mode": "walk",
+                "start_time": "14:58",
+                "end_time": "15:11",
+                "cost": 0,
+                "distance": 1.09,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "19:34",
+            "end_time": "20:55",
+            "start": "深圳宝安国际机场",
+            "end": "重庆江北国际机场",
+            "price": 503.09,
+            "cost": 2012.36,
+            "tickets": 4,
+            "transports": [
+              {
+                "start": "深圳宝利来国际大酒店·凤凰阁旋转餐厅",
+                "end": "怀德-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:13",
+                "cost": 0,
+                "distance": 1.09,
+                "price": 0
+              },
+              {
+                "start": "怀德-地铁站",
+                "end": "机场东-地铁站",
+                "mode": "metro",
+                "start_time": "18:13",
+                "end_time": "18:17",
+                "cost": 8,
+                "distance": 2.21,
+                "price": 2,
+                "tickets": 4
+              },
+              {
+                "start": "机场东-地铁站",
+                "end": "深圳宝安国际机场",
+                "mode": "walk",
+                "start_time": "18:17",
+                "end_time": "18:22",
+                "cost": 0,
+                "distance": 0.45,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL191",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 4,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==4)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 4,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "required_hotel_feature",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "山景房"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'山景房'}<=accommodation_type_set)"
+      }
+    },
+    {
+      "id": "origin_logic_6",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "在深圳平安金融中心云际观光层附近的活动范围最好控制在5公里以内。",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "深圳平安金融中心云际观光层",
+        "type": "attraction",
+        "city": "深圳"
+      }
+    ],
+    "spatial": {
+      "city": "深圳",
+      "poi_local_radius_limit": {
+        "anchor_poi": "深圳平安金融中心云际观光层",
+        "max_distance_km": 5.0
+      },
+      "max_walking_distance": 5.0
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "anchor_neighbor_commute_distance_cap",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "anchor_name": "深圳平安金融中心云际观光层"
+      },
+      "operator": "<=",
+      "value": 5.0,
+      "params": {
+        "unit": "km",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "深圳平安金融中心云际观光层"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "spatial",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_spatial_overflow__poi_local_radius_limit__00",
+    "template": "把{poi}周边活动半径限制为{walk_dist}公里",
+    "template_str": "把{poi}周边活动半径限制为{walk_dist}公里",
+    "constraint_type": "poi_local_radius_limit",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    "target_city": "深圳",
+    "start_city": "重庆",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "poi_local_radius_limit"
+    ],
+    "requested_bucket_names": [
+      "structural_spatial_overflow"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000036",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_temporal_overlap/_validation_split/passed/sample_000036.json",
+    "diversity_augmented": true,
+    "diversity_domain": "spatial_compactness",
+    "constraint_type": "poi_local_radius_limit",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "spatial",
+      "overflow"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000222",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000222.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000058",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_spatial_overflow/_validation_split/passed/sample_000058.json",
+    "template_diversity_selected": true
+  }
+}

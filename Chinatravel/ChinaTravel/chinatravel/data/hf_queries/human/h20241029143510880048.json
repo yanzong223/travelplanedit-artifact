@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143510880048",
+  "tag": "human",
+  "start_city": "上海",
+  "target_city": "南京",
+  "days": 5,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'石臼湖','音乐台'}<=attraction_name_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置上海,目标位置南京,旅行人数3,旅行天数5] 我想去有天空之境之誉的石臼湖，也想去音乐台！！",
+  "nature_language_en": "[Current location: Shanghai, Destination: Nanjing, Number of travelers: 3, Number of travel days: 5] I want to visit Shijiu Lake, which is known as the \"Sky Mirror,\" and I also want to go to the Music Stage!!"
+}

@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143818664124",
+  "tag": "human",
+  "start_city": "重庆",
+  "target_city": "武汉",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'黄鹤楼'}<=attraction_name_set)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'湖北菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置重庆,目标位置武汉,旅行人数2,旅行天数2] 和闺蜜计划周末2天从重庆坐高铁到武汉游长江，想看黄鹤楼，顺便品尝当地的特色菜，请你为我们规划行程",
+  "nature_language_en": "[Current location: Chongqing, Destination: Wuhan, Number of travelers: 2, Number of travel days: 2] My best friend and I are planning a 2-day weekend trip from Chongqing to Wuhan by high-speed train to tour the Yangtze River. We want to see the Yellow Crane Tower and also try some local specialties. Could you help us plan the itinerary?"
+}

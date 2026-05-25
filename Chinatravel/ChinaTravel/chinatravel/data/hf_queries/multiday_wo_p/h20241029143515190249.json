@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143515190249",
+  "tag": "human",
+  "start_city": "上海",
+  "target_city": "苏州",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "go_start_time = 0\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train','airplane'] and intercity_transport_origin(activity) == start_city(plan): go_start_time = activity_start_time(activity)\nresult=(go_start_time>='17:00')",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光'}<=attraction_type_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置上海,目标位置苏州,旅行人数2,旅行天数4] 我想和对象从上海取苏州玩，对象想打卡一些自然景色优美的景点，一共玩4天，我们第一天晚上从上海出发。",
+  "nature_language_en": "[Current location: Shanghai, Destination: Suzhou, Number of travelers: 2, Number of travel days: 4] I want to travel from Shanghai to Suzhou with my partner. My partner wants to visit some scenic spots with beautiful natural landscapes. We will be traveling for a total of 4 days, departing from Shanghai on the first evening."
+}

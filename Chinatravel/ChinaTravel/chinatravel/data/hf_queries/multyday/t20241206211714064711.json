@@ -1,0 +1,20 @@
+{
+  "uid": "t20241206211714064711",
+  "tag": "easy",
+  "start_city": "成都",
+  "target_city": "南京",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'taxi'})"
+  ],
+  "nature_language": "当前位置成都。我和两个朋友计划去南京玩两天，选择火车出行，市内交通方式选择打车。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Chengdu. My two friends and I are planning to visit Nanjing for two days. We have chosen to travel by train and use taxis for intra-city transportation. Please provide me with a travel itinerary."
+}

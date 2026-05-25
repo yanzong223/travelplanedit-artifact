@@ -1,0 +1,19 @@
+{
+  "uid": "t20241206164116321945",
+  "tag": "easy",
+  "start_city": "南京",
+  "target_city": "重庆",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置南京。我和朋友计划去重庆玩两天，选择火车出行。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Nanjing. My friend and I are planning to visit Chongqing for two days. We have chosen to travel by train. Please provide me with a travel itinerary."
+}

@@ -1,0 +1,437 @@
+{
+  "sample_id": "sample_000018",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置广州。我一个人想去武汉玩一天，预算3000人民币，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028160309165566",
+    "tag": "easy",
+    "start_city": "广州",
+    "target_city": "武汉",
+    "days": 1,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==1)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置广州。我一个人想去武汉玩一天，预算3000人民币，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Guangzhou. I want to visit Wuhan for a day by myself with a budget of 3000 RMB. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "广州",
+    "target_city": "武汉",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "06:19",
+            "end_time": "10:44",
+            "start": "广州南站",
+            "end": "武汉站",
+            "price": 543.6,
+            "cost": 543.6,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G1170",
+            "type": "train"
+          },
+          {
+            "position": "黄鹤楼",
+            "type": "attraction",
+            "price": 65,
+            "cost": 65,
+            "start_time": "11:18",
+            "end_time": "12:48",
+            "transports": [
+              {
+                "start": "武汉站",
+                "end": "武汉站东广场-地铁站",
+                "mode": "walk",
+                "start_time": "10:44",
+                "end_time": "10:46",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              },
+              {
+                "start": "武汉站东广场-地铁站",
+                "end": "昙华林武胜门-地铁站",
+                "mode": "metro",
+                "start_time": "10:46",
+                "end_time": "11:12",
+                "cost": 4,
+                "distance": 13.04,
+                "price": 4,
+                "tickets": 1
+              },
+              {
+                "start": "昙华林武胜门-地铁站",
+                "end": "黄鹤楼",
+                "mode": "walk",
+                "start_time": "11:12",
+                "end_time": "11:18",
+                "cost": 0,
+                "distance": 0.56,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "粗茶淡饭·壹号餐房",
+            "type": "lunch",
+            "price": 398,
+            "cost": 398,
+            "start_time": "12:54",
+            "end_time": "13:54",
+            "transports": [
+              {
+                "start": "黄鹤楼",
+                "end": "粗茶淡饭·壹号餐房",
+                "mode": "taxi",
+                "start_time": "12:48",
+                "end_time": "12:54",
+                "cost": 19.58,
+                "distance": 4.25,
+                "price": 19.58,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "湖北省博物馆",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "14:04",
+            "end_time": "15:34",
+            "transports": [
+              {
+                "start": "粗茶淡饭·壹号餐房",
+                "end": "湖北省博物馆",
+                "mode": "taxi",
+                "start_time": "13:54",
+                "end_time": "14:04",
+                "cost": 29.09,
+                "distance": 6.97,
+                "price": 29.09,
+                "cars": 1
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "麦当劳(永旺购物中心餐厅)",
+            "type": "dinner",
+            "price": 23,
+            "cost": 23,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "湖北省博物馆",
+                "end": "省博湖北日报-地铁站",
+                "mode": "walk",
+                "start_time": "15:34",
+                "end_time": "15:42",
+                "cost": 0,
+                "distance": 0.71,
+                "price": 0
+              },
+              {
+                "start": "省博湖北日报-地铁站",
+                "end": "金银潭-地铁站",
+                "mode": "metro",
+                "start_time": "15:42",
+                "end_time": "16:12",
+                "cost": 5,
+                "distance": 15.1,
+                "price": 5,
+                "tickets": 1
+              },
+              {
+                "start": "金银潭-地铁站",
+                "end": "麦当劳(永旺购物中心餐厅)",
+                "mode": "walk",
+                "start_time": "16:12",
+                "end_time": "16:16",
+                "cost": 0,
+                "distance": 0.38,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "府河湿地",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "18:14",
+            "end_time": "19:44",
+            "transports": [
+              {
+                "start": "麦当劳(永旺购物中心餐厅)",
+                "end": "府河湿地",
+                "mode": "taxi",
+                "start_time": "18:00",
+                "end_time": "18:14",
+                "cost": 38.91,
+                "distance": 9.77,
+                "price": 38.91,
+                "cars": 1
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "start_time": "21:09",
+            "end_time": "22:12",
+            "start": "武汉天河国际机场",
+            "end": "广州白云国际机场",
+            "price": 453.61,
+            "cost": 453.61,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "府河湿地",
+                "end": "航空总部-地铁站",
+                "mode": "walk",
+                "start_time": "19:44",
+                "end_time": "20:26",
+                "cost": 0,
+                "distance": 3.52,
+                "price": 0
+              },
+              {
+                "start": "航空总部-地铁站",
+                "end": "天河机场-地铁站",
+                "mode": "metro",
+                "start_time": "20:26",
+                "end_time": "20:34",
+                "cost": 3,
+                "distance": 4.35,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "天河机场-地铁站",
+                "end": "武汉天河国际机场",
+                "mode": "walk",
+                "start_time": "20:34",
+                "end_time": "20:40",
+                "cost": 0,
+                "distance": 0.55,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL597",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 3000.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "我想找家粤菜馆子尝尝",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "武汉"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "preferred_type": "粤菜",
+      "restaurant_cuisine": "粤菜",
+      "required_restaurant_type": "粤菜"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "required_restaurant_type",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "meal"
+      },
+      "operator": "contains_all",
+      "value": [
+        "粤菜"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "template_id": "structural_semantic_incompatibility__required_restaurant_type__01",
+    "template": "我想吃{poi_type}",
+    "template_str": "我想吃{poi_type}",
+    "constraint_type": "required_restaurant_type",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "target_city": "武汉",
+    "start_city": "广州",
+    "day_count": 1,
+    "requested_constraint_type": [
+      "required_restaurant_type"
+    ],
+    "requested_bucket_names": [
+      "structural_semantic_incompatibility"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000048",
+    "source_seed_path": "./data/data/batches/batch005/batches/compositional_structural_overflow/_validation_split/passed/sample_000048.json",
+    "diversity_augmented": true,
+    "diversity_domain": "meal",
+    "constraint_type": "required_restaurant_type",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000030",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000030.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000026",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_incompatibility/_validation_split/passed/sample_000026.json",
+    "template_diversity_selected": true
+  }
+}

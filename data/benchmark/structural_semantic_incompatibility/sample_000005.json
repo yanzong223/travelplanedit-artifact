@@ -1,0 +1,617 @@
+{
+  "sample_id": "sample_000005",
+  "batch_id": "benchmark",
+  "origin_query_text": "[当前位置深圳,目标位置广州,旅行人数2,旅行天数2] 我和朋友想在周末两天从深圳出发到广州玩，想去人比较少的地方，主打一个悠闲，如何规划",
+  "origin_query_structured": {
+    "uid": "h20241029143602442546",
+    "tag": "human",
+    "start_city": "深圳",
+    "target_city": "广州",
+    "days": 2,
+    "people_number": 2,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==2)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "[当前位置深圳,目标位置广州,旅行人数2,旅行天数2] 我和朋友想在周末两天从深圳出发到广州玩，想去人比较少的地方，主打一个悠闲，如何规划",
+    "nature_language_en": "[Current location: Shenzhen, Destination: Guangzhou, Number of travelers: 2, Number of travel days: 2] My friend and I want to travel from Shenzhen to Guangzhou for two days over the weekend. We are looking for less crowded places to visit, focusing on a leisurely experience. How should we plan our trip?"
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "深圳",
+    "target_city": "广州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "05:42",
+            "end_time": "13:44",
+            "start": "深圳北站",
+            "end": "广州南站",
+            "price": 67.73,
+            "cost": 135.46,
+            "tickets": 2,
+            "transports": [],
+            "TrainID": "G9695",
+            "type": "train"
+          },
+          {
+            "position": "柏高·雅酒店(广州科学城萝岗万达广场店)",
+            "type": "accommodation",
+            "price": 352,
+            "cost": 352,
+            "start_time": "14:45",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "广州南站",
+                "end": "广州南站-地铁站",
+                "mode": "walk",
+                "start_time": "13:44",
+                "end_time": "13:46",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              },
+              {
+                "start": "广州南站-地铁站",
+                "end": "苏元-地铁站",
+                "mode": "metro",
+                "start_time": "13:46",
+                "end_time": "14:43",
+                "cost": 14,
+                "distance": 28.66,
+                "price": 7,
+                "tickets": 2
+              },
+              {
+                "start": "苏元-地铁站",
+                "end": "柏高·雅酒店(广州科学城萝岗万达广场店)",
+                "mode": "walk",
+                "start_time": "14:43",
+                "end_time": "14:45",
+                "cost": 0,
+                "distance": 0.22,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "柏高·雅酒店(广州科学城萝岗万达广场店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "沙面街文化站",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "09:30",
+            "end_time": "11:00",
+            "transports": [
+              {
+                "start": "柏高·雅酒店(广州科学城萝岗万达广场店)",
+                "end": "苏元-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:32",
+                "cost": 0,
+                "distance": 0.22,
+                "price": 0
+              },
+              {
+                "start": "苏元-地铁站",
+                "end": "文化公园-地铁站",
+                "mode": "metro",
+                "start_time": "08:32",
+                "end_time": "09:18",
+                "cost": 12,
+                "distance": 23.5,
+                "price": 6,
+                "tickets": 2
+              },
+              {
+                "start": "文化公园-地铁站",
+                "end": "沙面街文化站",
+                "mode": "walk",
+                "start_time": "09:18",
+                "end_time": "09:24",
+                "cost": 0,
+                "distance": 0.56,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "广州白天鹅宾馆·玉堂春暖餐厅",
+            "type": "lunch",
+            "price": 427,
+            "cost": 854,
+            "start_time": "11:14",
+            "end_time": "12:14",
+            "transports": [
+              {
+                "start": "沙面街文化站",
+                "end": "文化公园-地铁站",
+                "mode": "walk",
+                "start_time": "11:00",
+                "end_time": "11:06",
+                "cost": 0,
+                "distance": 0.56,
+                "price": 0
+              },
+              {
+                "start": "文化公园-地铁站",
+                "end": "黄沙-地铁站",
+                "mode": "metro",
+                "start_time": "11:06",
+                "end_time": "11:07",
+                "cost": 4,
+                "distance": 0.95,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "黄沙-地铁站",
+                "end": "广州白天鹅宾馆·玉堂春暖餐厅",
+                "mode": "walk",
+                "start_time": "11:07",
+                "end_time": "11:14",
+                "cost": 0,
+                "distance": 0.58,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "洲头咀公园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:26",
+            "end_time": "13:56",
+            "transports": [
+              {
+                "start": "广州白天鹅宾馆·玉堂春暖餐厅",
+                "end": "黄沙-地铁站",
+                "mode": "walk",
+                "start_time": "12:14",
+                "end_time": "12:21",
+                "cost": 0,
+                "distance": 0.58,
+                "price": 0
+              },
+              {
+                "start": "黄沙-地铁站",
+                "end": "文化公园-地铁站",
+                "mode": "metro",
+                "start_time": "12:21",
+                "end_time": "12:22",
+                "cost": 4,
+                "distance": 0.95,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "文化公园-地铁站",
+                "end": "洲头咀公园",
+                "mode": "walk",
+                "start_time": "12:22",
+                "end_time": "12:26",
+                "cost": 0,
+                "distance": 0.37,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "广州瑰丽酒店·广御轩",
+            "type": "dinner",
+            "price": 430,
+            "cost": 860,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "洲头咀公园",
+                "end": "文化公园-地铁站",
+                "mode": "walk",
+                "start_time": "13:56",
+                "end_time": "14:00",
+                "cost": 0,
+                "distance": 0.37,
+                "price": 0
+              },
+              {
+                "start": "文化公园-地铁站",
+                "end": "花城大道-地铁站",
+                "mode": "metro",
+                "start_time": "14:00",
+                "end_time": "14:15",
+                "cost": 6,
+                "distance": 7.84,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "花城大道-地铁站",
+                "end": "广州瑰丽酒店·广御轩",
+                "mode": "walk",
+                "start_time": "14:15",
+                "end_time": "14:17",
+                "cost": 0,
+                "distance": 0.25,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "19:31",
+            "end_time": "20:59",
+            "start": "广州东站",
+            "end": "深圳站",
+            "price": 46.89,
+            "cost": 93.78,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "广州瑰丽酒店·广御轩",
+                "end": "花城大道-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:02",
+                "cost": 0,
+                "distance": 0.25,
+                "price": 0
+              },
+              {
+                "start": "花城大道-地铁站",
+                "end": "燕塘-地铁站",
+                "mode": "metro",
+                "start_time": "18:02",
+                "end_time": "18:11",
+                "cost": 6,
+                "distance": 4.52,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "燕塘-地铁站",
+                "end": "广州东站",
+                "mode": "walk",
+                "start_time": "18:11",
+                "end_time": "18:18",
+                "cost": 0,
+                "distance": 0.66,
+                "price": 0
+              }
+            ],
+            "TrainID": "C7023",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "我希望能加入一些自然风光的景点。",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "广州"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "preferred_type": "自然风光"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "includes_type",
+      "value": "自然风光",
+      "params": {
+        "min_count": 1,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [
+    {
+      "id": "edit_pref_theme_alignment_nature",
+      "source": "edit",
+      "family": "theme_alignment",
+      "facet": "theme_concentration_maximize",
+      "direction": "maximize",
+      "anchor": null,
+      "edit_mode": "addition",
+      "params": {
+        "canonical_facet": "nature",
+        "target_theme": "nature",
+        "intensity": "medium"
+      },
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "type_filter",
+        "template_text": "我想{poi_type}类型的景点"
+      }
+    }
+  ],
+  "origin_preference_tags": [
+    {
+      "family": "burden_reduction",
+      "facet": "activity_load",
+      "edit_mode": null,
+      "anchor": null,
+      "intensity": "weak",
+      "provenance": {
+        "source": "origin_query_text",
+        "is_explicit": false,
+        "evidence_span": "[当前位置深圳,目标位置广州,旅行人数2,旅行天数2] 我和朋友想在周末两天从深圳出发到广州玩，想去人比较少的地方，主打一个悠闲，如何规划"
+      }
+    },
+    {
+      "family": "burden_reduction",
+      "facet": "pace",
+      "edit_mode": null,
+      "anchor": null,
+      "intensity": "weak",
+      "provenance": {
+        "source": "origin_query_text",
+        "is_explicit": false,
+        "evidence_span": "[当前位置深圳,目标位置广州,旅行人数2,旅行天数2] 我和朋友想在周末两天从深圳出发到广州玩，想去人比较少的地方，主打一个悠闲，如何规划"
+      }
+    }
+  ],
+  "edit_target_preference_tags": [
+    {
+      "family": "theme_alignment",
+      "facet": "nature",
+      "edit_mode": "addition",
+      "anchor": null,
+      "intensity": "medium",
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "type_filter",
+        "template_text": "我想{poi_type}类型的景点"
+      }
+    }
+  ],
+  "conflict_set": [
+    [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "type_filter",
+    "template": "我想{poi_type}类型的景点",
+    "template_id": "structural_semantic_incompatibility__type_filter__07",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [],
+      "relation_slots": [
+        "semantic_type",
+        "min_count"
+      ],
+      "ir_outputs": [
+        "semantic_type_requirement"
+      ],
+      "hard_axes": [
+        "semantic_type"
+      ],
+      "soft_axes": [
+        "semantic_type"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "type_filter",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "type_filter"
+    },
+    "rendered_params": {
+      "start_city": "深圳",
+      "target_city": "广州",
+      "day_count": 2,
+      "poi_type": "自然风光"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "type_filter",
+      "preferred_type": "自然风光"
+    },
+    "canonical_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "type_filter",
+      "preferred_type": "自然风光",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.73
+    },
+    "canonical_semantic_parse_source": "llm",
+    "canonical_semantic_parse_confidence": 0.73,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "preferred_type": "自然风光"
+    },
+    "soft_target_family": "theme_alignment",
+    "soft_target_facet": "nature",
+    "soft_target_mode": "addition",
+    "soft_target_intensity": "medium",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "type_filter",
+      "preferred_type": "自然风光"
+    },
+    "surface_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "type_filter",
+      "preferred_type": "自然风光",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.73
+    },
+    "surface_semantic_parse_source": "llm",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "preferred_type": "自然风光"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "target_city": "广州",
+    "start_city": "深圳",
+    "is_single_day": false,
+    "day_count": 2,
+    "origin_plan_file": "h20241029143602442546.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_semantic_incompatibility"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-22T09:38:44.439165",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000006",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_incompatibility/_validation_split/passed/sample_000006.json",
+    "template_diversity_selected": true
+  }
+}

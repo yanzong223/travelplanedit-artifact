@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143653372872",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "北京",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'历史古迹','博物馆/纪念馆'}<=attraction_type_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置北京,旅行人数2,旅行天数4] 当前位置武汉，两个人想去北京玩4天，多去博物馆等历史人文景点，要体验当地美食，请问可以帮忙规划吗，预算3000",
+  "nature_language_en": "[Current location: Wuhan, Destination: Beijing, Number of travelers: 2, Travel days: 4] The current location is Wuhan, and two people want to visit Beijing for 4 days. They would like to visit museums and other historical and cultural sites, and experience local cuisine. Could you help plan the trip with a budget of 3000?"
+}

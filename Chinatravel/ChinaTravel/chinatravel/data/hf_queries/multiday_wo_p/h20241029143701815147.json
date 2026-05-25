@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143701815147",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "广州",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'海边'}<=attraction_type_set)",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'迷人海景'}<=accommodation_type_set)",
+    "hotel_cost=0\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': hotel_cost+=activity_cost(activity)\nresult=(hotel_cost/people_count(plan)/(day_count(plan)-1)<= 500)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置广州,旅行人数1,旅行天数2] 我准备去广州找朋友玩两天，想看海，除此之外还希望参观一些热门景点，希望可以在酒店看到海，但是酒店价格不要超过500元一晚，想在海边玩一段时间，怎么规划行程",
+  "nature_language_en": "[Current location: Nanjing, Destination: Guangzhou, Number of travelers: 1, Number of travel days: 2] I am planning to visit a friend in Guangzhou for two days. I want to see the sea and also hope to visit some popular attractions. I would like a hotel with a sea view, but the price should not exceed 500 yuan per night. I want to spend some time by the sea. How should I plan my itinerary?"
+}

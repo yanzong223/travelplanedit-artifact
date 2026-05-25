@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143636163145",
+  "tag": "human",
+  "start_city": "成都",
+  "target_city": "南京",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光'}<=attraction_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置成都,目标位置南京,旅行人数1,旅行天数3] 当前位置成都，想去南京玩三天，哪里比较适合观赏景点",
+  "nature_language_en": "[Current location: Chengdu, Destination: Nanjing, Number of travelers: 1, Travel days: 3] Currently in Chengdu, planning to visit Nanjing for three days. What are some good places to visit for sightseeing?"
+}

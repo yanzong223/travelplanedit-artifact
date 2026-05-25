@@ -1,0 +1,23 @@
+{
+  "uid": "h20241029143709097610",
+  "tag": "human",
+  "start_city": "上海",
+  "target_city": "杭州",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=4000)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'西湖风景名胜区'}<=attraction_name_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'博物馆/纪念馆','古风写真'}<=attraction_type_set)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'位置超好'}<=accommodation_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置上海,目标位置杭州,旅行人数2,旅行天数3] 坐标上海，两个人想去杭州玩三天，必须高铁(G)往返，想参观西湖，并拍摄一组古风写真，参观历史博物馆以及吃西湖醋鱼，酒店要位置超好，可以帮我做一个行程规划吗，预算4000",
+  "nature_language_en": "[Current location: Changsha, Destination: Hangzhou, Number of travelers: 2, Number of travel days: 3] Two people in Changsha want to travel to Hangzhou for three days. They must travel round-trip by high-speed train (G). They want to visit West Lake, take a set of traditional-style photos, visit a history museum, and eat West Lake vinegar fish. The hotel should be in an excellent location. Can you help me make a travel itinerary with a budget of 4000?"
+}

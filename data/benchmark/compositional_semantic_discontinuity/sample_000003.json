@@ -1,0 +1,962 @@
+{
+  "sample_id": "sample_000003",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置武汉。我两个人想去杭州玩3天，坐飞机往返，麻烦给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "t20241206172016879934",
+    "tag": "easy",
+    "start_city": "武汉",
+    "target_city": "杭州",
+    "days": 3,
+    "people_number": 2,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==3)",
+      "result=(people_count(plan)==2)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+      "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置武汉。我两个人想去杭州玩3天，坐飞机往返，麻烦给我一个旅行规划。",
+    "nature_language_en": "Current location: Wuhan. Two of us want to visit Hangzhou for 3 days. We plan to travel by plane round-trip. Could you please provide a travel plan for us?"
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "武汉",
+    "target_city": "杭州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:35",
+            "end_time": "08:17",
+            "start": "武汉天河国际机场",
+            "end": "杭州萧山国际机场",
+            "price": 242.31,
+            "cost": 484.62,
+            "tickets": 2,
+            "transports": [],
+            "FlightID": "FL622",
+            "type": "airplane"
+          },
+          {
+            "position": "杭州滨江开元名都大酒店",
+            "type": "accommodation",
+            "price": 498,
+            "cost": 498,
+            "start_time": "09:32",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "杭州萧山国际机场",
+                "end": "萧山国际机场-地铁站",
+                "mode": "walk",
+                "start_time": "08:17",
+                "end_time": "08:18",
+                "cost": 0,
+                "distance": 0.12,
+                "price": 0
+              },
+              {
+                "start": "萧山国际机场-地铁站",
+                "end": "伟业路-地铁站",
+                "mode": "metro",
+                "start_time": "08:18",
+                "end_time": "09:12",
+                "cost": 12,
+                "distance": 27.04,
+                "price": 6,
+                "tickets": 2
+              },
+              {
+                "start": "伟业路-地铁站",
+                "end": "杭州滨江开元名都大酒店",
+                "mode": "walk",
+                "start_time": "09:12",
+                "end_time": "09:32",
+                "cost": 0,
+                "distance": 1.71,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "杭州滨江开元名都大酒店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "西湖风景名胜区",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "09:38",
+            "end_time": "11:08",
+            "transports": [
+              {
+                "start": "杭州滨江开元名都大酒店",
+                "end": "伟业路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:50",
+                "cost": 0,
+                "distance": 1.71,
+                "price": 0
+              },
+              {
+                "start": "伟业路-地铁站",
+                "end": "水澄桥-地铁站",
+                "mode": "metro",
+                "start_time": "08:50",
+                "end_time": "08:55",
+                "cost": 4,
+                "distance": 2.5,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "水澄桥-地铁站",
+                "end": "西湖风景名胜区",
+                "mode": "walk",
+                "start_time": "08:55",
+                "end_time": "09:38",
+                "cost": 0,
+                "distance": 3.6,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "杭州西子湖四季酒店·金沙厅",
+            "type": "lunch",
+            "price": 873,
+            "cost": 1746,
+            "start_time": "12:26",
+            "end_time": "13:26",
+            "transports": [
+              {
+                "start": "西湖风景名胜区",
+                "end": "水澄桥-地铁站",
+                "mode": "walk",
+                "start_time": "11:08",
+                "end_time": "11:51",
+                "cost": 0,
+                "distance": 3.6,
+                "price": 0
+              },
+              {
+                "start": "水澄桥-地铁站",
+                "end": "黄龙体育中心-地铁站",
+                "mode": "metro",
+                "start_time": "11:51",
+                "end_time": "12:05",
+                "cost": 6,
+                "distance": 7.42,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "黄龙体育中心-地铁站",
+                "end": "杭州西子湖四季酒店·金沙厅",
+                "mode": "walk",
+                "start_time": "12:05",
+                "end_time": "12:26",
+                "cost": 0,
+                "distance": 1.81,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "灵隐寺",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "14:17",
+            "end_time": "15:47",
+            "transports": [
+              {
+                "start": "杭州西子湖四季酒店·金沙厅",
+                "end": "黄龙体育中心-地铁站",
+                "mode": "walk",
+                "start_time": "13:26",
+                "end_time": "13:47",
+                "cost": 0,
+                "distance": 1.81,
+                "price": 0
+              },
+              {
+                "start": "黄龙体育中心-地铁站",
+                "end": "古墩路-地铁站",
+                "mode": "metro",
+                "start_time": "13:47",
+                "end_time": "13:52",
+                "cost": 4,
+                "distance": 2.71,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "古墩路-地铁站",
+                "end": "灵隐寺",
+                "mode": "walk",
+                "start_time": "13:52",
+                "end_time": "14:17",
+                "cost": 0,
+                "distance": 2.12,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "杭州西湖国宾馆·西湖第一名园·紫薇厅",
+            "type": "dinner",
+            "price": 468,
+            "cost": 936,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "灵隐寺",
+                "end": "古墩路-地铁站",
+                "mode": "walk",
+                "start_time": "15:47",
+                "end_time": "16:12",
+                "cost": 0,
+                "distance": 2.12,
+                "price": 0
+              },
+              {
+                "start": "古墩路-地铁站",
+                "end": "吴山广场-地铁站",
+                "mode": "metro",
+                "start_time": "16:12",
+                "end_time": "16:25",
+                "cost": 6,
+                "distance": 6.54,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "吴山广场-地铁站",
+                "end": "杭州西湖国宾馆·西湖第一名园·紫薇厅",
+                "mode": "walk",
+                "start_time": "16:25",
+                "end_time": "17:00",
+                "cost": 0,
+                "distance": 2.95,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "雷峰塔",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "18:03",
+            "end_time": "19:33",
+            "transports": [
+              {
+                "start": "杭州西湖国宾馆·西湖第一名园·紫薇厅",
+                "end": "雷峰塔",
+                "mode": "taxi",
+                "start_time": "18:00",
+                "end_time": "18:03",
+                "cost": 12.25,
+                "distance": 2.16,
+                "price": 12.25,
+                "cars": 1
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "杭州滨江开元名都大酒店",
+            "type": "accommodation",
+            "price": 498,
+            "cost": 498,
+            "start_time": "20:14",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "雷峰塔",
+                "end": "吴山广场-地铁站",
+                "mode": "walk",
+                "start_time": "19:33",
+                "end_time": "19:42",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              },
+              {
+                "start": "吴山广场-地铁站",
+                "end": "伟业路-地铁站",
+                "mode": "metro",
+                "start_time": "19:42",
+                "end_time": "19:54",
+                "cost": 6,
+                "distance": 6.38,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "伟业路-地铁站",
+                "end": "杭州滨江开元名都大酒店",
+                "mode": "walk",
+                "start_time": "19:54",
+                "end_time": "20:14",
+                "cost": 0,
+                "distance": 1.71,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "activities": [
+          {
+            "position": "杭州滨江开元名都大酒店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "飞来峰造像",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:45",
+            "end_time": "10:15",
+            "transports": [
+              {
+                "start": "杭州滨江开元名都大酒店",
+                "end": "飞来峰造像",
+                "mode": "taxi",
+                "start_time": "08:30",
+                "end_time": "08:45",
+                "cost": 40.44,
+                "distance": 10.16,
+                "price": 40.44,
+                "cars": 1
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "滨丸水產·烧肉烧鸟炉端烧(星光大道店)",
+            "type": "lunch",
+            "price": 167,
+            "cost": 334,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "飞来峰造像",
+                "end": "滨丸水產·烧肉烧鸟炉端烧(星光大道店)",
+                "mode": "taxi",
+                "start_time": "10:15",
+                "end_time": "10:30",
+                "cost": 41.51,
+                "distance": 10.4,
+                "price": 41.51,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "美女坝",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "13:03",
+            "end_time": "14:33",
+            "transports": [
+              {
+                "start": "滨丸水產·烧肉烧鸟炉端烧(星光大道店)",
+                "end": "江陵路-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:07",
+                "cost": 0,
+                "distance": 0.66,
+                "price": 0
+              },
+              {
+                "start": "江陵路-地铁站",
+                "end": "杭州大会展中心-地铁站",
+                "mode": "metro",
+                "start_time": "12:07",
+                "end_time": "12:47",
+                "cost": 10,
+                "distance": 20.03,
+                "price": 5,
+                "tickets": 2
+              },
+              {
+                "start": "杭州大会展中心-地铁站",
+                "end": "美女坝",
+                "mode": "walk",
+                "start_time": "12:47",
+                "end_time": "13:03",
+                "cost": 0,
+                "distance": 1.37,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "start_time": "16:32",
+            "end_time": "17:14",
+            "start": "杭州萧山国际机场",
+            "end": "武汉天河国际机场",
+            "price": 232.0,
+            "cost": 464.0,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "美女坝",
+                "end": "杭州大会展中心-地铁站",
+                "mode": "walk",
+                "start_time": "14:33",
+                "end_time": "14:49",
+                "cost": 0,
+                "distance": 1.37,
+                "price": 0
+              },
+              {
+                "start": "杭州大会展中心-地铁站",
+                "end": "萧山国际机场-地铁站",
+                "mode": "metro",
+                "start_time": "14:49",
+                "end_time": "14:57",
+                "cost": 6,
+                "distance": 4.44,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "萧山国际机场-地铁站",
+                "end": "杭州萧山国际机场",
+                "mode": "walk",
+                "start_time": "14:57",
+                "end_time": "14:58",
+                "cost": 0,
+                "distance": 0.12,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL542",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==3)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "required_intercity_transport_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "equals_set",
+      "value": [
+        "airplane"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "我想第一天去保俶塔（偏历史古迹），第二天去如梦上塘（偏人文景观），两天风格要明显不同",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "杭州"
+    },
+    "temporal": [
+      {
+        "day": 1,
+        "must_visit": "保俶塔"
+      },
+      {
+        "day": 2,
+        "must_visit": "如梦上塘"
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "preferred_type": [
+        "历史古迹",
+        "人文景观"
+      ]
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction",
+        "day": 1
+      },
+      "operator": "includes_type",
+      "value": "历史古迹",
+      "params": {
+        "day": 1,
+        "min_count": 1,
+        "strict_majority": true,
+        "derived_from": "constraints.semantic.preferred_type"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction",
+        "day": 2
+      },
+      "operator": "includes_type",
+      "value": "人文景观",
+      "params": {
+        "day": 2,
+        "min_count": 1,
+        "strict_majority": true,
+        "derived_from": "constraints.semantic.preferred_type"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_2",
+      "source": "edit",
+      "type": "poi_day_binding",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "poi_name": "保俶塔"
+      },
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_3",
+      "source": "edit",
+      "type": "poi_day_binding",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "poi_name": "如梦上塘"
+      },
+      "operator": "==",
+      "value": 2,
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "compositional",
+      "semantic",
+      "discontinuity"
+    ],
+    [
+      "compositional",
+      "structural",
+      "discontinuity"
+    ],
+    [
+      "structural",
+      "semantic",
+      "discontinuity"
+    ]
+  ],
+  "primary_conflict": [
+    "compositional",
+    "semantic",
+    "discontinuity"
+  ],
+  "secondary_conflicts": [
+    [
+      "compositional",
+      "structural",
+      "discontinuity"
+    ],
+    [
+      "structural",
+      "semantic",
+      "discontinuity"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "cross_day_variety_by_types",
+    "template": "我想{day}去{poi1}（偏{poi_type1}），{day2}去{poi2}（偏{poi_type2}），两天风格要明显不同",
+    "template_id": "compositional_semantic_discontinuity__cross_day_variety_by_types__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "day_count"
+      ],
+      "relation_slots": [
+        "day_type_pairs"
+      ],
+      "ir_outputs": [
+        "day_count",
+        "poi_day_binding",
+        "semantic_type_requirement"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "composite",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "cross_day_variety_by_types",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "cross_day_variety_by_types"
+    },
+    "rendered_params": {
+      "start_city": "武汉",
+      "target_city": "杭州",
+      "day_count": 3,
+      "day": "第一天",
+      "day2": "第二天",
+      "poi_type1": "历史古迹",
+      "poi_type2": "人文景观"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "cross_day_variety_by_types",
+      "day_poi_pairs": [
+        [
+          1,
+          "保俶塔（偏历史古迹）"
+        ],
+        [
+          2,
+          "如梦上塘（偏人文景观）"
+        ]
+      ]
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "cross_day_variety_by_types",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "保俶塔（偏历史古迹）",
+      "day_poi_pairs": [
+        [
+          1,
+          "保俶塔（偏历史古迹）"
+        ],
+        [
+          2,
+          "如梦上塘（偏人文景观）"
+        ]
+      ],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": 1,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.67,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.67,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "pairs": [
+        [
+          1,
+          "保俶塔"
+        ],
+        [
+          2,
+          "如梦上塘"
+        ]
+      ]
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "template_fallback",
+    "surface_quality_pass": false,
+    "surface_reject_reason": "spec_drift:day_poi_pairs changed: expected [[1, '保俶塔（偏历史古迹）'], [2, '如梦上塘（偏人文景观）']], got [(1, '保俶塔'), (2, '如梦上塘')]",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "cross_day_variety_by_types",
+      "day_poi_pairs": [
+        [
+          1,
+          "保俶塔（偏历史古迹）"
+        ],
+        [
+          2,
+          "如梦上塘（偏人文景观）"
+        ]
+      ]
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "cross_day_variety_by_types",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "保俶塔（偏历史古迹）",
+      "day_poi_pairs": [
+        [
+          1,
+          "保俶塔（偏历史古迹）"
+        ],
+        [
+          2,
+          "如梦上塘（偏人文景观）"
+        ]
+      ],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": 1,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.67,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "pairs": [
+        [
+          1,
+          "保俶塔"
+        ],
+        [
+          2,
+          "如梦上塘"
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "compositional",
+      "semantic",
+      "discontinuity"
+    ],
+    "target_city": "杭州",
+    "start_city": "武汉",
+    "is_single_day": false,
+    "day_count": 3,
+    "origin_plan_file": "t20241206172016879934.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "compositional_semantic_discontinuity"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-22T08:42:10.462220",
+    "target_confirmed": true,
+    "target_confidence": 0.8667,
+    "primary_label": [
+      "compositional",
+      "semantic",
+      "discontinuity"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000003",
+    "source_sample_path": "./data/data/batches/batch005/batches/compositional_semantic_discontinuity/_validation_split/passed/sample_000003.json",
+    "template_diversity_selected": true
+  }
+}

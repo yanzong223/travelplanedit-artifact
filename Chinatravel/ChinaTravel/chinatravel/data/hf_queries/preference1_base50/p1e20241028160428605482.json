@@ -1,0 +1,22 @@
+{
+  "uid": "p1e20241028160428605482",
+  "tag": "preference1_base50",
+  "start_city": "广州",
+  "target_city": "重庆",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1300)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置广州。我一个人想去重庆玩一天，预算1300人民币，请给我一个旅行规划。希望地点间交通时间尽可能少，以便我能参观更多景点。",
+  "nature_language_en": "Current location: Guangzhou. I want to travel to Chongqing alone for one day with a budget of 1300 RMB. Please provide me with a travel plan. I hope to minimize the travel time between locations so that I can visit more attractions.",
+  "preference": "['地点间交通时间尽可能少']",
+  "preference_en": "['less inner transports time']",
+  "preference_py": "['minimize average_time_cost\\ntime_cost = 0\\ntransport_count = 0\\nfor activity in allactivities(plan):\\n    transports = activity_transports(activity)\\n    if transports!=[]:\\n        transport_count += 1\\n        time_cost += innercity_transport_time(transports)\\naverage_time_cost = time_cost / transport_count if transport_count > 0 else -1']"
+}

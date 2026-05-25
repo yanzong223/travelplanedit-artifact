@@ -1,0 +1,22 @@
+{
+  "uid": "p2m20241028164901591817",
+  "tag": "preference2_base50",
+  "start_city": "武汉",
+  "target_city": "成都",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'紫坪铺水库'}<=attraction_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置武汉。我和朋友两个人想去成都玩3天，想去紫坪铺水库，希望去餐厅的交通时间尽可能少，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Wuhan. My friend and I want to visit Chengdu for 3 days and would like to go to Zipingpu Reservoir. We hope to minimize the travel time to restaurants. Could you please provide us with a travel plan?",
+  "preference": "['去餐厅的交通时间尽可能少']",
+  "preference_en": "['minimize average transport time to restaurants']",
+  "preference_py": "[\"minimize average_time_cost\\nrestaurant_count = 0\\ntime_cost = 0\\nfor activity in allactivities(plan):\\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner']:\\n        restaurant_count += 1\\n        time_cost += innercity_transport_time(activity_transports(activity))\\nif restaurant_count == 0:\\n    average_time_cost = -1\\nelse:\\n    average_time_cost = time_cost / restaurant_count\"]"
+}

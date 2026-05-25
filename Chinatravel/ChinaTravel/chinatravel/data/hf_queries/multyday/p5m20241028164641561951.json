@@ -1,0 +1,22 @@
+{
+  "uid": "p5m20241028164641561951",
+  "tag": "preference5_base50",
+  "start_city": "武汉",
+  "target_city": "重庆",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'火锅'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置武汉。我一个人想去重庆玩2天，想尝试当地的火锅，并且希望在龙水峡地缝附近游玩，距离尽可能近，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Wuhan. I want to travel to Chongqing alone for 2 days and try the local hotpot, and I hope to visit the Longshuixia Rift nearby with the shortest possible distance. Please provide me with a travel plan.",
+  "preference": "['在龙水峡地缝附近游玩，距离尽可能近']",
+  "preference_en": "['minimize distance to poi']",
+  "preference_py": "[\"minimize average_dist_cost\\ntarget_poi = '龙水峡地缝'\\npoi_list = list()\\ntotal_distance = 0\\npoi_count=0\\ncity = target_city(plan)\\nfor activity in allactivities(plan):\\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner', 'accommodation', 'attraction']:\\n        poi_list.append(activity_position(activity))\\nfor poi in poi_list:\\n    total_distance += poi_distance(city, target_poi, poi)\\n    poi_count += 1\\naverage_dist_cost = total_distance / poi_count if poi_count > 0 else -1\"]"
+}

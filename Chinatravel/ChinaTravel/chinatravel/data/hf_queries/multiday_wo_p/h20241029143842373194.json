@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143842373194",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "重庆",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置重庆,旅行人数1,旅行天数3] 我想一个人从南京到重庆旅游三日，本人不想游览景区等人过于多的地方,想大致地转一转重庆,烦请给出一个合理的路线规划与时间安。",
+  "nature_language_en": "[Current location: Nanjing, Destination: Chongqing, Number of travelers: 1, Travel days: 3] I would like to travel alone from Nanjing to Chongqing for three days. I prefer not to visit places with too many people, such as popular tourist attractions. I would like to explore Chongqing in a general way. Could you please provide a reasonable itinerary and time schedule?"
+}

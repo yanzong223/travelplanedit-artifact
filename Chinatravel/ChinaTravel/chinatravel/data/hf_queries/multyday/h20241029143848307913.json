@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143848307913",
+  "tag": "human",
+  "start_city": "重庆",
+  "target_city": "广州",
+  "days": 4,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=10000)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置重庆,目标位置广州,旅行人数3,旅行天数4] 当前位置重庆。我和朋友们一共3个人想去广州玩4天，预算10000人民币，往返坐飞机，请给我一个旅行规划。",
+  "nature_language_en": "[Current location: Chongqing, Destination: Guangzhou, Number of travelers: 3, Duration of trip: 4 days] Current location: Chongqing. My friends and I, a total of 3 people, want to travel to Guangzhou for 4 days with a budget of 10,000 RMB. We plan to fly round-trip. Please provide me with a travel itinerary."
+}

@@ -1,0 +1,23 @@
+{
+  "uid": "p0t20241206211714065305",
+  "tag": "preference0_base50",
+  "start_city": "杭州",
+  "target_city": "北京",
+  "days": 2,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==4)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'taxi'}<=innercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置杭州。我和三个朋友计划去北京玩两天，选择火车出行，市内交通方式选择打车。我们希望尽可能多地参观景点，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Hangzhou. My three friends and I are planning to visit Beijing for two days. We have chosen to travel by train and use taxis for intra-city transportation. We hope to visit as many attractions as possible, please provide us with a travel itinerary.",
+  "preference": "去尽可能多的景点",
+  "preference_en": "more attractions",
+  "preference_py": "maximize daily_attraction_count\nattraction_count = 0\nfor activity in allactivities(plan):\n    if activity_type(activity) == 'attraction':\n        attraction_count += 1\ndaily_attraction_count = attraction_count / day_count(plan)"
+}

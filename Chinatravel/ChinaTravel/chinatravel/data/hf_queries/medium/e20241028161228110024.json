@@ -1,0 +1,22 @@
+{
+  "uid": "e20241028161228110024",
+  "tag": "medium",
+  "start_city": "北京",
+  "target_city": "南京",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'中山陵景区'}<=attraction_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置北京。我一个人想去南京玩2天，预算3000人民币，住一间单床房，想去中山陵景区，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Beijing. I want to travel alone to Nanjing for 2 days with a budget of 3000 RMB. I plan to stay in a single room and visit the Sun Yat-sen Mausoleum Scenic Area. Please provide me with a travel itinerary."
+}

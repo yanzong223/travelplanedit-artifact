@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164750006178",
+  "tag": "easy",
+  "start_city": "杭州",
+  "target_city": "成都",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'大学校园'}<=attraction_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置杭州。我们三个人想去成都玩3天，想去校园里面看看当代大学生，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Hangzhou. The three of us want to visit Chengdu for 3 days and would like to explore university campuses to see contemporary college students. Could you please provide us with a travel plan?"
+}

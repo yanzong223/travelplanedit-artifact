@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143918467169",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置上海,旅行人数2,旅行天数3] 我和同学两个人想去上海玩三天，开一间房间就行，请给我拟定一个预算较少的规划。",
+  "nature_language_en": "[Current location: Nanjing, Destination: Shanghai, Number of travelers: 2, Number of travel days: 3] My classmate and I want to go to Shanghai for three days. We only need one room. Please help me draft a budget-friendly plan."
+}

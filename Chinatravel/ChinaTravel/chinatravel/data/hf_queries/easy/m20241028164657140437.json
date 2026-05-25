@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164657140437",
+  "tag": "easy",
+  "start_city": "广州",
+  "target_city": "南京",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'融合菜'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置广州。我一个人想去南京玩2天，想尝试江浙融合菜，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Guangzhou. I want to travel alone to Nanjing for 2 days and try Jiangsu-Zhejiang fusion cuisine. Please provide me with a travel plan."
+}

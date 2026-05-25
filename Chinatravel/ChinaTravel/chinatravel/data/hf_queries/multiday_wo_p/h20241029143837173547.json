@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143837173547",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "广州",
+  "days": 5,
+  "people_number": 5,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==5)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置广州,旅行人数5,旅行天数5] 公司4女和1男去广州团建，计划去5天，想要去网红景点和餐厅打卡，并且吃好吃的",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Guangzhou, Number of travelers: 5, Duration of travel: 5 days] A company group consisting of 4 women and 1 man is going to Guangzhou for a team-building trip. They plan to stay for 5 days and want to visit popular attractions and restaurants, as well as enjoy delicious food."
+}

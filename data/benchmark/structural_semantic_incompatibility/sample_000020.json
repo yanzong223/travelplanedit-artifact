@@ -1,0 +1,514 @@
+{
+  "sample_id": "sample_000020",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置上海。我们四个人计划去武汉玩两天，市内交通使用地铁。请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "t20241206171807314229",
+    "tag": "easy",
+    "start_city": "上海",
+    "target_city": "武汉",
+    "days": 2,
+    "people_number": 4,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==4)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False",
+      "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'metro'})"
+    ],
+    "nature_language": "当前位置上海。我们四个人计划去武汉玩两天，市内交通使用地铁。请给我一个旅行规划。",
+    "nature_language_en": "Current location: Shanghai. Four of us are planning to visit Wuhan for two days. We will primarily use the subway for transportation within the city. Please provide a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 4,
+    "start_city": "上海",
+    "target_city": "武汉",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "13:54",
+            "end_time": "17:26",
+            "start": "上海虹桥站",
+            "end": "武汉站",
+            "price": 446.81,
+            "cost": 1787.24,
+            "tickets": 4,
+            "transports": [],
+            "TrainID": "G1720",
+            "type": "train"
+          },
+          {
+            "position": "粗茶淡饭·壹号餐房",
+            "type": "dinner",
+            "price": 398,
+            "cost": 1592,
+            "start_time": "18:03",
+            "end_time": "19:03",
+            "transports": [
+              {
+                "start": "武汉站",
+                "end": "武汉站东广场-地铁站",
+                "mode": "walk",
+                "start_time": "17:26",
+                "end_time": "17:28",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              },
+              {
+                "start": "武汉站东广场-地铁站",
+                "end": "大智路-地铁站",
+                "mode": "metro",
+                "start_time": "17:28",
+                "end_time": "17:53",
+                "cost": 16,
+                "distance": 12.74,
+                "price": 4,
+                "tickets": 4
+              },
+              {
+                "start": "大智路-地铁站",
+                "end": "粗茶淡饭·壹号餐房",
+                "mode": "walk",
+                "start_time": "17:53",
+                "end_time": "18:03",
+                "cost": 0,
+                "distance": 0.91,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "光谷花海",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "20:14",
+            "end_time": "21:44",
+            "transports": [
+              {
+                "start": "粗茶淡饭·壹号餐房",
+                "end": "大智路-地铁站",
+                "mode": "walk",
+                "start_time": "19:03",
+                "end_time": "19:13",
+                "cost": 0,
+                "distance": 0.91,
+                "price": 0
+              },
+              {
+                "start": "大智路-地铁站",
+                "end": "光谷四路-地铁站",
+                "mode": "metro",
+                "start_time": "19:13",
+                "end_time": "19:57",
+                "cost": 24,
+                "distance": 22.11,
+                "price": 6,
+                "tickets": 4
+              },
+              {
+                "start": "光谷四路-地铁站",
+                "end": "光谷花海",
+                "mode": "walk",
+                "start_time": "19:57",
+                "end_time": "20:14",
+                "cost": 0,
+                "distance": 1.49,
+                "price": 0
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "象牙国际青年旅舍(武汉大学华中师范大学店)",
+            "type": "accommodation",
+            "price": 37,
+            "cost": 74,
+            "start_time": "22:27",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "光谷花海",
+                "end": "光谷四路-地铁站",
+                "mode": "walk",
+                "start_time": "21:44",
+                "end_time": "22:01",
+                "cost": 0,
+                "distance": 1.49,
+                "price": 0
+              },
+              {
+                "start": "光谷四路-地铁站",
+                "end": "广埠屯-地铁站",
+                "mode": "metro",
+                "start_time": "22:01",
+                "end_time": "22:26",
+                "cost": 16,
+                "distance": 12.81,
+                "price": 4,
+                "tickets": 4
+              },
+              {
+                "start": "广埠屯-地铁站",
+                "end": "象牙国际青年旅舍(武汉大学华中师范大学店)",
+                "mode": "walk",
+                "start_time": "22:26",
+                "end_time": "22:27",
+                "cost": 0,
+                "distance": 0.1,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 2
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "象牙国际青年旅舍(武汉大学华中师范大学店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "合美术馆",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "10:00",
+            "end_time": "11:30",
+            "transports": [
+              {
+                "start": "象牙国际青年旅舍(武汉大学华中师范大学店)",
+                "end": "广埠屯-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:31",
+                "cost": 0,
+                "distance": 0.1,
+                "price": 0
+              },
+              {
+                "start": "广埠屯-地铁站",
+                "end": "马湖-地铁站",
+                "mode": "metro",
+                "start_time": "08:31",
+                "end_time": "08:44",
+                "cost": 12,
+                "distance": 6.76,
+                "price": 3,
+                "tickets": 4
+              },
+              {
+                "start": "马湖-地铁站",
+                "end": "合美术馆",
+                "mode": "walk",
+                "start_time": "08:44",
+                "end_time": "08:52",
+                "cost": 0,
+                "distance": 0.72,
+                "price": 0
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "青禾餐厅(东湖店)",
+            "type": "lunch",
+            "price": 306,
+            "cost": 1224,
+            "start_time": "12:21",
+            "end_time": "13:21",
+            "transports": [
+              {
+                "start": "合美术馆",
+                "end": "马湖-地铁站",
+                "mode": "walk",
+                "start_time": "11:30",
+                "end_time": "11:38",
+                "cost": 0,
+                "distance": 0.72,
+                "price": 0
+              },
+              {
+                "start": "马湖-地铁站",
+                "end": "铁机路-地铁站",
+                "mode": "metro",
+                "start_time": "11:38",
+                "end_time": "12:04",
+                "cost": 16,
+                "distance": 13.13,
+                "price": 4,
+                "tickets": 4
+              },
+              {
+                "start": "铁机路-地铁站",
+                "end": "青禾餐厅(东湖店)",
+                "mode": "walk",
+                "start_time": "12:04",
+                "end_time": "12:21",
+                "cost": 0,
+                "distance": 1.47,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "15:04",
+            "end_time": "18:37",
+            "start": "武汉站",
+            "end": "上海虹桥站",
+            "price": 446.81,
+            "cost": 1787.24,
+            "tickets": 4,
+            "transports": [
+              {
+                "start": "青禾餐厅(东湖店)",
+                "end": "铁机路-地铁站",
+                "mode": "walk",
+                "start_time": "13:21",
+                "end_time": "13:38",
+                "cost": 0,
+                "distance": 1.47,
+                "price": 0
+              },
+              {
+                "start": "铁机路-地铁站",
+                "end": "武汉站东广场-地铁站",
+                "mode": "metro",
+                "start_time": "13:38",
+                "end_time": "13:50",
+                "cost": 12,
+                "distance": 6.11,
+                "price": 3,
+                "tickets": 4
+              },
+              {
+                "start": "武汉站东广场-地铁站",
+                "end": "武汉站",
+                "mode": "walk",
+                "start_time": "13:50",
+                "end_time": "13:52",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              }
+            ],
+            "TrainID": "G600",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 4,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==4)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 4,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'metro'})"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'metro'})"
+      }
+    }
+  ],
+  "edit_query": "我想尝尝地道的湘菜",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "武汉"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "preferred_type": "湘菜",
+      "constraint_type": "required_restaurant_type",
+      "required_restaurant_type": "湘菜"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "required_restaurant_type",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "meal"
+      },
+      "operator": "contains_all",
+      "value": [
+        "湘菜"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "template_id": "structural_semantic_incompatibility__required_restaurant_type__01",
+    "template": "我想吃{poi_type}",
+    "template_str": "我想吃{poi_type}",
+    "constraint_type": "required_restaurant_type",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "target_city": "武汉",
+    "start_city": "上海",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "required_restaurant_type"
+    ],
+    "requested_bucket_names": [
+      "structural_semantic_incompatibility"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000050",
+    "source_seed_path": "./data/data/batches/batch005/batches/compositional_structural_overflow/_validation_split/passed/sample_000050.json",
+    "diversity_augmented": true,
+    "diversity_domain": "meal",
+    "constraint_type": "required_restaurant_type",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000032",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000032.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000028",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_incompatibility/_validation_split/passed/sample_000028.json",
+    "template_diversity_selected": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143656081463",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "北京",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置北京,旅行人数1,旅行天数3] 想去北京玩3天，希望去人流少一些的地方，请帮我推荐一些景点",
+  "nature_language_en": "[Current location Wuhan, destination Beijing, number of travelers 1, travel days 1] Current location Wuhan, planning to visit Beijing for 3 days, hoping to go to less crowded places. Please recommend some attractions."
+}

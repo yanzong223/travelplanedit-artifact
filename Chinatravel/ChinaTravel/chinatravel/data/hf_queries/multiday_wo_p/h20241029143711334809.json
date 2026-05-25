@@ -1,0 +1,22 @@
+{
+  "uid": "h20241029143711334809",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "北京",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=4000)",
+    "hotel_cost=0\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': hotel_cost+=activity_cost(activity)\nresult=(hotel_cost/people_count(plan)/(day_count(plan)-1)<= 450)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'八达岭长城','天安门广场','故宫博物院','圆明园','天坛'}<=attraction_name_set)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'北京菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置北京,旅行人数2,旅行天数4] 坐标南京，两个人想去北京玩四天，必须高铁(G)往返，想看天安门升旗，参观故宫圆明园天坛，并爬长城，要吃到北京烤鸭、豆汁等特色美食，酒店价格不能超过450一晚，可以帮我做一个行程规划吗预算4000",
+  "nature_language_en": "[Current location: Nanjing, Destination: Beijing, Number of travelers: 2, Number of travel days: 4] Two people are currently in Nanjing and want to travel to Beijing for four days. They must travel round-trip by high-speed train (G). They want to watch the flag-raising ceremony at Tiananmen Square, visit the Forbidden City, the Old Summer Palace, and the Temple of Heaven, and climb the Great Wall. They also want to try Beijing's specialty foods like Peking duck and douzhi. The hotel price should not exceed 450 per night. Can you help me make a travel itinerary with a budget of 4000?"
+}

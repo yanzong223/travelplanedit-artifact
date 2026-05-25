@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143816266519",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "苏州",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光','园林','河边'}<=attraction_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置苏州,旅行人数2,旅行天数3] 我和妈妈准备从北京去苏州旅游，打算待3天，除机票外预算在6000元左右。我们对古典园林和水乡风情感兴趣，希望能得到尽可能多的行程推荐。",
+  "nature_language_en": "[Current location: Beijing, Destination: Suzhou, Number of travelers: 2, Number of travel days: 3] My mom and I are planning to travel from Beijing to Suzhou for a 3-day trip, with a budget of around 6000 RMB excluding airfare. We are interested in classical gardens and the charm of water towns, and we hope to receive as many itinerary recommendations as possible."
+}

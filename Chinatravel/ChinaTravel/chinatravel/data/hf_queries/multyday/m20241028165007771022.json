@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028165007771022",
+  "tag": "easy",
+  "start_city": "杭州",
+  "target_city": "武汉",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "accommodation_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': accommodation_name_set.add(activity_position(activity))\nresult=({'怡尚花园酒店(武汉东湖风景区欢乐谷店)'}<=accommodation_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置杭州。我们三个人想去武汉玩2天，住怡尚花园酒店(武汉东湖风景区欢乐谷店)，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Hangzhou. The three of us want to visit Wuhan for 2 days and stay at the Yishang Garden Hotel (Wuhan East Lake Scenic Area Happy Valley Branch). Please provide us with a travel plan."
+}

@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143547722063",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "苏州",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'园林'}<=attraction_type_set)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'江浙菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置苏州,旅行人数2,旅行天数2] 我和朋友准备晚上从杭州出发去苏州玩两天，想看苏州的园林，想品尝一些当地特色美食，希望总预算不超过两千",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Suzhou, Number of travelers: 2, Number of travel days: 2] My friend and I are planning to leave Hangzhou for Suzhou in the evening to spend two days there. We want to visit the gardens in Suzhou and taste some local specialty foods, hoping to keep the total budget under 2000 yuan."
+}

@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143926788464",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "上海",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=3000)",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'metro'}<=innercity_transport_set)",
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置上海,旅行人数1,旅行天数1] 本人想去上海玩1天，预算3000，尽量坐公共交通，住宿尽量便宜，吃饭方便，怎么规划行程",
+  "nature_language_en": "[Current location: Nanjing, Destination: Shanghai, Number of travelers: 1, Number of travel days: 1] I want to spend one day in Shanghai with a budget of 3000. I prefer to use public transportation as much as possible, find affordable accommodation, and have convenient dining options. How should I plan my itinerary?"
+}

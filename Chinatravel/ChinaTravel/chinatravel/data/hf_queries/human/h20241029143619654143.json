@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143619654143",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "重庆",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置重庆,旅行人数1,旅行天数3] 一个人从武汉出发去重庆特种兵穷游三天。",
+  "nature_language_en": "[Current location: Wuhan, Destination: Chongqing, Number of travelers: 1, Travel days: 3] One person is embarking on a three-day budget travel adventure from Wuhan to Chongqing."
+}

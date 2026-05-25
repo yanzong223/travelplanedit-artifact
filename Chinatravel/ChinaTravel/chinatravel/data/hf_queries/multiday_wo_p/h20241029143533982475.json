@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143533982475",
+  "tag": "human",
+  "start_city": "成都",
+  "target_city": "北京",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置成都,目标位置北京,旅行人数2,旅行天数3] 我要从成都到巴塞罗那去，会在北京转机，所以会在北京大兴机场附近停留三天，附近有什么值得去且交通便利的景点吗，想要穷游，所以景点希望是免费的",
+  "nature_language_en": "[Current location: Chengdu, Destination: Beijing, Number of travelers: 2, Travel days: 3] I am traveling from Chengdu to Barcelona and will have a layover in Beijing, so I will be staying near Beijing Daxing Airport for three days. Are there any worthwhile and easily accessible attractions nearby? I am looking to travel on a budget, so I hope the attractions are free."
+}

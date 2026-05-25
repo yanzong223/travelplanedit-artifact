@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143739523099",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "北京",
+  "days": 5,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'历史古迹'}<=attraction_type_set)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置北京,旅行人数2,旅行天数5] 我们两个人想去北京玩一趟，打算坐飞机往返，帮我安排一下行程和住宿酒店。想多去一些历史景点。",
+  "nature_language_en": "[Current location: Suzhou, Destination: Beijing, Number of travelers: 2, Duration of trip: 5 days] The two of us want to take a trip to Beijing and plan to travel by plane round-trip. Please help me arrange the itinerary and accommodation. We would like to visit many historical sites."
+}

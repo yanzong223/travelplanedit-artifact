@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143632058747",
+  "tag": "human",
+  "start_city": "重庆",
+  "target_city": "北京",
+  "days": 1,
+  "people_number": 5,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==5)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置重庆,目标位置北京,旅行人数5,旅行天数1] 我们在北京转机，想计划一个短期一天的行程，探索这里最值得去的地方",
+  "nature_language_en": "[Current location: Chongqing, Destination: Beijing, Number of travelers: 5, Duration of travel: 1 day] We have a layover in Beijing and would like to plan a short one-day itinerary to explore the most worthwhile places to visit here."
+}

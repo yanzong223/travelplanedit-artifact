@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143921648851",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "南京",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=10000)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光'}<=attraction_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置南京,旅行人数1,旅行天数3] 本人在北京，想坐飞机去南京玩三天，看一下南京的自然风光，预算10000，请帮忙规划",
+  "nature_language_en": "[Current location: Beijing, Destination: Nanjing, Number of travelers: 1, Travel days: 3] I am currently in Beijing and would like to fly to Nanjing for a three-day trip to enjoy the natural scenery. My budget is 10,000. Please help me plan."
+}

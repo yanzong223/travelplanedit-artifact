@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143732290071",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "深圳",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'世界之窗'}<=attraction_name_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置深圳,旅行人数4,旅行天数3] 我和4个同学打算一起从武汉坐高铁去深圳世界之窗景点玩3天，想问问附近有没有好吃的餐厅推荐。",
+  "nature_language_en": "[Current location: Wuhan, Destination: Shenzhen, Number of travelers: 4, Number of travel days: 3] My four classmates and I are planning to take the high-speed train from Wuhan to visit the Window of the World attraction in Shenzhen for three days. I would like to ask if there are any good restaurant recommendations nearby."
+}

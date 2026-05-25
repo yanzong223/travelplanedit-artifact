@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143641719716",
+  "tag": "human",
+  "start_city": "重庆",
+  "target_city": "北京",
+  "days": 4,
+  "people_number": 3,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!= 2: result=False",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=8000)",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'walk'}<=innercity_transport_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置重庆,目标位置北京,旅行人数3,旅行天数4] 我们3人想从重庆到北京游玩，大概4天，不想逛一些热门景点，只想舒服的进行步行游玩，住2间房，预算8000元。",
+  "nature_language_en": "[Current location: Chongqing, Destination: Beijing, Number of travelers: 3, Number of travel days: 4] The three of us want to travel from Chongqing to Beijing for about 4 days. We are not interested in visiting popular tourist spots; we just want to enjoy a comfortable walking tour. We need 2 rooms and have a budget of 8,000 yuan."
+}

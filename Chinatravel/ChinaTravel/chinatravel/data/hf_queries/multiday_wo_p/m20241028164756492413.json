@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164756492413",
+  "tag": "easy",
+  "start_city": "上海",
+  "target_city": "杭州",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'公园'}<=attraction_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置上海。我和朋友两个人想去杭州玩3天，想去公园度过休闲时光，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Shanghai. My friend and I want to visit Hangzhou for 3 days. We would like to spend some leisure time in parks. Could you please provide us with a travel plan?"
+}

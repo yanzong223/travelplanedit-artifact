@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164954860610",
+  "tag": "easy",
+  "start_city": "北京",
+  "target_city": "杭州",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+    "accommodation_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': accommodation_name_set.add(activity_position(activity))\nresult=({'瑾馨酒店'}<=accommodation_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置北京。我和朋友两个人想去杭州玩2天，住瑾馨酒店，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Beijing. My friend and I want to visit Hangzhou for 2 days and stay at the Jinxin Hotel. Please provide us with a travel plan."
+}

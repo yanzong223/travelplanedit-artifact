@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143549773288",
+  "tag": "human",
+  "start_city": "成都",
+  "target_city": "重庆",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'火锅'}<=restaurant_type_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'历史古迹'}<=attraction_type_set or {'人文景观'}<=attraction_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置成都,目标位置重庆,旅行人数3,旅行天数3] 我和爸爸妈妈计划从成都去重庆玩三天，想火锅，看看当地的历史人文，行程不要太赶",
+  "nature_language_en": "[Current location: Chengdu, Destination: Chongqing, Number of travelers: 3, Number of travel days: 3] My parents and I are planning to travel from Chengdu to Chongqing for three days. We want to try hot pot, explore the local history and culture, and prefer a relaxed itinerary."
+}

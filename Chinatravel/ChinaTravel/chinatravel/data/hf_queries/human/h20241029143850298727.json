@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143850298727",
+  "tag": "human",
+  "start_city": "上海",
+  "target_city": "重庆",
+  "days": 1,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置上海,目标位置重庆,旅行人数3,旅行天数1] 我和两个同学一起想从上海出发去重庆玩一天，坐飞机去，怎么规划行程",
+  "nature_language_en": "[Current location: Shanghai, Destination: Chongqing, Number of travelers: 3, Travel days: 1] My two classmates and I want to travel from Shanghai to Chongqing for a day. We plan to fly there. How should we plan the itinerary?"
+}

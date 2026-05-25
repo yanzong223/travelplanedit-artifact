@@ -1,0 +1,23 @@
+{
+  "uid": "p5t20241206211714065676",
+  "tag": "preference5_base50",
+  "start_city": "杭州",
+  "target_city": "成都",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'metro'}<=innercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置杭州。我和两个朋友计划去成都玩两天，选择火车出行，市内交通方式选择地铁。我们希望在成都动物园附近游玩，距离尽可能近。请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Hangzhou. My two friends and I are planning to visit Chengdu for two days. We have chosen to travel by train and use subway for intra-city transportation. We hope to play near the Chengdu Zoo, as close as possible. Please provide us with a travel itinerary.",
+  "preference": "['在成都动物园附近游玩，距离尽可能近']",
+  "preference_en": "['minimize distance to poi']",
+  "preference_py": "[\"minimize average_dist_cost\\ntarget_poi = '成都动物园'\\npoi_list = list()\\ntotal_distance = 0\\npoi_count=0\\ncity = target_city(plan)\\nfor activity in allactivities(plan):\\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner', 'accommodation', 'attraction']:\\n        poi_list.append(activity_position(activity))\\nfor poi in poi_list:\\n    total_distance += poi_distance(city, target_poi, poi)\\n    poi_count += 1\\naverage_dist_cost = total_distance / poi_count if poi_count > 0 else -1\"]"
+}

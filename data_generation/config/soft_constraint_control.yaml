@@ -1,0 +1,67 @@
+# Soft constraint control configuration
+# 第一版只启用当前 templates/validators 能稳定承接的 family/facet 组合。
+
+sampling:
+  max_attempts: 20
+  family_minimums:
+    theme_alignment: 1
+
+families:
+  theme_alignment:
+    weight: 0.35
+    allowed_buckets:
+      - structural_semantic_incompatibility
+    facets:
+      nature:
+        weight: 0.55
+        edit_modes:
+          addition:
+            weight: 0.6
+          strengthen:
+            weight: 0.4
+      culture:
+        weight: 0.45
+        edit_modes:
+          addition:
+            weight: 0.6
+          strengthen:
+            weight: 0.4
+
+  anchor_proximity:
+    weight: 0.25
+    allowed_buckets:
+      - structural_spatial_overflow
+    facets:
+      poi_anchor:
+        weight: 1.0
+        edit_modes:
+          addition:
+            weight: 0.6
+          strengthen:
+            weight: 0.4
+
+  route_compactness:
+    weight: 0.2
+    allowed_buckets:
+      - structural_temporal_overflow
+    facets:
+      travel_time:
+        weight: 1.0
+        edit_modes:
+          addition:
+            weight: 0.6
+          strengthen:
+            weight: 0.4
+
+  burden_reduction:
+    weight: 0.2
+    allowed_buckets:
+      - compositional_structural_overflow
+    facets:
+      pace:
+        weight: 1.0
+        edit_modes:
+          addition:
+            weight: 0.5
+          strengthen:
+            weight: 0.5

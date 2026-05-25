@@ -1,0 +1,900 @@
+{
+  "sample_id": "sample_000004",
+  "batch_id": "benchmark",
+  "origin_query_text": "[当前位置武汉,目标位置北京,旅行人数1,旅行天数3] 想去北京玩3天，希望去人流少一些的地方，请帮我推荐一些景点",
+  "origin_query_structured": {
+    "uid": "h20241029143656081463",
+    "tag": "human",
+    "start_city": "武汉",
+    "target_city": "北京",
+    "days": 3,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==3)",
+      "result=(people_count(plan)==1)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "[当前位置武汉,目标位置北京,旅行人数1,旅行天数3] 想去北京玩3天，希望去人流少一些的地方，请帮我推荐一些景点",
+    "nature_language_en": "[Current location Wuhan, destination Beijing, number of travelers 1, travel days 1] Current location Wuhan, planning to visit Beijing for 3 days, hoping to go to less crowded places. Please recommend some attractions."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "武汉",
+    "target_city": "北京",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:40",
+            "end_time": "11:35",
+            "start": "武汉站",
+            "end": "北京西站",
+            "price": 684.27,
+            "cost": 684.27,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G66",
+            "type": "train"
+          },
+          {
+            "position": "明城墙遗址公园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "11:56",
+            "end_time": "13:26",
+            "transports": [
+              {
+                "start": "北京西站",
+                "end": "北京西站-地铁站",
+                "mode": "walk",
+                "start_time": "11:35",
+                "end_time": "11:35",
+                "cost": 0,
+                "distance": 0.08,
+                "price": 0
+              },
+              {
+                "start": "北京西站-地铁站",
+                "end": "建国门-地铁站",
+                "mode": "metro",
+                "start_time": "11:35",
+                "end_time": "11:54",
+                "cost": 4,
+                "distance": 9.92,
+                "price": 4,
+                "tickets": 1
+              },
+              {
+                "start": "建国门-地铁站",
+                "end": "明城墙遗址公园",
+                "mode": "walk",
+                "start_time": "11:54",
+                "end_time": "11:56",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "景里酒店(北京合生汇大郊亭地铁站店)",
+            "type": "accommodation",
+            "price": 428,
+            "cost": 428,
+            "start_time": "13:41",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "明城墙遗址公园",
+                "end": "建国门-地铁站",
+                "mode": "walk",
+                "start_time": "13:26",
+                "end_time": "13:28",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              },
+              {
+                "start": "建国门-地铁站",
+                "end": "大郊亭-地铁站",
+                "mode": "metro",
+                "start_time": "13:28",
+                "end_time": "13:37",
+                "cost": 3,
+                "distance": 4.77,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "大郊亭-地铁站",
+                "end": "景里酒店(北京合生汇大郊亭地铁站店)",
+                "mode": "walk",
+                "start_time": "13:37",
+                "end_time": "13:41",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "景里酒店(北京合生汇大郊亭地铁站店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "东四胡同博物馆",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "09:00",
+            "end_time": "10:30",
+            "transports": [
+              {
+                "start": "景里酒店(北京合生汇大郊亭地铁站店)",
+                "end": "大郊亭-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:34",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              },
+              {
+                "start": "大郊亭-地铁站",
+                "end": "东四十条-地铁站",
+                "mode": "metro",
+                "start_time": "08:34",
+                "end_time": "08:46",
+                "cost": 3,
+                "distance": 6.44,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "东四十条-地铁站",
+                "end": "东四胡同博物馆",
+                "mode": "walk",
+                "start_time": "08:46",
+                "end_time": "08:53",
+                "cost": 0,
+                "distance": 0.63,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "北京璞瑄酒店·左岸",
+            "type": "lunch",
+            "price": 733,
+            "cost": 733,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "东四胡同博物馆",
+                "end": "东四十条-地铁站",
+                "mode": "walk",
+                "start_time": "10:30",
+                "end_time": "10:37",
+                "cost": 0,
+                "distance": 0.63,
+                "price": 0
+              },
+              {
+                "start": "东四十条-地铁站",
+                "end": "中国美术馆-地铁站",
+                "mode": "metro",
+                "start_time": "10:37",
+                "end_time": "10:41",
+                "cost": 2,
+                "distance": 2.29,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "中国美术馆-地铁站",
+                "end": "北京璞瑄酒店·左岸",
+                "mode": "walk",
+                "start_time": "10:41",
+                "end_time": "10:41",
+                "cost": 0,
+                "distance": 0.05,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "石刻艺术博物馆",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:30",
+            "end_time": "14:00",
+            "transports": [
+              {
+                "start": "北京璞瑄酒店·左岸",
+                "end": "中国美术馆-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:00",
+                "cost": 0,
+                "distance": 0.05,
+                "price": 0
+              },
+              {
+                "start": "中国美术馆-地铁站",
+                "end": "国家图书馆-地铁站",
+                "mode": "metro",
+                "start_time": "12:00",
+                "end_time": "12:15",
+                "cost": 3,
+                "distance": 7.63,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "国家图书馆-地铁站",
+                "end": "石刻艺术博物馆",
+                "mode": "walk",
+                "start_time": "12:15",
+                "end_time": "12:30",
+                "cost": 0,
+                "distance": 1.29,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "北坞公园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "14:38",
+            "end_time": "16:08",
+            "transports": [
+              {
+                "start": "石刻艺术博物馆",
+                "end": "国家图书馆-地铁站",
+                "mode": "walk",
+                "start_time": "14:00",
+                "end_time": "14:15",
+                "cost": 0,
+                "distance": 1.29,
+                "price": 0
+              },
+              {
+                "start": "国家图书馆-地铁站",
+                "end": "颐和园西门-地铁站",
+                "mode": "metro",
+                "start_time": "14:15",
+                "end_time": "14:29",
+                "cost": 3,
+                "distance": 7.1,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "颐和园西门-地铁站",
+                "end": "北坞公园",
+                "mode": "walk",
+                "start_time": "14:29",
+                "end_time": "14:38",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "沃夫冈牛排馆Wolfgang’s Steakhouse(三里屯店)",
+            "type": "dinner",
+            "price": 1100,
+            "cost": 1100,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "北坞公园",
+                "end": "颐和园西门-地铁站",
+                "mode": "walk",
+                "start_time": "16:08",
+                "end_time": "16:17",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              },
+              {
+                "start": "颐和园西门-地铁站",
+                "end": "团结湖-地铁站",
+                "mode": "metro",
+                "start_time": "16:17",
+                "end_time": "16:52",
+                "cost": 5,
+                "distance": 17.92,
+                "price": 5,
+                "tickets": 1
+              },
+              {
+                "start": "团结湖-地铁站",
+                "end": "沃夫冈牛排馆Wolfgang’s Steakhouse(三里屯店)",
+                "mode": "walk",
+                "start_time": "16:52",
+                "end_time": "16:56",
+                "cost": 0,
+                "distance": 0.34,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "月坛公园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "18:25",
+            "end_time": "19:55",
+            "transports": [
+              {
+                "start": "沃夫冈牛排馆Wolfgang’s Steakhouse(三里屯店)",
+                "end": "团结湖-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:04",
+                "cost": 0,
+                "distance": 0.34,
+                "price": 0
+              },
+              {
+                "start": "团结湖-地铁站",
+                "end": "阜成门-地铁站",
+                "mode": "metro",
+                "start_time": "18:04",
+                "end_time": "18:22",
+                "cost": 4,
+                "distance": 9.11,
+                "price": 4,
+                "tickets": 1
+              },
+              {
+                "start": "阜成门-地铁站",
+                "end": "月坛公园",
+                "mode": "walk",
+                "start_time": "18:22",
+                "end_time": "18:25",
+                "cost": 0,
+                "distance": 0.29,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "龙潭公园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "20:27",
+            "end_time": "21:57",
+            "transports": [
+              {
+                "start": "月坛公园",
+                "end": "阜成门-地铁站",
+                "mode": "walk",
+                "start_time": "19:55",
+                "end_time": "19:58",
+                "cost": 0,
+                "distance": 0.29,
+                "price": 0
+              },
+              {
+                "start": "阜成门-地铁站",
+                "end": "广渠门外-地铁站",
+                "mode": "metro",
+                "start_time": "19:58",
+                "end_time": "20:15",
+                "cost": 3,
+                "distance": 8.62,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "广渠门外-地铁站",
+                "end": "龙潭公园",
+                "mode": "walk",
+                "start_time": "20:15",
+                "end_time": "20:27",
+                "cost": 0,
+                "distance": 1.03,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "景里酒店(北京合生汇大郊亭地铁站店)",
+            "type": "accommodation",
+            "price": 428,
+            "cost": 428,
+            "start_time": "22:19",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "龙潭公园",
+                "end": "广渠门外-地铁站",
+                "mode": "walk",
+                "start_time": "21:57",
+                "end_time": "22:09",
+                "cost": 0,
+                "distance": 1.03,
+                "price": 0
+              },
+              {
+                "start": "广渠门外-地铁站",
+                "end": "大郊亭-地铁站",
+                "mode": "metro",
+                "start_time": "22:09",
+                "end_time": "22:15",
+                "cost": 2,
+                "distance": 3.33,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "大郊亭-地铁站",
+                "end": "景里酒店(北京合生汇大郊亭地铁站店)",
+                "mode": "walk",
+                "start_time": "22:15",
+                "end_time": "22:19",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "activities": [
+          {
+            "position": "景里酒店(北京合生汇大郊亭地铁站店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "紫竹院公园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "09:10",
+            "end_time": "10:40",
+            "transports": [
+              {
+                "start": "景里酒店(北京合生汇大郊亭地铁站店)",
+                "end": "大郊亭-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:34",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              },
+              {
+                "start": "大郊亭-地铁站",
+                "end": "国家图书馆-地铁站",
+                "mode": "metro",
+                "start_time": "08:34",
+                "end_time": "09:03",
+                "cost": 5,
+                "distance": 14.98,
+                "price": 5,
+                "tickets": 1
+              },
+              {
+                "start": "国家图书馆-地铁站",
+                "end": "紫竹院公园",
+                "mode": "walk",
+                "start_time": "09:03",
+                "end_time": "09:10",
+                "cost": 0,
+                "distance": 0.6,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "提督·TIDU(北京坊店)",
+            "type": "lunch",
+            "price": 337,
+            "cost": 337,
+            "start_time": "11:06",
+            "end_time": "12:06",
+            "transports": [
+              {
+                "start": "紫竹院公园",
+                "end": "国家图书馆-地铁站",
+                "mode": "walk",
+                "start_time": "10:40",
+                "end_time": "10:47",
+                "cost": 0,
+                "distance": 0.6,
+                "price": 0
+              },
+              {
+                "start": "国家图书馆-地铁站",
+                "end": "前门-地铁站",
+                "mode": "metro",
+                "start_time": "10:47",
+                "end_time": "11:02",
+                "cost": 3,
+                "distance": 7.84,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "前门-地铁站",
+                "end": "提督·TIDU(北京坊店)",
+                "mode": "walk",
+                "start_time": "11:02",
+                "end_time": "11:06",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "14:00",
+            "end_time": "18:11",
+            "start": "北京西站",
+            "end": "武汉站",
+            "price": 684.27,
+            "cost": 684.27,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "提督·TIDU(北京坊店)",
+                "end": "前门-地铁站",
+                "mode": "walk",
+                "start_time": "12:06",
+                "end_time": "12:10",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              },
+              {
+                "start": "前门-地铁站",
+                "end": "北京西站-地铁站",
+                "mode": "metro",
+                "start_time": "12:10",
+                "end_time": "12:23",
+                "cost": 3,
+                "distance": 6.59,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "北京西站-地铁站",
+                "end": "北京西站",
+                "mode": "walk",
+                "start_time": "12:23",
+                "end_time": "12:23",
+                "cost": 0,
+                "distance": 0.08,
+                "price": 0
+              }
+            ],
+            "TrainID": "G81",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==3)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "我想历史古迹类型的景点",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "北京"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "preferred_type": "历史古迹"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "includes_type",
+      "value": "历史古迹",
+      "params": {
+        "min_count": 1,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [
+    {
+      "id": "edit_pref_theme_alignment_culture",
+      "source": "edit",
+      "family": "theme_alignment",
+      "facet": "theme_concentration_maximize",
+      "direction": "maximize",
+      "anchor": null,
+      "edit_mode": "addition",
+      "params": {
+        "canonical_facet": "culture",
+        "target_theme": "culture",
+        "intensity": "medium"
+      },
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "type_filter",
+        "template_text": "我想{poi_type}类型的景点"
+      }
+    }
+  ],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [
+    {
+      "family": "theme_alignment",
+      "facet": "culture",
+      "edit_mode": "addition",
+      "anchor": null,
+      "intensity": "medium",
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "type_filter",
+        "template_text": "我想{poi_type}类型的景点"
+      }
+    }
+  ],
+  "conflict_set": [
+    [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "type_filter",
+    "template": "我想{poi_type}类型的景点",
+    "template_id": "structural_semantic_incompatibility__type_filter__09",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [],
+      "relation_slots": [
+        "semantic_type",
+        "min_count"
+      ],
+      "ir_outputs": [
+        "semantic_type_requirement"
+      ],
+      "hard_axes": [
+        "semantic_type"
+      ],
+      "soft_axes": [
+        "semantic_type"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "type_filter",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "type_filter"
+    },
+    "rendered_params": {
+      "start_city": "武汉",
+      "target_city": "北京",
+      "day_count": 3,
+      "poi_type": "历史古迹"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "type_filter",
+      "preferred_type": "历史古迹"
+    },
+    "canonical_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "type_filter",
+      "preferred_type": "历史古迹",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.73
+    },
+    "canonical_semantic_parse_source": "llm",
+    "canonical_semantic_parse_confidence": 0.73,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "preferred_type": "历史古迹"
+    },
+    "soft_target_family": "theme_alignment",
+    "soft_target_facet": "culture",
+    "soft_target_mode": "addition",
+    "soft_target_intensity": "medium",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "template_fallback",
+    "surface_quality_pass": false,
+    "surface_reject_reason": "duplicate_surface_in_batch",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "type_filter",
+      "preferred_type": "历史古迹"
+    },
+    "surface_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "type_filter",
+      "preferred_type": "历史古迹",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.73
+    },
+    "surface_semantic_parse_source": "llm",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "preferred_type": "历史古迹"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "target_city": "北京",
+    "start_city": "武汉",
+    "is_single_day": false,
+    "day_count": 3,
+    "origin_plan_file": "h20241029143656081463.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_semantic_incompatibility"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-22T09:38:44.438896",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000005",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_incompatibility/_validation_split/passed/sample_000005.json",
+    "template_diversity_selected": true
+  }
+}

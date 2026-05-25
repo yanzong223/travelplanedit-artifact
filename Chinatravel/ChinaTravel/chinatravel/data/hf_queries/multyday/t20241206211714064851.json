@@ -1,0 +1,20 @@
+{
+  "uid": "t20241206211714064851",
+  "tag": "easy",
+  "start_city": "北京",
+  "target_city": "重庆",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'taxi'})"
+  ],
+  "nature_language": "当前位置北京。我和三个朋友计划去重庆玩三天，选择火车出行，市内交通方式选择打车。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Beijing. My three friends and I are planning to visit Chongqing for three days. We have chosen to travel by train and use taxis for intra-city transportation. Please provide me with a travel itinerary."
+}

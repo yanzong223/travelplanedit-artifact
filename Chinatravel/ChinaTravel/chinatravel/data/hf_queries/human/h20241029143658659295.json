@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143658659295",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "上海",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2000)",
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置上海,旅行人数1,旅行天数1] 当前位置苏州，想去上海玩一天，想去著名景点逛逛，希望能尽量多逛一些景点，预算2000",
+  "nature_language_en": "[Current location: Suzhou, Destination: Shanghai, Number of travelers: 1, Travel days: 1] Currently in Suzhou, planning to visit Shanghai for a day. I want to visit famous attractions and hope to see as many as possible. The budget is 2000."
+}

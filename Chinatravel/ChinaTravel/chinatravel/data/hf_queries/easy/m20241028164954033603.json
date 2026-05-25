@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164954033603",
+  "tag": "easy",
+  "start_city": "武汉",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "accommodation_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': accommodation_name_set.add(activity_position(activity))\nresult=({'上海陆家嘴浦东大道亚朵酒店'}<=accommodation_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "我目前在武汉，计划和三个朋友一起去上海玩三天，希望住在上海陆家嘴浦东大道亚朵酒店，请帮我规划一个旅行计划。",
+  "nature_language_en": "Sure, here's the translation of your request into English:"
+}

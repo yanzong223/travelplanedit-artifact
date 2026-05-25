@@ -1,0 +1,575 @@
+{
+  "sample_id": "sample_000001",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置南京。我一个人想去杭州玩一天，预算1400人民币，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028160353644992",
+    "tag": "easy",
+    "start_city": "南京",
+    "target_city": "杭州",
+    "days": 1,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==1)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1400)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置南京。我一个人想去杭州玩一天，预算1400人民币，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Nanjing. I want to travel to Hangzhou alone for a day with a budget of 1,400 RMB. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "南京",
+    "target_city": "杭州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "00:03",
+            "end_time": "05:50",
+            "start": "南京站",
+            "end": "杭州站",
+            "price": 118.47,
+            "cost": 118.47,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "Z175",
+            "type": "train"
+          },
+          {
+            "position": "西湖风景名胜区",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "06:45",
+            "end_time": "08:15",
+            "transports": [
+              {
+                "start": "杭州站",
+                "end": "城站-地铁站",
+                "mode": "walk",
+                "start_time": "05:50",
+                "end_time": "05:52",
+                "cost": 0,
+                "distance": 0.21,
+                "price": 0
+              },
+              {
+                "start": "城站-地铁站",
+                "end": "水澄桥-地铁站",
+                "mode": "metro",
+                "start_time": "05:52",
+                "end_time": "06:02",
+                "cost": 3,
+                "distance": 5.28,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "水澄桥-地铁站",
+                "end": "西湖风景名胜区",
+                "mode": "walk",
+                "start_time": "06:02",
+                "end_time": "06:45",
+                "cost": 0,
+                "distance": 3.6,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "西湖游船",
+            "type": "attraction",
+            "price": 55,
+            "cost": 55,
+            "start_time": "08:20",
+            "end_time": "09:50",
+            "transports": [
+              {
+                "start": "西湖风景名胜区",
+                "end": "西湖游船",
+                "mode": "taxi",
+                "start_time": "08:15",
+                "end_time": "08:20",
+                "cost": 18.18,
+                "distance": 3.85,
+                "price": 18.18,
+                "cars": 1
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "start_time": "11:24",
+            "end_time": "12:26",
+            "start": "杭州东站",
+            "end": "南京南站",
+            "price": 154.02,
+            "cost": 154.02,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "西湖游船",
+                "end": "龙翔桥-地铁站",
+                "mode": "walk",
+                "start_time": "09:50",
+                "end_time": "09:59",
+                "cost": 0,
+                "distance": 0.8,
+                "price": 0
+              },
+              {
+                "start": "龙翔桥-地铁站",
+                "end": "火车东站(东广场)-地铁站",
+                "mode": "metro",
+                "start_time": "09:59",
+                "end_time": "10:12",
+                "cost": 3,
+                "distance": 6.63,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "火车东站(东广场)-地铁站",
+                "end": "杭州东站",
+                "mode": "walk",
+                "start_time": "10:12",
+                "end_time": "10:17",
+                "cost": 0,
+                "distance": 0.48,
+                "price": 0
+              }
+            ],
+            "TrainID": "G182",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 1400.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1400)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把南宋御街加进行程里，而且所有景点之间的交通时间都不能超过35分钟",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "南宋御街",
+        "type": "attraction",
+        "city": "杭州"
+      }
+    ],
+    "spatial": {
+      "city": "杭州"
+    },
+    "temporal": [
+      {
+        "max_duration": "35分钟"
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "adjacent_travel_time_cap",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_types": [
+          "attraction"
+        ]
+      },
+      "operator": "<=",
+      "value": 35,
+      "params": {
+        "unit": "minute",
+        "day": "all",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "南宋御街"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [
+    {
+      "id": "edit_pref_route_compactness_travel_time",
+      "source": "edit",
+      "family": "route_compactness",
+      "facet": "transport_time_minimize",
+      "direction": "minimize",
+      "anchor": "南宋御街",
+      "edit_mode": "addition",
+      "params": {
+        "canonical_facet": "travel_time",
+        "intensity": "medium"
+      },
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "travel_time_constraint",
+        "template_text": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}"
+      }
+    }
+  ],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [
+    {
+      "family": "route_compactness",
+      "facet": "travel_time",
+      "edit_mode": "addition",
+      "anchor": "南宋御街",
+      "intensity": "medium",
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "travel_time_constraint",
+        "template_text": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}"
+      }
+    }
+  ],
+  "conflict_set": [
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "temporal",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "travel_time_constraint",
+    "template": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}",
+    "template_id": "structural_temporal_overflow__travel_time_constraint__01",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [
+        "poi"
+      ],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "duration_limit_min"
+      ],
+      "relation_slots": [
+        "adjacent_edge_scope"
+      ],
+      "ir_outputs": [
+        "required_attraction_name",
+        "adjacent_travel_time_cap"
+      ],
+      "hard_axes": [
+        "travel_time"
+      ],
+      "soft_axes": [
+        "travel_time"
+      ],
+      "entity_slots_hard_policy": "keep_if_explicit",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_keep_entity",
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "composite",
+      "constraint_type": "travel_time_constraint",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "travel_time_constraint",
+      "baseline_max_transport_duration_min": 43,
+      "chosen_transport_duration_limit_min": 35
+    },
+    "rendered_params": {
+      "start_city": "南京",
+      "target_city": "杭州",
+      "day_count": 1,
+      "duration": "35分钟"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "travel_time_constraint",
+      "anchor_poi": "南宋御街",
+      "duration_limit_min": 35
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "travel_time_constraint",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "南宋御街",
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": 35,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "baseline": 43,
+      "threshold": 35
+    },
+    "soft_target_family": "route_compactness",
+    "soft_target_facet": "travel_time",
+    "soft_target_mode": "addition",
+    "soft_target_intensity": "medium",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "travel_time_constraint",
+      "anchor_poi": "南宋御街",
+      "duration_limit_min": 35
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "travel_time_constraint",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "南宋御街",
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": 35,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "baseline": 43,
+      "threshold": 35
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    "target_city": "杭州",
+    "start_city": "南京",
+    "is_single_day": true,
+    "day_count": 1,
+    "origin_plan_file": "e20241028160353644992.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_temporal_overflow"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T14:15:07.594895",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000013",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_temporal_overflow/_validation_split/passed/sample_000013.json",
+    "template_diversity_selected": true
+  }
+}

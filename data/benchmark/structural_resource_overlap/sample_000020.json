@@ -1,0 +1,482 @@
+{
+  "sample_id": "sample_000020",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置重庆。我三个人想去苏州玩2天，预算6100人民币，坐火车往返，住两间房，麻烦给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028161156053328",
+    "tag": "medium",
+    "start_city": "重庆",
+    "target_city": "苏州",
+    "days": 2,
+    "people_number": 3,
+    "limit_rooms": true,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==3)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=6100)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+      "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置重庆。我三个人想去苏州玩2天，预算6100人民币，坐火车往返，住两间房，麻烦给我一个旅行规划。",
+    "nature_language_en": "Current location: Chongqing. Three of us want to visit Suzhou for 2 days with a budget of 6,100 RMB. We plan to travel round-trip by train and stay in two rooms. Could you please provide a travel itinerary for us?"
+  },
+  "origin_plan": {
+    "people_number": 3,
+    "start_city": "重庆",
+    "target_city": "苏州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:51",
+            "end_time": "17:50",
+            "start": "重庆北站",
+            "end": "苏州站",
+            "price": 814.87,
+            "cost": 2444.61,
+            "tickets": 3,
+            "transports": [],
+            "TrainID": "D958",
+            "type": "train"
+          },
+          {
+            "position": "老王蛋饼(书院巷店)",
+            "type": "dinner",
+            "price": 10,
+            "cost": 30,
+            "start_time": "18:01",
+            "end_time": "19:00",
+            "transports": [
+              {
+                "start": "苏州站",
+                "end": "苏州火车站-地铁站",
+                "mode": "walk",
+                "start_time": "17:50",
+                "end_time": "17:51",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              },
+              {
+                "start": "苏州火车站-地铁站",
+                "end": "三元坊-地铁站",
+                "mode": "metro",
+                "start_time": "17:51",
+                "end_time": "17:58",
+                "cost": 6,
+                "distance": 3.85,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "三元坊-地铁站",
+                "end": "老王蛋饼(书院巷店)",
+                "mode": "walk",
+                "start_time": "17:58",
+                "end_time": "18:01",
+                "cost": 0,
+                "distance": 0.3,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "山塘街",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "19:18",
+            "end_time": "20:48",
+            "transports": [
+              {
+                "start": "老王蛋饼(书院巷店)",
+                "end": "三元坊-地铁站",
+                "mode": "walk",
+                "start_time": "19:00",
+                "end_time": "19:03",
+                "cost": 0,
+                "distance": 0.3,
+                "price": 0
+              },
+              {
+                "start": "三元坊-地铁站",
+                "end": "山塘街-地铁站",
+                "mode": "metro",
+                "start_time": "19:03",
+                "end_time": "19:09",
+                "cost": 6,
+                "distance": 3.17,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "山塘街-地铁站",
+                "end": "山塘街",
+                "mode": "walk",
+                "start_time": "19:09",
+                "end_time": "19:18",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              }
+            ],
+            "tickets": 3
+          },
+          {
+            "position": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+            "type": "accommodation",
+            "price": 225,
+            "cost": 450,
+            "start_time": "21:21",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "山塘街",
+                "end": "山塘街-地铁站",
+                "mode": "walk",
+                "start_time": "20:48",
+                "end_time": "20:57",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              },
+              {
+                "start": "山塘街-地铁站",
+                "end": "西环路-地铁站",
+                "mode": "metro",
+                "start_time": "20:57",
+                "end_time": "21:03",
+                "cost": 6,
+                "distance": 3.1,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "西环路-地铁站",
+                "end": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+                "mode": "walk",
+                "start_time": "21:03",
+                "end_time": "21:21",
+                "cost": 0,
+                "distance": 1.54,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 2
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "start_time": "10:00",
+            "end_time": "20:05",
+            "start": "苏州站",
+            "end": "重庆北站",
+            "price": 814.87,
+            "cost": 2444.61,
+            "tickets": 3,
+            "transports": [
+              {
+                "start": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+                "end": "西环路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:48",
+                "cost": 0,
+                "distance": 1.54,
+                "price": 0
+              },
+              {
+                "start": "西环路-地铁站",
+                "end": "苏州火车站-地铁站",
+                "mode": "metro",
+                "start_time": "08:48",
+                "end_time": "08:57",
+                "cost": 9,
+                "distance": 4.54,
+                "price": 3,
+                "tickets": 3
+              },
+              {
+                "start": "苏州火车站-地铁站",
+                "end": "苏州站",
+                "mode": "walk",
+                "start_time": "08:57",
+                "end_time": "08:58",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              }
+            ],
+            "TrainID": "D956",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==3)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 6100.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=6100)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_5",
+      "source": "origin",
+      "type": "required_intercity_transport_type",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "equals_set",
+      "value": [
+        "train"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)"
+      }
+    },
+    {
+      "id": "origin_logic_6",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把每人每晚住宿预算控制在120元以内",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "苏州"
+    },
+    "temporal": [],
+    "resource": {
+      "hotel_budget_per_night_per_person": 120.0,
+      "budget_cap": 120,
+      "activity_type": "accommodation",
+      "metric": "avg_cost_per_person_per_night"
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "activity_budget_limit",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "accommodation"
+      },
+      "operator": "<=",
+      "value": 120.0,
+      "params": {
+        "metric": "avg_cost_per_person_per_night",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "parameter",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "parameter",
+    "resource",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_resource_overlap__activity_budget_limit__03",
+    "template": "把每人每晚住宿预算控制在{budget}元以内",
+    "template_str": "把每人每晚住宿预算控制在{budget}元以内",
+    "constraint_type": "activity_budget_limit",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "target_city": "苏州",
+    "start_city": "重庆",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "activity_budget_limit"
+    ],
+    "requested_bucket_names": [
+      "structural_resource_overlap"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000007",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_structural_incompatibility/_validation_split/passed/sample_000007.json",
+    "diversity_augmented": true,
+    "diversity_domain": "accommodation",
+    "constraint_type": "activity_budget_limit",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": false,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "parameter",
+      "resource",
+      "overflow"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000146",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000146.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000027",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_resource_overlap/_validation_split/passed/sample_000027.json",
+    "template_diversity_selected": true
+  }
+}

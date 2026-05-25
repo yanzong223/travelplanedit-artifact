@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143811168339",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "武汉",
+  "days": 5,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=9000)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光','历史古迹'}<=attraction_type_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置武汉,旅行人数2,旅行天数5] 我和男朋友计划从杭州前往武汉旅游，计划游玩5天，预算在9000元。我们喜欢历史景点和自然风光，请你为我们规划行程",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Wuhan, Number of travelers: 2, Number of travel days: 5] My boyfriend and I are planning to travel from Hangzhou to Wuhan for a 5-day trip with a budget of 9000 RMB. We enjoy historical sites and natural scenery. Please help us plan our itinerary."
+}

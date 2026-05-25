@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143826541906",
+  "tag": "human",
+  "start_city": "北京",
+  "target_city": "深圳",
+  "days": 4,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'白石龙音乐主题公园'}<=attraction_name_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置北京,目标位置深圳,旅行人数4,旅行天数4] 从北京飞去深圳探亲，顺便玩4天。我和老婆带着两个孩子一起，孩子们想去白石龙音乐主题公园，预算1.5万元，请做下行程安排",
+  "nature_language_en": "[Current location: Beijing, Destination: Shenzhen, Number of travelers: 4, Travel days: 4] Traveling from Beijing to Shenzhen to visit relatives and spend 4 days having fun. My wife and I are bringing our two children, who want to visit the Baishilong Music Theme Park. Our budget is 15,000 RMB. Please help us plan the itinerary."
+}

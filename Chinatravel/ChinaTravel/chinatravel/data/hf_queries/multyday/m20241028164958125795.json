@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028164958125795",
+  "tag": "easy",
+  "start_city": "广州",
+  "target_city": "成都",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "accommodation_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': accommodation_name_set.add(activity_position(activity))\nresult=({'成都中航明宇尚雅酒店'}<=accommodation_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "我目前在广州，计划独自前往成都游玩三天。并希望入住成都中航明宇尚雅酒店。请为我制定一个旅行计划。",
+  "nature_language_en": "Sure, here is the translation of your request into English:"
+}

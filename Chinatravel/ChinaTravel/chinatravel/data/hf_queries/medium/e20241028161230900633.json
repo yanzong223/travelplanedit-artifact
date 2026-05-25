@@ -1,0 +1,21 @@
+{
+  "uid": "e20241028161230900633",
+  "tag": "medium",
+  "start_city": "重庆",
+  "target_city": "成都",
+  "days": 2,
+  "people_number": 4,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==4)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=5000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'成都博物馆'}<=attraction_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置重庆。我四个人想去成都玩2天，预算5000人民币，住两间房，想去成都博物馆，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Chongqing. Four of us want to visit Chengdu for 2 days with a budget of 5000 RMB. We need two rooms and would like to visit the Chengdu Museum. Please provide a travel plan."
+}

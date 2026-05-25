@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143823020071",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "苏州",
+  "days": 2,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'园林'}<=attraction_type_set)",
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置苏州,旅行人数2,旅行天数2] 我和同事明天从武汉高铁到苏州开会，会议后有两天自由活动时间，想参观一些园林，求建议！",
+  "nature_language_en": "[Current location: Wuhan, Destination: Suzhou, Number of travelers: 2, Number of travel days: 2] My colleague and I are taking the high-speed train from Wuhan to Suzhou tomorrow for a meeting. After the meeting, we have two days of free time and would like to visit some gardens. Any suggestions?"
+}

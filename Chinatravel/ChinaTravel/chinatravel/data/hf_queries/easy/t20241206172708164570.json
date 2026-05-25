@@ -1,0 +1,19 @@
+{
+  "uid": "t20241206172708164570",
+  "tag": "easy",
+  "start_city": "上海",
+  "target_city": "南京",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置上海。我和两位朋友打算去南京玩两天，选择火车出行。请给我一个旅行规划。",
+  "nature_language_en": "Current location: Shanghai. My two friends and I are planning to visit Nanjing for two days, and we plan to travel by train. Could you please provide a travel itinerary for us?"
+}

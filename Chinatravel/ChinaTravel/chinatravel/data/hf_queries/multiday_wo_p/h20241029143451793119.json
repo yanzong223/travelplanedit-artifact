@@ -1,0 +1,18 @@
+{
+  "uid": "h20241029143451793119",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "重庆",
+  "days": 4,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'川菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置重庆,旅行人数4,旅行天数4] 我想去重庆吃有当地特色，实惠且好吃的美食，有没有推荐",
+  "nature_language_en": "[Current location: Nanjing, Destination: Chongqing, Number of travelers: 4, Number of travel days: 4] I want to go to Chongqing to eat local, affordable, and delicious food. Do you have any recommendations?"
+}

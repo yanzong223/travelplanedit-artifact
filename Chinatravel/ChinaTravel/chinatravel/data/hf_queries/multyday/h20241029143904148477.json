@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143904148477",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "北京",
+  "days": 5,
+  "people_number": 3,
+  "limit_rooms": true,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=10000)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=2: result=False",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置北京,旅行人数3,旅行天数5] 我想和两个朋友去北京玩五天，预算小于10000，订两个房间，想住在交通便利的地方。请问我应当如何规划行程？",
+  "nature_language_en": "[Current location: Nanjing, Destination: Beijing, Number of travelers: 3, Number of travel days: 5] I want to go to Beijing with two friends for five days, with a budget of less than 10,000. We want to book two rooms and stay in a place with convenient transportation. How should I plan the itinerary?"
+}

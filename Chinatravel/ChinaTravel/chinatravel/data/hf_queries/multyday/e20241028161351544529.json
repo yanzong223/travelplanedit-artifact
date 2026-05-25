@@ -1,0 +1,25 @@
+{
+  "uid": "e20241028161351544529",
+  "tag": "medium",
+  "start_city": "上海",
+  "target_city": "南京",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": true,
+  "limits_room_type": true,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=2500)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_count(activity)!=1: result=False",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation' and room_type(activity)!=1: result=False",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'历史古迹'}<=attraction_type_set)",
+    "accommodation_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) == 'accommodation': accommodation_type_set.add(accommodation_type(activity, target_city(plan)))\nresult=({'桑拿'}<=accommodation_type_set)",
+    "food_cost,food_count=0,0\nfor activity in allactivities(plan):\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner']:\n        food_cost+=activity_cost(activity)\n        food_count+=1\nresult=(food_cost/food_count/people_count(plan)<=70)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置上海。我一个人想去南京玩2天，坐火车，预算2500人民币，喜欢历史古迹的景点，住一间有桑拿的酒店，每顿饭不超过70元，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Shanghai. I want to travel alone to Nanjing for 2 days by train, with a budget of 2500 RMB. I am interested in historical sites and would like to stay in a hotel with a sauna. I plan to spend no more than 70 RMB per meal. Please provide me with a travel itinerary."
+}

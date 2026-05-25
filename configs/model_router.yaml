@@ -1,0 +1,297 @@
+version: 1
+
+model_sets:
+  main6:
+    description: "Non-strict closed-source main experiment set: three open small/mid models plus three SOTA large models."
+    groups:
+      small_open_models:
+        - qwen3_30b_a3b_instruct_2507
+        - qwen3_5_35b_a3b
+        - qwen3_32b
+        - glm_4_5_air
+        - minimax_m2
+      sota_large_models:
+        - gpt_5_4
+        - gemini_3_1_pro
+        - gemini_3_1_pro_preview
+        - deepseek_v4_pro
+  mid3:
+    description: "Three medium-size/open main experiment models for partial runs."
+    groups:
+      small_open_models:
+        - qwen3_30b_a3b_instruct_2507
+        - qwen3_5_35b_a3b
+        - qwen3_32b
+        - glm_4_5_air
+        - minimax_m2
+
+models:
+  qwen3_30b_a3b_instruct_2507:
+    model: "Qwen3-30B-A3B-Instruct-2507"
+    provider: "dmxapi"
+    family: "qwen"
+    group: "small_open_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: true
+    request_overrides:
+      extra_body:
+        enable_thinking: false
+
+  qwen3_vl_8b_instruct:
+    model: "qwen3-vl-8b-instruct"
+    provider: "dmxapi"
+    family: "qwen"
+    group: "small_open_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: false
+      thinking_budget: false
+    request_overrides: {}
+
+  qwen3_6_35b_a3b:
+    model: "qwen3.6-35b-a3b"
+    provider: "dmxapi"
+    family: "qwen"
+    group: "small_open_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: true
+    request_overrides:
+      extra_body:
+        enable_thinking: true
+        thinking_budget: 8192
+    notes: "DMXAPI Qwen3.6 thinking-mode route."
+
+  qwen3_5_35b_a3b:
+    model: "qwen3.5-35b-a3b"
+    provider: "dmxapi"
+    family: "qwen"
+    group: "small_open_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: true
+    request_overrides:
+      extra_body:
+        enable_thinking: true
+        thinking_budget: 8192
+    notes: "DMXAPI Qwen3.5 35B A3B thinking-mode route."
+
+  qwen3_32b:
+    model: "qwen3-32b"
+    provider: "dmxapi"
+    family: "qwen"
+    group: "small_open_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: true
+    request_overrides:
+      extra_body:
+        enable_thinking: true
+        thinking_budget: 8192
+    notes: "DMXAPI Qwen3-32B thinking-mode route."
+
+  qwen3_6_plus:
+    model: "qwen3.6-plus"
+    provider: "dmxapi"
+    family: "qwen"
+    group: "sota_large_models"
+    open_weight: false
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: true
+    request_overrides:
+      extra_body:
+        enable_thinking: true
+        thinking_budget: 8192
+        preserve_thinking: true
+    notes: "DMXAPI Qwen3.6 Plus thinking-mode route."
+
+  glm_4_5_air:
+    model: "glm-4.5-air"
+    provider: "dmxapi"
+    family: "glm"
+    group: "small_open_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: false
+    request_overrides:
+      extra_body:
+        thinking:
+          type: "enabled"
+
+  minimax_m2:
+    model: "MiniMax-M2"
+    provider: "dmxapi"
+    family: "minimax"
+    group: "small_open_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: false
+      thinking_budget: false
+    request_overrides: {}
+    response_format_policy: "json_schema_with_repair"
+
+  gpt_4o_mini:
+    model: "gpt-4o-mini"
+    provider: "dmxapi"
+    family: "openai"
+    group: "small_open_models"
+    open_weight: false
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: false
+      thinking_budget: false
+    request_overrides: {}
+
+  gpt_5_4:
+    model: "gpt-5.4"
+    provider: "dmxapi"
+    family: "openai"
+    group: "sota_large_models"
+    open_weight: false
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: false
+    request_overrides:
+      reasoning_effort: "high"
+
+  gpt_5_5:
+    model: "gpt-5.5"
+    provider: "dmxapi"
+    family: "openai"
+    group: "sota_large_models"
+    open_weight: false
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: false
+    request_overrides:
+      reasoning_effort: "high"
+
+  gemini_3_1_pro:
+    model: "gemini-3.1-pro-preview"
+    provider: "dmxapi"
+    family: "gemini"
+    group: "sota_large_models"
+    open_weight: false
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: true
+    request_overrides:
+      extra_body:
+        thinking_config:
+          thinking_budget: 8192
+
+  gemini_3_1_pro_preview:
+    model: "gemini-3.1-pro-preview"
+    provider: "dmxapi"
+    family: "gemini"
+    group: "sota_large_models"
+    open_weight: false
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: true
+    request_overrides:
+      extra_body:
+        thinking_config:
+          thinking_budget: 16384
+    notes: "DMXAPI Gemini 3.1 Pro Preview route with extended thinking budget."
+
+  gemini_3_1_pro_preview_ssvip:
+    model: "gemini-3.1-pro-preview-ssvip"
+    provider: "dmxapi"
+    family: "gemini"
+    group: "sota_large_models"
+    open_weight: false
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: true
+    request_overrides:
+      extra_body:
+        thinking_config:
+          thinking_level: "high"
+
+  deepseek_v4_pro:
+    model: "deepseek-v4-pro"
+    provider: "dmxapi"
+    family: "deepseek"
+    group: "sota_large_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: false
+    request_overrides:
+      extra_body:
+        thinking:
+          type: "enabled"
+      reasoning_effort: "high"
+
+  deepseek_v4_pro_guan:
+    model: "deepseek-v4-pro-guan"
+    provider: "dmxapi"
+    family: "deepseek"
+    group: "sota_large_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: false
+    request_overrides:
+      extra_body:
+        thinking:
+          type: "enabled"
+      reasoning_effort: "high"
+    notes: "DMXAPI DeepSeek V4 Pro Guan route for benchmark thinking-mode runs."
+
+  deepseek_v4_flash:
+    model: "deepseek-v4-flash"
+    provider: "dmxapi"
+    family: "deepseek"
+    group: "sota_large_models"
+    open_weight: true
+    capabilities:
+      tools: true
+      structured_output: true
+      thinking: true
+      thinking_budget: false
+    request_overrides:
+      extra_body:
+        thinking:
+          type: "enabled"
+      reasoning_effort: "high"
+    notes: "Fallback for deepseek_v4_pro when cost or rate limits are too high."

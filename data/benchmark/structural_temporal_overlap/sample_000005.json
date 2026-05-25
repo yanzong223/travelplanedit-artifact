@@ -1,0 +1,538 @@
+{
+  "sample_id": "sample_000005",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置苏州。我一个人想去杭州玩一天，预算900人民币，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028160438025375",
+    "tag": "easy",
+    "start_city": "苏州",
+    "target_city": "杭州",
+    "days": 1,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==1)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=900)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置苏州。我一个人想去杭州玩一天，预算900人民币，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Suzhou. I want to visit Hangzhou alone for a day with a budget of 900 RMB. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "苏州",
+    "target_city": "杭州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "02:29",
+            "end_time": "06:40",
+            "start": "苏州站",
+            "end": "杭州站",
+            "price": 48.4,
+            "cost": 48.4,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "K1808",
+            "type": "train"
+          },
+          {
+            "position": "西湖风景名胜区",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "07:35",
+            "end_time": "09:05",
+            "transports": [
+              {
+                "start": "杭州站",
+                "end": "城站-地铁站",
+                "mode": "walk",
+                "start_time": "06:40",
+                "end_time": "06:42",
+                "cost": 0,
+                "distance": 0.21,
+                "price": 0
+              },
+              {
+                "start": "城站-地铁站",
+                "end": "水澄桥-地铁站",
+                "mode": "metro",
+                "start_time": "06:42",
+                "end_time": "06:52",
+                "cost": 3,
+                "distance": 5.28,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "水澄桥-地铁站",
+                "end": "西湖风景名胜区",
+                "mode": "walk",
+                "start_time": "06:52",
+                "end_time": "07:35",
+                "cost": 0,
+                "distance": 3.6,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "嘭嘭鲜·炭炉牛杂煲(万象汇店)",
+            "type": "lunch",
+            "price": 98,
+            "cost": 98,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "西湖风景名胜区",
+                "end": "水澄桥-地铁站",
+                "mode": "walk",
+                "start_time": "09:05",
+                "end_time": "09:48",
+                "cost": 0,
+                "distance": 3.6,
+                "price": 0
+              },
+              {
+                "start": "水澄桥-地铁站",
+                "end": "人民广场-地铁站",
+                "mode": "metro",
+                "start_time": "09:48",
+                "end_time": "10:10",
+                "cost": 4,
+                "distance": 11.35,
+                "price": 4,
+                "tickets": 1
+              },
+              {
+                "start": "人民广场-地铁站",
+                "end": "嘭嘭鲜·炭炉牛杂煲(万象汇店)",
+                "mode": "walk",
+                "start_time": "10:10",
+                "end_time": "10:13",
+                "cost": 0,
+                "distance": 0.33,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "13:10",
+            "end_time": "17:30",
+            "start": "杭州南站",
+            "end": "苏州站",
+            "price": 48.4,
+            "cost": 48.4,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "嘭嘭鲜·炭炉牛杂煲(万象汇店)",
+                "end": "人民广场-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:03",
+                "cost": 0,
+                "distance": 0.33,
+                "price": 0
+              },
+              {
+                "start": "人民广场-地铁站",
+                "end": "火车南站-地铁站",
+                "mode": "metro",
+                "start_time": "12:03",
+                "end_time": "12:09",
+                "cost": 2,
+                "distance": 3.08,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "火车南站-地铁站",
+                "end": "杭州南站",
+                "mode": "walk",
+                "start_time": "12:09",
+                "end_time": "12:12",
+                "cost": 0,
+                "distance": 0.3,
+                "price": 0
+              }
+            ],
+            "TrainID": "K1512",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 900.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=900)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把西湖风景名胜区的游览安排在晚上",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "西湖风景名胜区",
+        "type": "attraction",
+        "city": "杭州"
+      }
+    ],
+    "spatial": {
+      "city": "杭州"
+    },
+    "temporal": [
+      {
+        "must_visit": "西湖风景名胜区",
+        "time_period": "晚上"
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "poi_time_window",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "poi_name": "西湖风景名胜区"
+      },
+      "operator": "in",
+      "value": "evening",
+      "params": {
+        "day": null,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "西湖风景名胜区"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "temporal",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "temporal",
+    "overlap"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "time_window",
+    "template": "把{poi}的时间安排在{time_period}",
+    "template_id": "structural_temporal_overlap__time_window__00",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [
+        "poi"
+      ],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "time_period"
+      ],
+      "relation_slots": [
+        "day_scope"
+      ],
+      "ir_outputs": [
+        "poi_time_window"
+      ],
+      "risk_level": "medium",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "time_window",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "time_window"
+    },
+    "rendered_params": {
+      "start_city": "苏州",
+      "target_city": "杭州",
+      "day_count": 1,
+      "time_period": "晚上"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "time_window",
+      "anchor_poi": "西湖风景名胜区",
+      "time_period": "晚上"
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "time_window",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "西湖风景名胜区",
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.55,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "poi": "西湖风景名胜区",
+      "start_time": "07:35",
+      "end_time": "09:05",
+      "time_period": "晚上",
+      "citation": "itinerary[0].activities[1]"
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "llm_rewrite",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "time_window",
+      "anchor_poi": "西湖风景名胜区",
+      "time_period": "晚上"
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "time_window",
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "anchor_poi": "西湖风景名胜区",
+      "day_poi_pairs": [],
+      "budget_cap": null,
+      "duration_limit_min": null,
+      "distance_km": null,
+      "restaurant_name": null,
+      "restaurant_type": null,
+      "hotel_name": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "nearby_meal": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "regex",
+      "parse_confidence": 0.55,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "poi": "西湖风景名胜区",
+      "start_time": "07:35",
+      "end_time": "09:05",
+      "time_period": "晚上",
+      "citation": "itinerary[0].activities[1]"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "temporal",
+      "overlap"
+    ],
+    "target_city": "杭州",
+    "start_city": "苏州",
+    "is_single_day": true,
+    "day_count": 1,
+    "origin_plan_file": "e20241028160438025375.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_temporal_overlap"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-09T14:28:12.047597",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "temporal",
+      "overlap"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000014",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_temporal_overlap/_validation_split/passed/sample_000014.json",
+    "template_diversity_selected": true
+  }
+}

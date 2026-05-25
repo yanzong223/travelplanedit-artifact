@@ -1,0 +1,555 @@
+{
+  "sample_id": "sample_000021",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置成都。我们三个人想去重庆玩2天，想去桂园，请给我们一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "m20241028164854688667",
+    "tag": "easy",
+    "start_city": "成都",
+    "target_city": "重庆",
+    "days": 2,
+    "people_number": 3,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==3)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+      "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'桂园'}<=attraction_name_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置成都。我们三个人想去重庆玩2天，想去桂园，请给我们一个旅行规划。",
+    "nature_language_en": "Current location: Chengdu. The three of us want to visit Chongqing for 2 days and would like to go to Guiyuan. Please provide us with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 3,
+    "start_city": "成都",
+    "target_city": "重庆",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "06:48",
+            "end_time": "08:05",
+            "start": "成都东站",
+            "end": "重庆西站",
+            "price": 171.7,
+            "cost": 515.0999999999999,
+            "tickets": 3,
+            "transports": [],
+            "TrainID": "G2371",
+            "type": "train"
+          },
+          {
+            "position": "重庆美利亚酒店",
+            "type": "accommodation",
+            "price": 566,
+            "cost": 1132,
+            "start_time": "09:20",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "重庆西站",
+                "end": "重庆西站-地铁站",
+                "mode": "walk",
+                "start_time": "08:05",
+                "end_time": "08:06",
+                "cost": 0,
+                "distance": 0.1,
+                "price": 0
+              },
+              {
+                "start": "重庆西站-地铁站",
+                "end": "铁山坪-地铁站",
+                "mode": "metro",
+                "start_time": "08:06",
+                "end_time": "08:57",
+                "cost": 18,
+                "distance": 25.65,
+                "price": 6,
+                "tickets": 3
+              },
+              {
+                "start": "铁山坪-地铁站",
+                "end": "重庆美利亚酒店",
+                "mode": "walk",
+                "start_time": "08:57",
+                "end_time": "09:20",
+                "cost": 0,
+                "distance": 1.93,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 2
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "重庆美利亚酒店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "桂园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "09:23",
+            "end_time": "10:53",
+            "transports": [
+              {
+                "start": "重庆美利亚酒店",
+                "end": "铁山坪-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:53",
+                "cost": 0,
+                "distance": 1.93,
+                "price": 0
+              },
+              {
+                "start": "铁山坪-地铁站",
+                "end": "曾家岩-地铁站",
+                "mode": "metro",
+                "start_time": "08:53",
+                "end_time": "09:18",
+                "cost": 12,
+                "distance": 12.71,
+                "price": 4,
+                "tickets": 3
+              },
+              {
+                "start": "曾家岩-地铁站",
+                "end": "桂园",
+                "mode": "walk",
+                "start_time": "09:18",
+                "end_time": "09:23",
+                "cost": 0,
+                "distance": 0.44,
+                "price": 0
+              }
+            ],
+            "tickets": 3
+          },
+          {
+            "position": "杨记隆府(解放碑总店)",
+            "type": "lunch",
+            "price": 96,
+            "cost": 288,
+            "start_time": "11:08",
+            "end_time": "12:08",
+            "transports": [
+              {
+                "start": "桂园",
+                "end": "曾家岩-地铁站",
+                "mode": "walk",
+                "start_time": "10:53",
+                "end_time": "10:58",
+                "cost": 0,
+                "distance": 0.44,
+                "price": 0
+              },
+              {
+                "start": "曾家岩-地铁站",
+                "end": "临江门-地铁站",
+                "mode": "metro",
+                "start_time": "10:58",
+                "end_time": "11:03",
+                "cost": 6,
+                "distance": 2.51,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "临江门-地铁站",
+                "end": "杨记隆府(解放碑总店)",
+                "mode": "walk",
+                "start_time": "11:03",
+                "end_time": "11:08",
+                "cost": 0,
+                "distance": 0.49,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "李子坝轻轨站",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:21",
+            "end_time": "13:51",
+            "transports": [
+              {
+                "start": "杨记隆府(解放碑总店)",
+                "end": "临江门-地铁站",
+                "mode": "walk",
+                "start_time": "12:08",
+                "end_time": "12:13",
+                "cost": 0,
+                "distance": 0.49,
+                "price": 0
+              },
+              {
+                "start": "临江门-地铁站",
+                "end": "牛角沱-地铁站",
+                "mode": "metro",
+                "start_time": "12:13",
+                "end_time": "12:19",
+                "cost": 6,
+                "distance": 3.08,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "牛角沱-地铁站",
+                "end": "李子坝轻轨站",
+                "mode": "walk",
+                "start_time": "12:19",
+                "end_time": "12:21",
+                "cost": 0,
+                "distance": 0.24,
+                "price": 0
+              }
+            ],
+            "tickets": 3
+          },
+          {
+            "position": "叁步梯老火锅·地道重庆味",
+            "type": "dinner",
+            "price": 93,
+            "cost": 279,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "李子坝轻轨站",
+                "end": "牛角沱-地铁站",
+                "mode": "walk",
+                "start_time": "13:51",
+                "end_time": "13:53",
+                "cost": 0,
+                "distance": 0.24,
+                "price": 0
+              },
+              {
+                "start": "牛角沱-地铁站",
+                "end": "红旗河沟-地铁站",
+                "mode": "metro",
+                "start_time": "13:53",
+                "end_time": "13:59",
+                "cost": 6,
+                "distance": 3.17,
+                "price": 2,
+                "tickets": 3
+              },
+              {
+                "start": "红旗河沟-地铁站",
+                "end": "叁步梯老火锅·地道重庆味",
+                "mode": "walk",
+                "start_time": "13:59",
+                "end_time": "14:07",
+                "cost": 0,
+                "distance": 0.7,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "重庆中央公园",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "18:43",
+            "end_time": "20:13",
+            "transports": [
+              {
+                "start": "叁步梯老火锅·地道重庆味",
+                "end": "红旗河沟-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:08",
+                "cost": 0,
+                "distance": 0.7,
+                "price": 0
+              },
+              {
+                "start": "红旗河沟-地铁站",
+                "end": "中央公园东-地铁站",
+                "mode": "metro",
+                "start_time": "18:08",
+                "end_time": "18:41",
+                "cost": 15,
+                "distance": 16.62,
+                "price": 5,
+                "tickets": 3
+              },
+              {
+                "start": "中央公园东-地铁站",
+                "end": "重庆中央公园",
+                "mode": "walk",
+                "start_time": "18:41",
+                "end_time": "18:43",
+                "cost": 0,
+                "distance": 0.24,
+                "price": 0
+              }
+            ],
+            "tickets": 3
+          },
+          {
+            "start_time": "22:10",
+            "end_time": "22:29",
+            "start": "重庆江北国际机场",
+            "end": "成都双流国际机场",
+            "price": 275.15,
+            "cost": 825.4499999999999,
+            "tickets": 3,
+            "transports": [
+              {
+                "start": "重庆中央公园",
+                "end": "中央公园东-地铁站",
+                "mode": "walk",
+                "start_time": "20:13",
+                "end_time": "20:15",
+                "cost": 0,
+                "distance": 0.24,
+                "price": 0
+              },
+              {
+                "start": "中央公园东-地铁站",
+                "end": "江北机场T3航站楼-地铁站",
+                "mode": "metro",
+                "start_time": "20:15",
+                "end_time": "20:27",
+                "cost": 9,
+                "distance": 6.3,
+                "price": 3,
+                "tickets": 3
+              },
+              {
+                "start": "江北机场T3航站楼-地铁站",
+                "end": "重庆江北国际机场",
+                "mode": "walk",
+                "start_time": "20:27",
+                "end_time": "20:41",
+                "cost": 0,
+                "distance": 1.21,
+                "price": 0
+              }
+            ],
+            "FlightID": "FL367",
+            "type": "airplane"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==3)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "桂园"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'桂园'}<=attraction_name_set)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "我想吃粤菜",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "重庆"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "preferred_type": "粤菜",
+      "required_restaurant_type": "粤菜"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "required_restaurant_type",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "meal"
+      },
+      "operator": "contains_all",
+      "value": [
+        "粤菜"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "template_id": "structural_semantic_incompatibility__required_restaurant_type__01",
+    "template": "我想吃{poi_type}",
+    "template_str": "我想吃{poi_type}",
+    "constraint_type": "required_restaurant_type",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "target_city": "重庆",
+    "start_city": "成都",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "required_restaurant_type"
+    ],
+    "requested_bucket_names": [
+      "structural_semantic_incompatibility"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000004",
+    "source_seed_path": "./data/data/batches/batch005/batches/parameter_temporal_overflow/_validation_split/passed/sample_000004.json",
+    "diversity_augmented": true,
+    "diversity_domain": "meal",
+    "constraint_type": "required_restaurant_type",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000035",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000035.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000029",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_incompatibility/_validation_split/passed/sample_000029.json",
+    "template_diversity_selected": true
+  }
+}

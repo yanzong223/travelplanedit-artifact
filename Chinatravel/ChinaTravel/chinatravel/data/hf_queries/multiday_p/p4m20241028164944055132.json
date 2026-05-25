@@ -1,0 +1,22 @@
+{
+  "uid": "p4m20241028164944055132",
+  "tag": "preference4_base50",
+  "start_city": "南京",
+  "target_city": "重庆",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "restaurant_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_name_set.add(activity_position(activity))\nresult=({'锅碗瓢盆·重庆本土菜(解放碑店)'}<=restaurant_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置南京。我们三个人想去重庆玩2天，想吃解放碑附近的锅碗瓢盆·重庆本土菜，同时希望尽量减少住宿费用，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Nanjing. The three of us want to visit Chongqing for 2 days and would like to eat at Guo Wan Piao Pen·Chongqing Local Cuisine near Jiefangbei, while hoping to minimize accommodation costs. Please provide us with a travel plan.",
+  "preference": "['最小化 住宿费用']",
+  "preference_en": "['minimize accommodation_cost']",
+  "preference_py": "[\"minimize accommodation_cost\\naccommodation_cost = 0\\nfor activity in allactivities(plan):\\n    if activity_type(activity) == 'accommodation':\\n        accommodation_cost += activity_cost(activity)\"]"
+}

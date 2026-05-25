@@ -1,0 +1,19 @@
+{
+  "uid": "m20241028165006698484",
+  "tag": "easy",
+  "start_city": "北京",
+  "target_city": "重庆",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "accommodation_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': accommodation_name_set.add(activity_position(activity))\nresult=({'重庆INDITION英迪逊酒店(江北嘴金融城店)'}<=accommodation_name_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "我目前在北京，计划和两个朋友一起去重庆玩两天。并且希望住在重庆INDITION英迪逊酒店(江北嘴金融城店)。请帮我们制定一个旅行计划。",
+  "nature_language_en": "Sure, here is the translation of your request into English:"
+}

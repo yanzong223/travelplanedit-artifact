@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143844076573",
+  "tag": "human",
+  "start_city": "苏州",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置苏州,目标位置上海,旅行人数2,旅行天数3] 我们想两个人去上海，玩大概三天左右 请给我一个旅行规划",
+  "nature_language_en": "[Current location: Suzhou, Destination: Shanghai, Number of travelers: 2, Duration of travel: 3 days] We would like to travel to Shanghai with two people for about three days. Please provide me with a travel plan."
+}

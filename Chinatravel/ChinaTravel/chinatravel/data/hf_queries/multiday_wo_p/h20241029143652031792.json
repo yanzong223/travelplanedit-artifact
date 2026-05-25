@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143652031792",
+  "tag": "human",
+  "start_city": "重庆",
+  "target_city": "成都",
+  "days": 3,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1500)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'火锅'}<=restaurant_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置重庆,目标位置成都,旅行人数1,旅行天数3] 一个人从重庆出发去成都游玩三天，想体验当地火锅，预算1500",
+  "nature_language_en": "[Current location: Chongqing, Destination: Chengdu, Number of travelers: 1, Travel days: 3] One person is traveling from Chongqing to Chengdu for three days, wants to experience the local hot pot, with a budget of 1500."
+}

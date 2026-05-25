@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143556181559",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "成都",
+  "days": 3,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'自然风光'}<=attraction_type_set)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'酒吧/酒馆'}<=restaurant_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置成都,旅行人数4,旅行天数3] 我想四个人一块从武汉去成都玩三天，主要想去景色比较好的地方，还想去成都的小酒馆喝酒，住宿尽可能便宜一些",
+  "nature_language_en": "[Current location: Wuhan, Destination: Chengdu, Number of travelers: 4, Number of travel days: 3] I want four people to travel from Wuhan to Chengdu for three days. We mainly want to visit places with beautiful scenery and also go to small pubs in Chengdu for drinks. We would like the accommodation to be as cheap as possible."
+}

@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143706437033",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "重庆",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=4000)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'三峡博物馆','重庆动物园','朝天门广场','人民大礼堂'}<=attraction_name_set)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置重庆,旅行人数2,旅行天数4] 当前位置南京，两个人想去重庆玩四天，必须高铁(G)往返，想重点参观三峡博物馆、重庆动物园、朝天门、人民大礼堂这些景观，而且想体验一下重庆本地人的饮食习惯，可以帮我做一个行程规划吗 预算4000",
+  "nature_language_en": "[Current location Nanjing, destination Chongqing, number of travelers 2, travel days 4] Currently in Nanjing, two people want to travel to Chongqing for four days. They must travel round-trip by high-speed train (G). They want to focus on visiting attractions such as the Three Gorges Museum, Chongqing Zoo, Chaotianmen, and the Great Hall of the People. Additionally, they want to experience the local dining habits of Chongqing. Can you help me create an itinerary? Budget is 4000."
+}

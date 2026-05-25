@@ -1,0 +1,22 @@
+{
+  "uid": "p0m20241028164637595271",
+  "tag": "preference0_base50",
+  "start_city": "杭州",
+  "target_city": "上海",
+  "days": 2,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'本帮菜'}<=restaurant_type_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置杭州。我一个人想去上海玩2天，想尝试当地的特色菜，并且希望参观尽可能多的景点，请给我一个旅行规划。",
+  "nature_language_en": "Current location: Hangzhou. I want to travel to Shanghai alone for 2 days, try the local specialties, and visit as many attractions as possible. Please provide me with a travel plan.",
+  "preference": "去尽可能多的景点",
+  "preference_en": "more attractions",
+  "preference_py": "maximize daily_attraction_count\nattraction_count = 0\nfor activity in allactivities(plan):\n    if activity_type(activity) == 'attraction':\n        attraction_count += 1\ndaily_attraction_count = attraction_count / day_count(plan)"
+}

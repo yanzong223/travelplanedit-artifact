@@ -1,0 +1,22 @@
+{
+  "uid": "p2t20241206172005248006",
+  "tag": "preference2_base50",
+  "start_city": "重庆",
+  "target_city": "成都",
+  "days": 2,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==2)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=3: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=3: result=False",
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'train'}==intercity_transport_set)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "当前位置重庆。我们三个人想去成都玩2天，坐火车往返，希望规划中去的餐厅交通时间尽可能少，请给我们一个旅行规划。",
+  "nature_language_en": "Current location: Chongqing. Three of us want to visit Chengdu for 2 days. We plan to travel round-trip by train. We hope the travel plan includes restaurants with minimal travel time, please provide us with a travel itinerary.",
+  "preference": "['去餐厅的交通时间尽可能少']",
+  "preference_en": "['minimize average transport time to restaurants']",
+  "preference_py": "[\"minimize average_time_cost\\nrestaurant_count = 0\\ntime_cost = 0\\nfor activity in allactivities(plan):\\n    if activity_type(activity) in ['breakfast', 'lunch', 'dinner']:\\n        restaurant_count += 1\\n        time_cost += innercity_transport_time(activity_transports(activity))\\nif restaurant_count == 0:\\n    average_time_cost = -1\\nelse:\\n    average_time_cost = time_cost / restaurant_count\"]"
+}

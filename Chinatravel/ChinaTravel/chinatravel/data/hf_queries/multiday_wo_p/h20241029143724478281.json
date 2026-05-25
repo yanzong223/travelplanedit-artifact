@@ -1,0 +1,21 @@
+{
+  "uid": "h20241029143724478281",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "上海",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=8000)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'大学校园'}<=attraction_type_set)",
+    "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=({'metro'}<=innercity_transport_set)",
+    "hotel_cost=0\nfor activity in allactivities(plan):\n  if activity_type(activity)=='accommodation': hotel_cost+=activity_cost(activity)\nresult=(hotel_cost/people_count(plan)/(day_count(plan)-1)<= 600)",
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置上海,旅行人数2,旅行天数4] 从两人武汉到上海旅游四天,预算8000左右，希望可以参观当地高校，景点之间尽量地铁通行，不要特种兵旅行，酒店价格低于600一晚",
+  "nature_language_en": "[Current location: Wuhan, Destination: Shanghai, Number of travelers: 2, Duration of travel: 4 days] Two people traveling from Wuhan to Shanghai for four days, with a budget of around 8000. Hope to visit local universities, use the subway as much as possible between attractions, avoid intense travel schedules, and keep hotel prices below 600 per night."
+}

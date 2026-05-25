@@ -1,0 +1,20 @@
+{
+  "uid": "h20241029143846901147",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "北京",
+  "days": 5,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'北京环球度假区'}<=attraction_name_set)",
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=5000)",
+    "restaurant_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_type_set.add(restaurant_type(activity, target_city(plan)))\nresult=({'北京菜'}<=restaurant_type_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置北京,旅行人数1,旅行天数5] 一个人去北京5天，逛老北京和环球影城，预算四千多，吃北京烤鸭等当地特色",
+  "nature_language_en": "[Current location: Nanjing, Destination: Beijing, Number of travelers: 2, Travel days: 5] One person is going to Beijing for 5 days to explore Old Beijing and Universal Studios, with a budget of over four thousand, planning to eat Peking duck and other local specialties."
+}

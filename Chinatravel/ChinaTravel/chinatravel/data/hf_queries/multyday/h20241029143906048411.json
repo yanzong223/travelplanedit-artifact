@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143906048411",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "上海",
+  "days": 3,
+  "people_number": 3,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=5000)",
+    "attraction_type_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_type_set.add(attraction_type(activity, target_city(plan)))\nresult=({'商业街区'}<=attraction_type_set)",
+    "result=(day_count(plan)==3)",
+    "result=(people_count(plan)==3)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置上海,旅行人数3,旅行天数3] 我想和两个朋友去上海玩3天，想去现代繁华的地方，预算小于5000,请问我应当如何规划行程？",
+  "nature_language_en": "[Current location: Nanjing, Destination: Shanghai, Number of travelers: 3, Number of travel days: 3] I want to go to Shanghai with two friends for 3 days. We want to visit modern and bustling places, with a budget of less than 5000. How should I plan the itinerary?"
+}

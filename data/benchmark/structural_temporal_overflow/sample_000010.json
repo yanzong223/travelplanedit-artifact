@@ -1,0 +1,515 @@
+{
+  "sample_id": "sample_000010",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置南京。我们两个人计划去广州玩两天，选择地铁作为市内交通。请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "t20241206171940092767",
+    "tag": "easy",
+    "start_city": "南京",
+    "target_city": "广州",
+    "days": 2,
+    "people_number": 2,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==2)",
+      "result=(people_count(plan)==2)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False",
+      "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'metro'})"
+    ],
+    "nature_language": "当前位置南京。我们两个人计划去广州玩两天，选择地铁作为市内交通。请给我一个旅行规划。",
+    "nature_language_en": "Current location: Nanjing. Two of us are planning to visit Guangzhou for two days, choosing the metro as our mode of transportation within the city. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "南京",
+    "target_city": "广州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:25",
+            "end_time": "14:36",
+            "start": "南京南站",
+            "end": "广州南站",
+            "price": 736.07,
+            "cost": 1472.14,
+            "tickets": 2,
+            "transports": [],
+            "TrainID": "G637",
+            "type": "train"
+          },
+          {
+            "position": "广州塔",
+            "type": "attraction",
+            "price": 149,
+            "cost": 298,
+            "start_time": "15:15",
+            "end_time": "16:45",
+            "transports": [
+              {
+                "start": "广州南站",
+                "end": "广州南站-地铁站",
+                "mode": "walk",
+                "start_time": "14:36",
+                "end_time": "14:38",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              },
+              {
+                "start": "广州南站-地铁站",
+                "end": "海心沙-地铁站",
+                "mode": "metro",
+                "start_time": "14:38",
+                "end_time": "15:07",
+                "cost": 10,
+                "distance": 14.7,
+                "price": 5,
+                "tickets": 2
+              },
+              {
+                "start": "海心沙-地铁站",
+                "end": "广州塔",
+                "mode": "walk",
+                "start_time": "15:07",
+                "end_time": "15:15",
+                "cost": 0,
+                "distance": 0.69,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "明华饼店",
+            "type": "dinner",
+            "price": 26,
+            "cost": 52,
+            "start_time": "17:09",
+            "end_time": "18:09",
+            "transports": [
+              {
+                "start": "广州塔",
+                "end": "海心沙-地铁站",
+                "mode": "walk",
+                "start_time": "16:45",
+                "end_time": "16:53",
+                "cost": 0,
+                "distance": 0.69,
+                "price": 0
+              },
+              {
+                "start": "海心沙-地铁站",
+                "end": "海珠广场-地铁站",
+                "mode": "metro",
+                "start_time": "16:53",
+                "end_time": "17:05",
+                "cost": 6,
+                "distance": 6.06,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "海珠广场-地铁站",
+                "end": "明华饼店",
+                "mode": "walk",
+                "start_time": "17:05",
+                "end_time": "17:09",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "骏业国际公寓",
+            "type": "accommodation",
+            "price": 168,
+            "cost": 336,
+            "start_time": "20:03",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "明华饼店",
+                "end": "海珠广场-地铁站",
+                "mode": "walk",
+                "start_time": "18:09",
+                "end_time": "18:13",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              },
+              {
+                "start": "海珠广场-地铁站",
+                "end": "南岗-地铁站",
+                "mode": "metro",
+                "start_time": "18:13",
+                "end_time": "19:09",
+                "cost": 14,
+                "distance": 28.37,
+                "price": 7,
+                "tickets": 2
+              },
+              {
+                "start": "南岗-地铁站",
+                "end": "骏业国际公寓",
+                "mode": "walk",
+                "start_time": "19:09",
+                "end_time": "20:03",
+                "cost": 0,
+                "distance": 4.58,
+                "price": 0
+              }
+            ],
+            "room_type": 1,
+            "rooms": 2
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "骏业国际公寓",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "广州圣心大教堂",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "10:24",
+            "end_time": "11:00",
+            "transports": [
+              {
+                "start": "骏业国际公寓",
+                "end": "南岗-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "09:24",
+                "cost": 0,
+                "distance": 4.58,
+                "price": 0
+              },
+              {
+                "start": "南岗-地铁站",
+                "end": "北京路-地铁站",
+                "mode": "metro",
+                "start_time": "09:24",
+                "end_time": "10:19",
+                "cost": 12,
+                "distance": 27.9,
+                "price": 6,
+                "tickets": 2
+              },
+              {
+                "start": "北京路-地铁站",
+                "end": "广州圣心大教堂",
+                "mode": "walk",
+                "start_time": "10:19",
+                "end_time": "10:24",
+                "cost": 0,
+                "distance": 0.44,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "start_time": "11:41",
+            "end_time": "21:46",
+            "start": "广州东站",
+            "end": "南京南站",
+            "price": 736.07,
+            "cost": 1472.14,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "广州圣心大教堂",
+                "end": "北京路-地铁站",
+                "mode": "walk",
+                "start_time": "11:00",
+                "end_time": "11:05",
+                "cost": 0,
+                "distance": 0.44,
+                "price": 0
+              },
+              {
+                "start": "北京路-地铁站",
+                "end": "燕塘-地铁站",
+                "mode": "metro",
+                "start_time": "11:05",
+                "end_time": "11:19",
+                "cost": 6,
+                "distance": 7.4,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "燕塘-地铁站",
+                "end": "广州东站",
+                "mode": "walk",
+                "start_time": "11:19",
+                "end_time": "11:26",
+                "cost": 0,
+                "distance": 0.66,
+                "price": 0
+              }
+            ],
+            "TrainID": "G3072",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==2)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=2: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=2: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "python_expression",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": null,
+      "params": {
+        "code": "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'metro'})"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "innercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_transports(activity)!=[]: innercity_transport_set.add(innercity_transport_type(activity_transports(activity)))\nresult=(innercity_transport_set<={'metro'})"
+      }
+    }
+  ],
+  "edit_query": "我想把南越王博物院(王宫展区)加进行程，希望每个景点之间的交通都能在45分钟内搞定。",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "南越王博物院(王宫展区)",
+        "type": "attraction",
+        "city": "广州"
+      }
+    ],
+    "spatial": {
+      "city": "广州"
+    },
+    "temporal": [
+      {
+        "max_duration": "45分钟"
+      }
+    ],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "adjacent_travel_time_cap",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_types": [
+          "attraction"
+        ]
+      },
+      "operator": "<=",
+      "value": 45,
+      "params": {
+        "unit": "minute",
+        "day": "all",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "南越王博物院(王宫展区)"
+      ],
+      "params": {
+        "derived_from": "constraints.must_include"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "temporal",
+      "overflow"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "temporal",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_temporal_overflow__travel_time_constraint__01",
+    "template": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}",
+    "template_str": "增加{poi}到行程中，要求所有景点之间的交通时间不超过{duration}",
+    "constraint_type": "travel_time_constraint",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    "target_city": "广州",
+    "start_city": "南京",
+    "day_count": 2,
+    "requested_constraint_type": [
+      "travel_time_constraint"
+    ],
+    "requested_bucket_names": [
+      "structural_temporal_overflow"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000045",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_temporal_overflow/_validation_split/passed/sample_000045.json",
+    "diversity_augmented": true,
+    "diversity_domain": "local_transport",
+    "constraint_type": "travel_time_constraint",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "temporal",
+      "overflow"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000196",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000196.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000053",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_temporal_overflow/_validation_split/passed/sample_000053.json",
+    "template_diversity_selected": true
+  }
+}

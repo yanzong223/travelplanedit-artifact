@@ -1,0 +1,19 @@
+{
+  "uid": "h20241029143832205713",
+  "tag": "human",
+  "start_city": "杭州",
+  "target_city": "广州",
+  "days": 5,
+  "people_number": 4,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "intercity_transport_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['train', 'airplane']: intercity_transport_set.add(intercity_transport_type(activity))\nresult=({'airplane'}==intercity_transport_set)",
+    "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'广州海洋馆','广州动物园'}<=attraction_name_set)",
+    "result=(day_count(plan)==5)",
+    "result=(people_count(plan)==4)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置杭州,目标位置广州,旅行人数4,旅行天数5] 我和老婆想在中秋节从杭州飞去广州旅游五天，两个孩子们想去海洋馆和动物园，有没有好的推荐?",
+  "nature_language_en": "[Current location: Hangzhou, Destination: Guangzhou, Number of travelers: 4, Travel days: 5] My wife and I want to fly from Hangzhou to Guangzhou for a five-day trip during the Mid-Autumn Festival. Our two children want to visit the aquarium and the zoo. Do you have any good recommendations?"
+}

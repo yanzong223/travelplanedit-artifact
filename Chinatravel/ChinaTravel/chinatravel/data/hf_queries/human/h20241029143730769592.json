@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143730769592",
+  "tag": "human",
+  "start_city": "南京",
+  "target_city": "杭州",
+  "days": 1,
+  "people_number": 1,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==1)",
+    "result=(people_count(plan)==1)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置南京,目标位置杭州,旅行人数1,旅行天数1] 单人去杭州旅游，当天去当天返回，请帮我规划出行方案",
+  "nature_language_en": "[Current location: Nanjing, Destination: Hangzhou, Number of travelers: 1, Travel days: 1] A solo trip to Hangzhou, departing and returning on the same day. Please help me plan the travel itinerary."
+}

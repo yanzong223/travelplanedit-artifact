@@ -1,0 +1,1051 @@
+{
+  "sample_id": "sample_000024",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置上海。我2个人想去苏州玩3天，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "h20241029143447759844",
+    "tag": "manual_resource_overlap_origin",
+    "start_city": "上海",
+    "target_city": "苏州",
+    "days": 3,
+    "people_number": 2,
+    "hard_logic_py": [
+      "result=(day_count(plan)==3)",
+      "result=(people_count(plan)==2)"
+    ],
+    "nature_language": "当前位置上海。我2个人想去苏州玩3天，请给我一个旅行规划。",
+    "nature_language_en": "Current location: 上海. 2 traveler(s) want to visit 苏州 for 3 day(s). Please provide a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 2,
+    "start_city": "上海",
+    "target_city": "苏州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "06:15",
+            "end_time": "06:38",
+            "start": "上海虹桥站",
+            "end": "苏州北站",
+            "price": 55.23,
+            "cost": 110.46,
+            "tickets": 2,
+            "transports": [],
+            "TrainID": "G1802",
+            "type": "train"
+          },
+          {
+            "position": "拙政园",
+            "type": "attraction",
+            "price": 80,
+            "cost": 160,
+            "start_time": "07:30",
+            "end_time": "09:00",
+            "transports": [
+              {
+                "start": "苏州北站",
+                "end": "高铁苏州北站-地铁站",
+                "mode": "walk",
+                "start_time": "06:38",
+                "end_time": "06:39",
+                "cost": 0,
+                "distance": 0.14,
+                "price": 0
+              },
+              {
+                "start": "高铁苏州北站-地铁站",
+                "end": "梅巷-地铁站",
+                "mode": "metro",
+                "start_time": "06:39",
+                "end_time": "06:58",
+                "cost": 8,
+                "distance": 9.67,
+                "price": 4,
+                "tickets": 2
+              },
+              {
+                "start": "梅巷-地铁站",
+                "end": "拙政园",
+                "mode": "walk",
+                "start_time": "06:58",
+                "end_time": "07:06",
+                "cost": 0,
+                "distance": 0.75,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "得月楼(观前店)",
+            "type": "lunch",
+            "price": 153,
+            "cost": 306,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "拙政园",
+                "end": "梅巷-地铁站",
+                "mode": "walk",
+                "start_time": "09:00",
+                "end_time": "09:08",
+                "cost": 0,
+                "distance": 0.75,
+                "price": 0
+              },
+              {
+                "start": "梅巷-地铁站",
+                "end": "察院场-地铁站",
+                "mode": "metro",
+                "start_time": "09:08",
+                "end_time": "09:13",
+                "cost": 4,
+                "distance": 2.82,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "察院场-地铁站",
+                "end": "得月楼(观前店)",
+                "mode": "walk",
+                "start_time": "09:13",
+                "end_time": "09:17",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+            "type": "accommodation",
+            "price": 225,
+            "cost": 225,
+            "start_time": "12:30",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "得月楼(观前店)",
+                "end": "察院场-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:04",
+                "cost": 0,
+                "distance": 0.41,
+                "price": 0
+              },
+              {
+                "start": "察院场-地铁站",
+                "end": "西环路-地铁站",
+                "mode": "metro",
+                "start_time": "12:04",
+                "end_time": "12:12",
+                "cost": 6,
+                "distance": 4.34,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "西环路-地铁站",
+                "end": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+                "mode": "walk",
+                "start_time": "12:12",
+                "end_time": "12:30",
+                "cost": 0,
+                "distance": 1.54,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "狮子林",
+            "type": "attraction",
+            "price": 40,
+            "cost": 80,
+            "start_time": "09:09",
+            "end_time": "10:39",
+            "transports": [
+              {
+                "start": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+                "end": "西环路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:48",
+                "cost": 0,
+                "distance": 1.54,
+                "price": 0
+              },
+              {
+                "start": "西环路-地铁站",
+                "end": "拙政园苏博-地铁站",
+                "mode": "metro",
+                "start_time": "08:48",
+                "end_time": "08:58",
+                "cost": 6,
+                "distance": 5.3,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "拙政园苏博-地铁站",
+                "end": "狮子林",
+                "mode": "walk",
+                "start_time": "08:58",
+                "end_time": "09:09",
+                "cost": 0,
+                "distance": 0.95,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "苏州金鸡湖托尼洛·兰博基尼书苑酒店·苏面坊",
+            "type": "lunch",
+            "price": 168,
+            "cost": 336,
+            "start_time": "11:06",
+            "end_time": "12:06",
+            "transports": [
+              {
+                "start": "狮子林",
+                "end": "拙政园苏博-地铁站",
+                "mode": "walk",
+                "start_time": "10:39",
+                "end_time": "10:50",
+                "cost": 0,
+                "distance": 0.95,
+                "price": 0
+              },
+              {
+                "start": "拙政园苏博-地铁站",
+                "end": "东方之门-地铁站",
+                "mode": "metro",
+                "start_time": "10:50",
+                "end_time": "11:00",
+                "cost": 6,
+                "distance": 5.02,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "东方之门-地铁站",
+                "end": "苏州金鸡湖托尼洛·兰博基尼书苑酒店·苏面坊",
+                "mode": "walk",
+                "start_time": "11:00",
+                "end_time": "11:06",
+                "cost": 0,
+                "distance": 0.54,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "苏州香格里拉大酒店·香宫",
+            "type": "dinner",
+            "price": 231,
+            "cost": 462,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "苏州金鸡湖托尼洛·兰博基尼书苑酒店·苏面坊",
+                "end": "东方之门-地铁站",
+                "mode": "walk",
+                "start_time": "12:06",
+                "end_time": "12:12",
+                "cost": 0,
+                "distance": 0.54,
+                "price": 0
+              },
+              {
+                "start": "东方之门-地铁站",
+                "end": "狮山路-地铁站",
+                "mode": "metro",
+                "start_time": "12:12",
+                "end_time": "12:35",
+                "cost": 8,
+                "distance": 11.68,
+                "price": 4,
+                "tickets": 2
+              },
+              {
+                "start": "狮山路-地铁站",
+                "end": "苏州香格里拉大酒店·香宫",
+                "mode": "walk",
+                "start_time": "12:35",
+                "end_time": "12:36",
+                "cost": 0,
+                "distance": 0.1,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+            "type": "accommodation",
+            "price": 225,
+            "cost": 225,
+            "start_time": "18:22",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "苏州香格里拉大酒店·香宫",
+                "end": "狮山路-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:01",
+                "cost": 0,
+                "distance": 0.1,
+                "price": 0
+              },
+              {
+                "start": "狮山路-地铁站",
+                "end": "西环路-地铁站",
+                "mode": "metro",
+                "start_time": "18:01",
+                "end_time": "18:04",
+                "cost": 4,
+                "distance": 1.93,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "西环路-地铁站",
+                "end": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+                "mode": "walk",
+                "start_time": "18:04",
+                "end_time": "18:22",
+                "cost": 0,
+                "distance": 1.54,
+                "price": 0
+              }
+            ],
+            "room_type": 2,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "activities": [
+          {
+            "position": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "平江路历史街区",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "09:12",
+            "end_time": "10:42",
+            "transports": [
+              {
+                "start": "H酒店(苏州留园寒山寺虎丘婚纱城店)",
+                "end": "西环路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:48",
+                "cost": 0,
+                "distance": 1.54,
+                "price": 0
+              },
+              {
+                "start": "西环路-地铁站",
+                "end": "相门-地铁站",
+                "mode": "metro",
+                "start_time": "08:48",
+                "end_time": "08:59",
+                "cost": 6,
+                "distance": 5.94,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "相门-地铁站",
+                "end": "平江路历史街区",
+                "mode": "walk",
+                "start_time": "08:59",
+                "end_time": "09:12",
+                "cost": 0,
+                "distance": 1.14,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "苏州凯悦酒店·华池88中餐厅",
+            "type": "lunch",
+            "price": 438,
+            "cost": 876,
+            "start_time": "11:10",
+            "end_time": "12:10",
+            "transports": [
+              {
+                "start": "平江路历史街区",
+                "end": "相门-地铁站",
+                "mode": "walk",
+                "start_time": "10:42",
+                "end_time": "10:55",
+                "cost": 0,
+                "distance": 1.14,
+                "price": 0
+              },
+              {
+                "start": "相门-地铁站",
+                "end": "时代广场-地铁站",
+                "mode": "metro",
+                "start_time": "10:55",
+                "end_time": "11:09",
+                "cost": 6,
+                "distance": 7.21,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "时代广场-地铁站",
+                "end": "苏州凯悦酒店·华池88中餐厅",
+                "mode": "walk",
+                "start_time": "11:09",
+                "end_time": "11:10",
+                "cost": 0,
+                "distance": 0.14,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "寒山寺",
+            "type": "attraction",
+            "price": 18,
+            "cost": 36,
+            "start_time": "12:54",
+            "end_time": "14:24",
+            "transports": [
+              {
+                "start": "苏州凯悦酒店·华池88中餐厅",
+                "end": "时代广场-地铁站",
+                "mode": "walk",
+                "start_time": "12:10",
+                "end_time": "12:11",
+                "cost": 0,
+                "distance": 0.14,
+                "price": 0
+              },
+              {
+                "start": "时代广场-地铁站",
+                "end": "虎丘-地铁站",
+                "mode": "metro",
+                "start_time": "12:11",
+                "end_time": "12:36",
+                "cost": 8,
+                "distance": 12.78,
+                "price": 4,
+                "tickets": 2
+              },
+              {
+                "start": "虎丘-地铁站",
+                "end": "寒山寺",
+                "mode": "walk",
+                "start_time": "12:36",
+                "end_time": "12:54",
+                "cost": 0,
+                "distance": 1.57,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "哑巴生煎(临顿路店)",
+            "type": "dinner",
+            "price": 22,
+            "cost": 44,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "寒山寺",
+                "end": "虎丘-地铁站",
+                "mode": "walk",
+                "start_time": "14:24",
+                "end_time": "14:42",
+                "cost": 0,
+                "distance": 1.57,
+                "price": 0
+              },
+              {
+                "start": "虎丘-地铁站",
+                "end": "悬桥巷-地铁站",
+                "mode": "metro",
+                "start_time": "14:42",
+                "end_time": "14:52",
+                "cost": 6,
+                "distance": 5.07,
+                "price": 3,
+                "tickets": 2
+              },
+              {
+                "start": "悬桥巷-地铁站",
+                "end": "哑巴生煎(临顿路店)",
+                "mode": "walk",
+                "start_time": "14:52",
+                "end_time": "14:53",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "山塘街",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "18:15",
+            "end_time": "19:45",
+            "transports": [
+              {
+                "start": "哑巴生煎(临顿路店)",
+                "end": "悬桥巷-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:01",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              },
+              {
+                "start": "悬桥巷-地铁站",
+                "end": "山塘街-地铁站",
+                "mode": "metro",
+                "start_time": "18:01",
+                "end_time": "18:06",
+                "cost": 4,
+                "distance": 2.66,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "山塘街-地铁站",
+                "end": "山塘街",
+                "mode": "walk",
+                "start_time": "18:06",
+                "end_time": "18:15",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "position": "苏州古运河",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "20:06",
+            "end_time": "21:36",
+            "transports": [
+              {
+                "start": "山塘街",
+                "end": "山塘街-地铁站",
+                "mode": "walk",
+                "start_time": "19:45",
+                "end_time": "19:54",
+                "cost": 0,
+                "distance": 0.82,
+                "price": 0
+              },
+              {
+                "start": "山塘街-地铁站",
+                "end": "三元坊-地铁站",
+                "mode": "metro",
+                "start_time": "19:54",
+                "end_time": "20:00",
+                "cost": 4,
+                "distance": 3.17,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "三元坊-地铁站",
+                "end": "苏州古运河",
+                "mode": "walk",
+                "start_time": "20:00",
+                "end_time": "20:06",
+                "cost": 0,
+                "distance": 0.55,
+                "price": 0
+              }
+            ],
+            "tickets": 2
+          },
+          {
+            "start_time": "22:55",
+            "end_time": "23:20",
+            "start": "苏州站",
+            "end": "上海虹桥站",
+            "price": 55.23,
+            "cost": 110.46,
+            "tickets": 2,
+            "transports": [
+              {
+                "start": "苏州古运河",
+                "end": "三元坊-地铁站",
+                "mode": "walk",
+                "start_time": "21:36",
+                "end_time": "21:42",
+                "cost": 0,
+                "distance": 0.55,
+                "price": 0
+              },
+              {
+                "start": "三元坊-地铁站",
+                "end": "苏州火车站-地铁站",
+                "mode": "metro",
+                "start_time": "21:42",
+                "end_time": "21:49",
+                "cost": 4,
+                "distance": 3.85,
+                "price": 2,
+                "tickets": 2
+              },
+              {
+                "start": "苏州火车站-地铁站",
+                "end": "苏州站",
+                "mode": "walk",
+                "start_time": "21:49",
+                "end_time": "21:50",
+                "cost": 0,
+                "distance": 0.13,
+                "price": 0
+              }
+            ],
+            "TrainID": "G7170",
+            "type": "train"
+          }
+        ]
+      }
+    ],
+    "search_time_sec": 205.52658796310425,
+    "llm_inference_time_sec": 201.54491543769836,
+    "input_token_count": 9576,
+    "output_token_count": 6143,
+    "input_token_maxx": 964,
+    "llm_rec_count": 19,
+    "llm_rec_format_error_count": 2,
+    "search_nodes": 4668,
+    "backtrack_count": 40,
+    "constraints_validation_count": 1,
+    "commonsense_pass_count": 1,
+    "logical_pass_count": 1,
+    "all_constraints_pass": 1
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "manual_completion",
+        "source": "origin"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 2,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "manual_completion",
+        "source": "origin"
+      }
+    }
+  ],
+  "edit_query": "安排拙政园和附近3公里内的餐厅，但总花费（门票+餐费）不能超过360元",
+  "constraints": {
+    "must_include": [
+      {
+        "name": "拙政园",
+        "type": "attraction",
+        "city": "苏州"
+      }
+    ],
+    "spatial": {
+      "city": "苏州",
+      "max_distance_km": 3.0
+    },
+    "temporal": [],
+    "resource": {
+      "budget": 360,
+      "max_budget": 360,
+      "nearby_meal": true,
+      "overlap_anchor_poi": "拙政园",
+      "budget_scope": "anchor_bundle",
+      "max_distance_km": 3.0,
+      "origin_bundle_cost": 466.0,
+      "local_bundle_lower_bound": 178.0,
+      "anchor_meal_distance_km": 2.41
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "contains_all",
+      "value": [
+        "拙政园"
+      ],
+      "params": {
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_1",
+      "source": "edit",
+      "type": "nearby_meal_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "anchor_poi": "拙政园"
+      },
+      "operator": "==",
+      "value": true,
+      "params": {
+        "max_distance_km": 3.0,
+        "origin_bundle_cost": 466.0,
+        "local_bundle_lower_bound": 178.0,
+        "anchor_meal_distance_km": 2.41,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    },
+    {
+      "id": "edit_logic_2",
+      "source": "edit",
+      "type": "anchor_bundle_budget_limit",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "anchor_poi": "拙政园"
+      },
+      "operator": "<=",
+      "value": 360.0,
+      "params": {
+        "budget_scope": "anchor_bundle",
+        "requires_nearby_meal": true,
+        "max_distance_km": 3.0,
+        "origin_bundle_cost": 466.0,
+        "local_bundle_lower_bound": 178.0,
+        "anchor_meal_distance_km": 2.41,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "resource",
+    "overlap"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overflow"
+    ],
+    [
+      "structural",
+      "structural",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "constraint_type": "resource_overlap",
+    "template": "安排{poi}和附近的餐厅，但总花费（门票+餐费）不能超过{budget}元",
+    "template_id": "structural_resource_overlap__resource_overlap__manual_strict_nearby",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [
+        "poi"
+      ],
+      "forbidden_entities": [],
+      "bound_slots": [
+        "budget_cap"
+      ],
+      "relation_slots": [
+        "nearby_meal",
+        "bundle_cost"
+      ],
+      "ir_outputs": [
+        "required_attraction_name",
+        "nearby_meal_requirement",
+        "anchor_bundle_budget_limit"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "composite",
+      "hard_axes": [],
+      "soft_axes": [],
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "resource_overlap",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "resource_overlap",
+      "baseline_anchor_bundle_cost": 466.0,
+      "chosen_budget": 360,
+      "anchor_poi": "拙政园",
+      "anchor_meal_distance_km": 2.41,
+      "local_bundle_lower_bound": 178.0
+    },
+    "rendered_params": {
+      "target_city": "苏州",
+      "budget": "360",
+      "poi": "拙政园"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "resource_overlap",
+      "budget_cap": 360,
+      "anchor_poi": "拙政园",
+      "nearby_meal": true,
+      "max_distance_km": 3.0,
+      "origin_bundle_cost": 466.0,
+      "local_bundle_lower_bound": 178.0,
+      "anchor_meal_distance_km": 2.41
+    },
+    "canonical_semantic_slots": {
+      "constraint_type": "resource_overlap",
+      "budget_cap": 360,
+      "anchor_poi": "拙政园",
+      "nearby_meal": true,
+      "max_distance_km": 3.0,
+      "origin_bundle_cost": 466.0,
+      "local_bundle_lower_bound": 178.0,
+      "anchor_meal_distance_km": 2.41,
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "day_poi_pairs": [],
+      "duration_limit_min": null,
+      "distance_km": 3.0,
+      "restaurant_type": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "manual",
+      "parse_confidence": 1.0,
+      "parse_errors": []
+    },
+    "canonical_semantic_parse_source": "regex",
+    "canonical_semantic_parse_confidence": 0.91,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "baseline": 466.0,
+      "threshold": 360.0,
+      "baseline_reason": "origin_same_day_anchor_meal_bundle",
+      "poi": "拙政园",
+      "anchor_meal_distance_km": 2.41,
+      "local_bundle_lower_bound": 178.0
+    },
+    "soft_target_family": "",
+    "soft_target_facet": "",
+    "soft_target_mode": "",
+    "soft_target_intensity": "",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "manual_strict_nearby_completion",
+    "surface_quality_pass": true,
+    "surface_reject_reason": "spec_drift:nearby_meal changed: expected True, got None",
+    "repaired": true,
+    "repair_mode": "manual_strict_nearby_solver_valid_completion",
+    "repair_reason": "replace_low_diversity_resource_overlap_samples",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "partial",
+    "surface_query_spec": {
+      "constraint_type": "resource_overlap",
+      "budget_cap": 360,
+      "anchor_poi": "拙政园",
+      "nearby_meal": true,
+      "max_distance_km": 3.0,
+      "origin_bundle_cost": 466.0,
+      "local_bundle_lower_bound": 178.0,
+      "anchor_meal_distance_km": 2.41
+    },
+    "surface_semantic_slots": {
+      "constraint_type": "resource_overlap",
+      "budget_cap": 360,
+      "anchor_poi": "拙政园",
+      "nearby_meal": true,
+      "max_distance_km": 3.0,
+      "origin_bundle_cost": 466.0,
+      "local_bundle_lower_bound": 178.0,
+      "anchor_meal_distance_km": 2.41,
+      "specific_poi": null,
+      "preferred_type": null,
+      "source_poi": null,
+      "semantic_target": null,
+      "day_poi_pairs": [],
+      "duration_limit_min": null,
+      "distance_km": 3.0,
+      "restaurant_type": null,
+      "hotel_feature": null,
+      "hotel_room_type": null,
+      "hotel_room_count": null,
+      "city_split_targets": [],
+      "additional_similar": false,
+      "day_count": null,
+      "day_delta": null,
+      "daily_poi_cap": null,
+      "parse_source": "manual",
+      "parse_confidence": 1.0,
+      "parse_errors": []
+    },
+    "surface_semantic_parse_source": "regex",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "baseline": 466.0,
+      "threshold": 360.0,
+      "baseline_reason": "origin_same_day_anchor_meal_bundle",
+      "poi": "拙政园",
+      "anchor_meal_distance_km": 2.41,
+      "local_bundle_lower_bound": 178.0
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "target_city": "苏州",
+    "start_city": "上海",
+    "is_single_day": false,
+    "day_count": 3,
+    "origin_plan_file": "h20241029143447759844.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_resource_overlap"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-22T08:56:38.831273",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_manual_resource_overlap_strict_0006",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_resource_overlap/_validation_split/passed/sample_manual_resource_overlap_strict_0006.json",
+    "template_diversity_selected": true
+  }
+}

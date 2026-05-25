@@ -1,0 +1,774 @@
+{
+  "sample_id": "sample_000014",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置上海。我一个人想去武汉玩3天，想去汉口新四军军部旧址，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "m20241028164841864509",
+    "tag": "easy",
+    "start_city": "上海",
+    "target_city": "武汉",
+    "days": 3,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==3)",
+      "result=(people_count(plan)==1)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'汉口新四军军部旧址'}<=attraction_name_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置上海。我一个人想去武汉玩3天，想去汉口新四军军部旧址，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Shanghai. I want to travel to Wuhan alone for 3 days and visit the former site of the New Fourth Army Headquarters in Hankou. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "上海",
+    "target_city": "武汉",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "13:54",
+            "end_time": "17:26",
+            "start": "上海虹桥站",
+            "end": "武汉站",
+            "price": 446.81,
+            "cost": 446.81,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G1720",
+            "type": "train"
+          },
+          {
+            "position": "武汉汉口温德姆花园酒店",
+            "type": "accommodation",
+            "price": 498,
+            "cost": 498,
+            "start_time": "18:10",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "武汉站",
+                "end": "武汉站东广场-地铁站",
+                "mode": "walk",
+                "start_time": "17:26",
+                "end_time": "17:28",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              },
+              {
+                "start": "武汉站东广场-地铁站",
+                "end": "汉口火车站-地铁站",
+                "mode": "metro",
+                "start_time": "17:28",
+                "end_time": "18:01",
+                "cost": 5,
+                "distance": 16.52,
+                "price": 5,
+                "tickets": 1
+              },
+              {
+                "start": "汉口火车站-地铁站",
+                "end": "武汉汉口温德姆花园酒店",
+                "mode": "walk",
+                "start_time": "18:01",
+                "end_time": "18:10",
+                "cost": 0,
+                "distance": 0.76,
+                "price": 0
+              }
+            ],
+            "room_type": 1,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "武汉汉口温德姆花园酒店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "汉口新四军军部旧址",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:58",
+            "end_time": "10:28",
+            "transports": [
+              {
+                "start": "武汉汉口温德姆花园酒店",
+                "end": "汉口火车站-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:39",
+                "cost": 0,
+                "distance": 0.76,
+                "price": 0
+              },
+              {
+                "start": "汉口火车站-地铁站",
+                "end": "头道街-地铁站",
+                "mode": "metro",
+                "start_time": "08:39",
+                "end_time": "08:50",
+                "cost": 3,
+                "distance": 5.66,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "头道街-地铁站",
+                "end": "汉口新四军军部旧址",
+                "mode": "walk",
+                "start_time": "08:50",
+                "end_time": "08:58",
+                "cost": 0,
+                "distance": 0.72,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "粗茶淡饭·壹号餐房",
+            "type": "lunch",
+            "price": 398,
+            "cost": 398,
+            "start_time": "11:30",
+            "end_time": "12:30",
+            "transports": [
+              {
+                "start": "汉口新四军军部旧址",
+                "end": "头道街-地铁站",
+                "mode": "walk",
+                "start_time": "10:28",
+                "end_time": "10:36",
+                "cost": 0,
+                "distance": 0.72,
+                "price": 0
+              },
+              {
+                "start": "头道街-地铁站",
+                "end": "大智路-地铁站",
+                "mode": "metro",
+                "start_time": "10:36",
+                "end_time": "10:42",
+                "cost": 2,
+                "distance": 3.33,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "大智路-地铁站",
+                "end": "粗茶淡饭·壹号餐房",
+                "mode": "walk",
+                "start_time": "10:42",
+                "end_time": "10:52",
+                "cost": 0,
+                "distance": 0.91,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "武汉汉口温德姆花园酒店",
+            "type": "accommodation",
+            "price": 498,
+            "cost": 498,
+            "start_time": "12:58",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "粗茶淡饭·壹号餐房",
+                "end": "大智路-地铁站",
+                "mode": "walk",
+                "start_time": "12:30",
+                "end_time": "12:40",
+                "cost": 0,
+                "distance": 0.91,
+                "price": 0
+              },
+              {
+                "start": "大智路-地铁站",
+                "end": "汉口火车站-地铁站",
+                "mode": "metro",
+                "start_time": "12:40",
+                "end_time": "12:49",
+                "cost": 3,
+                "distance": 4.61,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "汉口火车站-地铁站",
+                "end": "武汉汉口温德姆花园酒店",
+                "mode": "walk",
+                "start_time": "12:49",
+                "end_time": "12:58",
+                "cost": 0,
+                "distance": 0.76,
+                "price": 0
+              }
+            ],
+            "room_type": 1,
+            "rooms": 1
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "activities": [
+          {
+            "position": "武汉汉口温德姆花园酒店",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "黄鹤楼",
+            "type": "attraction",
+            "price": 65,
+            "cost": 65,
+            "start_time": "09:01",
+            "end_time": "10:31",
+            "transports": [
+              {
+                "start": "武汉汉口温德姆花园酒店",
+                "end": "汉口火车站-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:39",
+                "cost": 0,
+                "distance": 0.76,
+                "price": 0
+              },
+              {
+                "start": "汉口火车站-地铁站",
+                "end": "昙华林武胜门-地铁站",
+                "mode": "metro",
+                "start_time": "08:39",
+                "end_time": "08:55",
+                "cost": 3,
+                "distance": 8.33,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "昙华林武胜门-地铁站",
+                "end": "黄鹤楼",
+                "mode": "walk",
+                "start_time": "08:55",
+                "end_time": "09:01",
+                "cost": 0,
+                "distance": 0.56,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "吉庆78号·油焖蜗牛·小龙虾(江汉路店)",
+            "type": "lunch",
+            "price": 102,
+            "cost": 102,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "黄鹤楼",
+                "end": "昙华林武胜门-地铁站",
+                "mode": "walk",
+                "start_time": "10:31",
+                "end_time": "10:37",
+                "cost": 0,
+                "distance": 0.56,
+                "price": 0
+              },
+              {
+                "start": "昙华林武胜门-地铁站",
+                "end": "循礼门-地铁站",
+                "mode": "metro",
+                "start_time": "10:37",
+                "end_time": "10:44",
+                "cost": 2,
+                "distance": 3.91,
+                "price": 2,
+                "tickets": 1
+              },
+              {
+                "start": "循礼门-地铁站",
+                "end": "吉庆78号·油焖蜗牛·小龙虾(江汉路店)",
+                "mode": "walk",
+                "start_time": "10:44",
+                "end_time": "10:49",
+                "cost": 0,
+                "distance": 0.46,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "湖北省博物馆",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:28",
+            "end_time": "13:58",
+            "transports": [
+              {
+                "start": "吉庆78号·油焖蜗牛·小龙虾(江汉路店)",
+                "end": "循礼门-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:05",
+                "cost": 0,
+                "distance": 0.46,
+                "price": 0
+              },
+              {
+                "start": "循礼门-地铁站",
+                "end": "省博湖北日报-地铁站",
+                "mode": "metro",
+                "start_time": "12:05",
+                "end_time": "12:20",
+                "cost": 3,
+                "distance": 7.93,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "省博湖北日报-地铁站",
+                "end": "湖北省博物馆",
+                "mode": "walk",
+                "start_time": "12:20",
+                "end_time": "12:28",
+                "cost": 0,
+                "distance": 0.71,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "position": "酒拾烤肉(青山印象城店)",
+            "type": "dinner",
+            "price": 58,
+            "cost": 58,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "湖北省博物馆",
+                "end": "省博湖北日报-地铁站",
+                "mode": "walk",
+                "start_time": "13:58",
+                "end_time": "14:06",
+                "cost": 0,
+                "distance": 0.71,
+                "price": 0
+              },
+              {
+                "start": "省博湖北日报-地铁站",
+                "end": "和平公园-地铁站",
+                "mode": "metro",
+                "start_time": "14:06",
+                "end_time": "14:21",
+                "cost": 3,
+                "distance": 7.67,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "和平公园-地铁站",
+                "end": "酒拾烤肉(青山印象城店)",
+                "mode": "walk",
+                "start_time": "14:21",
+                "end_time": "14:23",
+                "cost": 0,
+                "distance": 0.24,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "18:56",
+            "end_time": "23:22",
+            "start": "武汉站",
+            "end": "上海虹桥站",
+            "price": 446.81,
+            "cost": 446.81,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "酒拾烤肉(青山印象城店)",
+                "end": "和平公园-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:02",
+                "cost": 0,
+                "distance": 0.24,
+                "price": 0
+              },
+              {
+                "start": "和平公园-地铁站",
+                "end": "武汉站东广场-地铁站",
+                "mode": "metro",
+                "start_time": "18:02",
+                "end_time": "18:11",
+                "cost": 3,
+                "distance": 4.72,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "武汉站东广场-地铁站",
+                "end": "武汉站",
+                "mode": "walk",
+                "start_time": "18:11",
+                "end_time": "18:13",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              }
+            ],
+            "TrainID": "G1788",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==3)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "required_attraction_name",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "汉口新四军军部旧址"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "attraction_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity)=='attraction': attraction_name_set.add(activity_position(activity))\nresult=({'汉口新四军军部旧址'}<=attraction_name_set)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "我想自然风光类型的景点",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "武汉"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "preferred_type": "自然风光"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "includes_type",
+      "value": "自然风光",
+      "params": {
+        "min_count": 1,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [
+    {
+      "id": "edit_pref_theme_alignment_nature",
+      "source": "edit",
+      "family": "theme_alignment",
+      "facet": "theme_concentration_maximize",
+      "direction": "maximize",
+      "anchor": null,
+      "edit_mode": "addition",
+      "params": {
+        "canonical_facet": "nature",
+        "target_theme": "nature",
+        "intensity": "medium"
+      },
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "type_filter",
+        "template_text": "我想{poi_type}类型的景点"
+      }
+    }
+  ],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [
+    {
+      "family": "theme_alignment",
+      "facet": "nature",
+      "edit_mode": "addition",
+      "anchor": null,
+      "intensity": "medium",
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "type_filter",
+        "template_text": "我想{poi_type}类型的景点"
+      }
+    }
+  ],
+  "conflict_set": [
+    [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "type_filter",
+    "template": "我想{poi_type}类型的景点",
+    "template_id": "structural_semantic_incompatibility__type_filter__07",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [],
+      "relation_slots": [
+        "semantic_type",
+        "min_count"
+      ],
+      "ir_outputs": [
+        "semantic_type_requirement"
+      ],
+      "hard_axes": [
+        "semantic_type"
+      ],
+      "soft_axes": [
+        "semantic_type"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "type_filter",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "type_filter"
+    },
+    "rendered_params": {
+      "start_city": "上海",
+      "target_city": "武汉",
+      "day_count": 3,
+      "poi_type": "自然风光"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "type_filter",
+      "preferred_type": "自然风光"
+    },
+    "canonical_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "type_filter",
+      "preferred_type": "自然风光",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.73
+    },
+    "canonical_semantic_parse_source": "llm",
+    "canonical_semantic_parse_confidence": 0.73,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "preferred_type": "自然风光"
+    },
+    "soft_target_family": "theme_alignment",
+    "soft_target_facet": "nature",
+    "soft_target_mode": "addition",
+    "soft_target_intensity": "medium",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "template_fallback",
+    "surface_quality_pass": false,
+    "surface_reject_reason": "duplicate_surface_in_batch",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "type_filter",
+      "preferred_type": "自然风光"
+    },
+    "surface_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "type_filter",
+      "preferred_type": "自然风光",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.73
+    },
+    "surface_semantic_parse_source": "llm",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "preferred_type": "自然风光"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "target_city": "武汉",
+    "start_city": "上海",
+    "is_single_day": false,
+    "day_count": 3,
+    "origin_plan_file": "m20241028164841864509.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_semantic_incompatibility"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-22T09:38:44.442539",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000020",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_incompatibility/_validation_split/passed/sample_000020.json",
+    "template_diversity_selected": true
+  }
+}

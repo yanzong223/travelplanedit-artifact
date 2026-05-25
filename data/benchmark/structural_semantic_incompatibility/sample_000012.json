@@ -1,0 +1,858 @@
+{
+  "sample_id": "sample_000012",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置北京。我们四个人想去武汉玩3天，想吃鱼酷活力烤鱼(万达广场店)，请给我们一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "m20241028164928339245",
+    "tag": "easy",
+    "start_city": "北京",
+    "target_city": "武汉",
+    "days": 3,
+    "people_number": 4,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==3)",
+      "result=(people_count(plan)==4)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False",
+      "restaurant_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_name_set.add(activity_position(activity))\nresult=({'鱼酷活力烤鱼(万达广场店)'}<=restaurant_name_set)",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置北京。我们四个人想去武汉玩3天，想吃鱼酷活力烤鱼(万达广场店)，请给我们一个旅行规划。",
+    "nature_language_en": "Current location: Beijing. Four of us want to visit Wuhan for 3 days and would like to eat at Fish Cool Grilled Fish (Wanda Plaza branch). Please provide us with a travel itinerary."
+  },
+  "origin_plan": {
+    "people_number": 4,
+    "start_city": "北京",
+    "target_city": "武汉",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "08:00",
+            "end_time": "12:03",
+            "start": "北京西站",
+            "end": "武汉站",
+            "price": 684.27,
+            "cost": 2737.08,
+            "tickets": 4,
+            "transports": [],
+            "TrainID": "G77",
+            "type": "train"
+          },
+          {
+            "position": "鱼酷活力烤鱼(万达广场店)",
+            "type": "lunch",
+            "price": 85,
+            "cost": 340,
+            "start_time": "12:43",
+            "end_time": "13:43",
+            "transports": [
+              {
+                "start": "武汉站",
+                "end": "鱼酷活力烤鱼(万达广场店)",
+                "mode": "taxi",
+                "start_time": "12:03",
+                "end_time": "12:43",
+                "cost": 115.33,
+                "distance": 26.81,
+                "price": 115.33,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "汉口江滩",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "14:33",
+            "end_time": "16:03",
+            "transports": [
+              {
+                "start": "鱼酷活力烤鱼(万达广场店)",
+                "end": "体育中心-地铁站",
+                "mode": "walk",
+                "start_time": "13:43",
+                "end_time": "13:45",
+                "cost": 0,
+                "distance": 0.2,
+                "price": 0
+              },
+              {
+                "start": "体育中心-地铁站",
+                "end": "头道街-地铁站",
+                "mode": "metro",
+                "start_time": "13:45",
+                "end_time": "14:21",
+                "cost": 20,
+                "distance": 18.48,
+                "price": 5,
+                "tickets": 4
+              },
+              {
+                "start": "头道街-地铁站",
+                "end": "汉口江滩",
+                "mode": "walk",
+                "start_time": "14:21",
+                "end_time": "14:33",
+                "cost": 0,
+                "distance": 1.04,
+                "price": 0
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "捞旺猪肚鸡(后湖店)",
+            "type": "dinner",
+            "price": 79,
+            "cost": 316,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "汉口江滩",
+                "end": "头道街-地铁站",
+                "mode": "walk",
+                "start_time": "16:03",
+                "end_time": "16:15",
+                "cost": 0,
+                "distance": 1.04,
+                "price": 0
+              },
+              {
+                "start": "头道街-地铁站",
+                "end": "后湖大道-地铁站",
+                "mode": "metro",
+                "start_time": "16:15",
+                "end_time": "16:22",
+                "cost": 8,
+                "distance": 3.72,
+                "price": 2,
+                "tickets": 4
+              },
+              {
+                "start": "后湖大道-地铁站",
+                "end": "捞旺猪肚鸡(后湖店)",
+                "mode": "walk",
+                "start_time": "16:22",
+                "end_time": "16:26",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "臻程酒店(武汉汉阳江滩国博店)",
+            "type": "accommodation",
+            "price": 308,
+            "cost": 1232,
+            "start_time": "18:36",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "捞旺猪肚鸡(后湖店)",
+                "end": "后湖大道-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:04",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              },
+              {
+                "start": "后湖大道-地铁站",
+                "end": "马鹦路-地铁站",
+                "mode": "metro",
+                "start_time": "18:04",
+                "end_time": "18:29",
+                "cost": 16,
+                "distance": 12.97,
+                "price": 4,
+                "tickets": 4
+              },
+              {
+                "start": "马鹦路-地铁站",
+                "end": "臻程酒店(武汉汉阳江滩国博店)",
+                "mode": "walk",
+                "start_time": "18:29",
+                "end_time": "18:36",
+                "cost": 0,
+                "distance": 0.62,
+                "price": 0
+              }
+            ],
+            "room_type": 1,
+            "rooms": 4
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "activities": [
+          {
+            "position": "臻程酒店(武汉汉阳江滩国博店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "江汉路步行街",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:54",
+            "end_time": "10:24",
+            "transports": [
+              {
+                "start": "臻程酒店(武汉汉阳江滩国博店)",
+                "end": "马鹦路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:37",
+                "cost": 0,
+                "distance": 0.62,
+                "price": 0
+              },
+              {
+                "start": "马鹦路-地铁站",
+                "end": "大智路-地铁站",
+                "mode": "metro",
+                "start_time": "08:37",
+                "end_time": "08:50",
+                "cost": 12,
+                "distance": 6.64,
+                "price": 3,
+                "tickets": 4
+              },
+              {
+                "start": "大智路-地铁站",
+                "end": "江汉路步行街",
+                "mode": "walk",
+                "start_time": "08:50",
+                "end_time": "08:54",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "哈根达斯(武汉天地店)",
+            "type": "lunch",
+            "price": 83,
+            "cost": 332,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "江汉路步行街",
+                "end": "大智路-地铁站",
+                "mode": "walk",
+                "start_time": "10:24",
+                "end_time": "10:28",
+                "cost": 0,
+                "distance": 0.39,
+                "price": 0
+              },
+              {
+                "start": "大智路-地铁站",
+                "end": "黄浦路-地铁站",
+                "mode": "metro",
+                "start_time": "10:28",
+                "end_time": "10:32",
+                "cost": 8,
+                "distance": 2.16,
+                "price": 2,
+                "tickets": 4
+              },
+              {
+                "start": "黄浦路-地铁站",
+                "end": "哈根达斯(武汉天地店)",
+                "mode": "walk",
+                "start_time": "10:32",
+                "end_time": "10:36",
+                "cost": 0,
+                "distance": 0.34,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "position": "武汉科技馆",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "12:24",
+            "end_time": "13:54",
+            "transports": [
+              {
+                "start": "哈根达斯(武汉天地店)",
+                "end": "黄浦路-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:04",
+                "cost": 0,
+                "distance": 0.34,
+                "price": 0
+              },
+              {
+                "start": "黄浦路-地铁站",
+                "end": "大智路-地铁站",
+                "mode": "metro",
+                "start_time": "12:04",
+                "end_time": "12:08",
+                "cost": 8,
+                "distance": 2.16,
+                "price": 2,
+                "tickets": 4
+              },
+              {
+                "start": "大智路-地铁站",
+                "end": "武汉科技馆",
+                "mode": "walk",
+                "start_time": "12:08",
+                "end_time": "12:24",
+                "cost": 0,
+                "distance": 1.39,
+                "price": 0
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "十六号洋房(岳飞街店)",
+            "type": "dinner",
+            "price": 188,
+            "cost": 752,
+            "start_time": "17:00",
+            "end_time": "18:00",
+            "transports": [
+              {
+                "start": "武汉科技馆",
+                "end": "十六号洋房(岳飞街店)",
+                "mode": "taxi",
+                "start_time": "13:54",
+                "end_time": "13:55",
+                "cost": 11.0,
+                "distance": 0.9,
+                "price": 11.0,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "晴川阁",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "18:32",
+            "end_time": "20:02",
+            "transports": [
+              {
+                "start": "十六号洋房(岳飞街店)",
+                "end": "大智路-地铁站",
+                "mode": "walk",
+                "start_time": "18:00",
+                "end_time": "18:06",
+                "cost": 0,
+                "distance": 0.5,
+                "price": 0
+              },
+              {
+                "start": "大智路-地铁站",
+                "end": "昙华林武胜门-地铁站",
+                "mode": "metro",
+                "start_time": "18:06",
+                "end_time": "18:14",
+                "cost": 12,
+                "distance": 4.37,
+                "price": 3,
+                "tickets": 4
+              },
+              {
+                "start": "昙华林武胜门-地铁站",
+                "end": "晴川阁",
+                "mode": "walk",
+                "start_time": "18:14",
+                "end_time": "18:32",
+                "cost": 0,
+                "distance": 1.55,
+                "price": 0
+              }
+            ],
+            "tickets": 4
+          },
+          {
+            "position": "臻程酒店(武汉汉阳江滩国博店)",
+            "type": "accommodation",
+            "price": 308,
+            "cost": 1232,
+            "start_time": "20:35",
+            "end_time": "24:00",
+            "transports": [
+              {
+                "start": "晴川阁",
+                "end": "昙华林武胜门-地铁站",
+                "mode": "walk",
+                "start_time": "20:02",
+                "end_time": "20:20",
+                "cost": 0,
+                "distance": 1.55,
+                "price": 0
+              },
+              {
+                "start": "昙华林武胜门-地铁站",
+                "end": "马鹦路-地铁站",
+                "mode": "metro",
+                "start_time": "20:20",
+                "end_time": "20:28",
+                "cost": 12,
+                "distance": 4.11,
+                "price": 3,
+                "tickets": 4
+              },
+              {
+                "start": "马鹦路-地铁站",
+                "end": "臻程酒店(武汉汉阳江滩国博店)",
+                "mode": "walk",
+                "start_time": "20:28",
+                "end_time": "20:35",
+                "cost": 0,
+                "distance": 0.62,
+                "price": 0
+              }
+            ],
+            "room_type": 1,
+            "rooms": 4
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "activities": [
+          {
+            "position": "臻程酒店(武汉汉阳江滩国博店)",
+            "type": "breakfast",
+            "price": 0,
+            "cost": 0,
+            "start_time": "08:00",
+            "end_time": "08:30",
+            "transports": []
+          },
+          {
+            "position": "京前老北京涮肉·烤鸭(群星城店)",
+            "type": "lunch",
+            "price": 68,
+            "cost": 272,
+            "start_time": "11:00",
+            "end_time": "12:00",
+            "transports": [
+              {
+                "start": "臻程酒店(武汉汉阳江滩国博店)",
+                "end": "马鹦路-地铁站",
+                "mode": "walk",
+                "start_time": "08:30",
+                "end_time": "08:37",
+                "cost": 0,
+                "distance": 0.62,
+                "price": 0
+              },
+              {
+                "start": "马鹦路-地铁站",
+                "end": "汪家墩-地铁站",
+                "mode": "metro",
+                "start_time": "08:37",
+                "end_time": "08:56",
+                "cost": 16,
+                "distance": 9.56,
+                "price": 4,
+                "tickets": 4
+              },
+              {
+                "start": "汪家墩-地铁站",
+                "end": "京前老北京涮肉·烤鸭(群星城店)",
+                "mode": "walk",
+                "start_time": "08:56",
+                "end_time": "08:57",
+                "cost": 0,
+                "distance": 0.1,
+                "price": 0
+              }
+            ]
+          },
+          {
+            "start_time": "13:35",
+            "end_time": "17:23",
+            "start": "武汉站",
+            "end": "北京西站",
+            "price": 684.27,
+            "cost": 2737.08,
+            "tickets": 4,
+            "transports": [
+              {
+                "start": "京前老北京涮肉·烤鸭(群星城店)",
+                "end": "汪家墩-地铁站",
+                "mode": "walk",
+                "start_time": "12:00",
+                "end_time": "12:01",
+                "cost": 0,
+                "distance": 0.1,
+                "price": 0
+              },
+              {
+                "start": "汪家墩-地铁站",
+                "end": "武汉站东广场-地铁站",
+                "mode": "metro",
+                "start_time": "12:01",
+                "end_time": "12:16",
+                "cost": 12,
+                "distance": 7.75,
+                "price": 3,
+                "tickets": 4
+              },
+              {
+                "start": "武汉站东广场-地铁站",
+                "end": "武汉站",
+                "mode": "walk",
+                "start_time": "12:16",
+                "end_time": "12:18",
+                "cost": 0,
+                "distance": 0.19,
+                "price": 0
+              }
+            ],
+            "TrainID": "G894",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 3,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==3)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 4,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==4)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 4,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=4: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=4: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "required_restaurant_name",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "contains_all",
+      "value": [
+        "鱼酷活力烤鱼(万达广场店)"
+      ],
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "restaurant_name_set=set()\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['breakfast', 'lunch', 'dinner']: restaurant_name_set.add(activity_position(activity))\nresult=({'鱼酷活力烤鱼(万达广场店)'}<=restaurant_name_set)"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "我想历史古迹类型的景点",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "武汉"
+    },
+    "temporal": [],
+    "resource": {},
+    "forbidden": [],
+    "semantic": {
+      "preferred_type": "历史古迹"
+    }
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "semantic_type_requirement",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "attraction"
+      },
+      "operator": "includes_type",
+      "value": "历史古迹",
+      "params": {
+        "min_count": 1,
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [
+    {
+      "id": "edit_pref_theme_alignment_culture",
+      "source": "edit",
+      "family": "theme_alignment",
+      "facet": "theme_concentration_maximize",
+      "direction": "maximize",
+      "anchor": null,
+      "edit_mode": "addition",
+      "params": {
+        "canonical_facet": "culture",
+        "target_theme": "culture",
+        "intensity": "medium"
+      },
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "type_filter",
+        "template_text": "我想{poi_type}类型的景点"
+      }
+    }
+  ],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [
+    {
+      "family": "theme_alignment",
+      "facet": "culture",
+      "edit_mode": "addition",
+      "anchor": null,
+      "intensity": "medium",
+      "provenance": {
+        "source": "canonical_constraint_ir",
+        "constraint_type": "type_filter",
+        "template_text": "我想{poi_type}类型的景点"
+      }
+    }
+  ],
+  "conflict_set": [
+    [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ]
+  ],
+  "primary_conflict": [
+    "structural",
+    "semantic",
+    "incompatibility"
+  ],
+  "secondary_conflicts": [],
+  "query_generation_trace": {
+    "constraint_type": "type_filter",
+    "template": "我想{poi_type}类型的景点",
+    "template_id": "structural_semantic_incompatibility__type_filter__09",
+    "template_semantic_spec_version": "v1",
+    "template_semantic_spec": {
+      "required_entities": [],
+      "forbidden_entities": [],
+      "bound_slots": [],
+      "relation_slots": [
+        "semantic_type",
+        "min_count"
+      ],
+      "ir_outputs": [
+        "semantic_type_requirement"
+      ],
+      "hard_axes": [
+        "semantic_type"
+      ],
+      "soft_axes": [
+        "semantic_type"
+      ],
+      "risk_level": "high",
+      "decision": "keep",
+      "root_node_type": "atomic",
+      "entity_slots_hard_policy": "none",
+      "bound_slots_hard_policy": "require_explicit",
+      "drop_behavior_when_bound_missing": "drop_bound_only",
+      "constraint_type": "type_filter",
+      "template_semantic_spec_version": "v1"
+    },
+    "evidence": {
+      "constraint_type": "type_filter"
+    },
+    "rendered_params": {
+      "start_city": "北京",
+      "target_city": "武汉",
+      "day_count": 3,
+      "poi_type": "历史古迹"
+    },
+    "canonical_query_spec": {
+      "constraint_type": "type_filter",
+      "preferred_type": "历史古迹"
+    },
+    "canonical_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "type_filter",
+      "preferred_type": "历史古迹",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.73
+    },
+    "canonical_semantic_parse_source": "llm",
+    "canonical_semantic_parse_confidence": 0.73,
+    "canonical_semantic_parse_errors": [],
+    "structure_frozen": true,
+    "canonical_alignment_pass": true,
+    "canonical_alignment_errors": [],
+    "canonical_gate_pass": true,
+    "canonical_gate_reason": "ok",
+    "canonical_proof_ok": true,
+    "canonical_proof_reason_code": "ok",
+    "canonical_proof_evidence": {
+      "preferred_type": "历史古迹"
+    },
+    "soft_target_family": "theme_alignment",
+    "soft_target_facet": "culture",
+    "soft_target_mode": "addition",
+    "soft_target_intensity": "medium",
+    "soft_alignment_pass": true,
+    "soft_alignment_errors": [],
+    "query_surface_source": "template_fallback",
+    "surface_quality_pass": false,
+    "surface_reject_reason": "duplicate_surface_in_batch",
+    "repaired": false,
+    "repair_mode": "none",
+    "repair_reason": "",
+    "template_attempt_count": 1,
+    "origin_attempt_count": 1,
+    "recovery_action": "accept",
+    "hard_truth_source": "canonical_constraint_ir",
+    "soft_truth_source": "canonical_constraint_ir",
+    "hard_truth_compile_mode": "full",
+    "surface_query_spec": {
+      "constraint_type": "type_filter",
+      "preferred_type": "历史古迹"
+    },
+    "surface_semantic_slots": {
+      "parse_source": "llm",
+      "constraint_type": "type_filter",
+      "preferred_type": "历史古迹",
+      "additional_similar": false,
+      "nearby_meal": false,
+      "parse_confidence": 0.73
+    },
+    "surface_semantic_parse_source": "llm",
+    "surface_gate_pass": true,
+    "surface_gate_reason": "ok",
+    "surface_proof_ok": true,
+    "surface_proof_reason_code": "ok",
+    "surface_proof_evidence": {
+      "preferred_type": "历史古迹"
+    }
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "target_city": "武汉",
+    "start_city": "北京",
+    "is_single_day": false,
+    "day_count": 3,
+    "origin_plan_file": "m20241028164928339245.json",
+    "origin_variant_index": 1,
+    "origin_variant_limit": 1,
+    "requested_constraint_type": [],
+    "requested_bucket_names": [
+      "structural_semantic_incompatibility"
+    ],
+    "curated_batch_id": "batch005",
+    "curated_from_batch_id": "batch004_complete_valid_review",
+    "status": "09_completed",
+    "created_at": "2026-04-22T09:26:33.092195",
+    "target_confirmed": true,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "structural",
+      "semantic",
+      "incompatibility"
+    ],
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000014",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_semantic_incompatibility/_validation_split/passed/sample_000014.json",
+    "template_diversity_selected": true
+  }
+}

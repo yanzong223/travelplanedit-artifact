@@ -1,0 +1,363 @@
+{
+  "sample_id": "sample_000010",
+  "batch_id": "benchmark",
+  "origin_query_text": "当前位置武汉。我一个人想去杭州玩一天，预算1400人民币，请给我一个旅行规划。",
+  "origin_query_structured": {
+    "uid": "e20241028160430652306",
+    "tag": "easy",
+    "start_city": "武汉",
+    "target_city": "杭州",
+    "days": 1,
+    "people_number": 1,
+    "limit_rooms": false,
+    "limits_room_type": false,
+    "hard_logic_py": [
+      "result=(day_count(plan)==1)",
+      "result=(people_count(plan)==1)",
+      "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1400)",
+      "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False",
+      "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+    ],
+    "nature_language": "当前位置武汉。我一个人想去杭州玩一天，预算1400人民币，请给我一个旅行规划。",
+    "nature_language_en": "Current location: Wuhan. I want to travel to Hangzhou alone for a day with a budget of 1,400 RMB. Please provide me with a travel plan."
+  },
+  "origin_plan": {
+    "people_number": 1,
+    "start_city": "武汉",
+    "target_city": "杭州",
+    "itinerary": [
+      {
+        "day": 1,
+        "activities": [
+          {
+            "start_time": "07:19",
+            "end_time": "12:54",
+            "start": "武汉站",
+            "end": "杭州西站",
+            "price": 365.22,
+            "cost": 365.22,
+            "tickets": 1,
+            "transports": [],
+            "TrainID": "G3237",
+            "type": "train"
+          },
+          {
+            "position": "聞炉·港式海鲜火锅(城西店)",
+            "type": "lunch",
+            "price": 328,
+            "cost": 328,
+            "start_time": "12:58",
+            "end_time": "13:58",
+            "transports": [
+              {
+                "start": "杭州西站",
+                "end": "聞炉·港式海鲜火锅(城西店)",
+                "mode": "taxi",
+                "start_time": "12:54",
+                "end_time": "12:58",
+                "cost": 14.59,
+                "distance": 2.83,
+                "price": 14.59,
+                "cars": 1
+              }
+            ]
+          },
+          {
+            "position": "晓书馆",
+            "type": "attraction",
+            "price": 0,
+            "cost": 0,
+            "start_time": "14:36",
+            "end_time": "16:06",
+            "transports": [
+              {
+                "start": "聞炉·港式海鲜火锅(城西店)",
+                "end": "良睦路-地铁站",
+                "mode": "walk",
+                "start_time": "13:58",
+                "end_time": "14:03",
+                "cost": 0,
+                "distance": 0.49,
+                "price": 0
+              },
+              {
+                "start": "良睦路-地铁站",
+                "end": "良渚-地铁站",
+                "mode": "metro",
+                "start_time": "14:03",
+                "end_time": "14:20",
+                "cost": 3,
+                "distance": 8.77,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "良渚-地铁站",
+                "end": "晓书馆",
+                "mode": "walk",
+                "start_time": "14:20",
+                "end_time": "14:36",
+                "cost": 0,
+                "distance": 1.35,
+                "price": 0
+              }
+            ],
+            "tickets": 1
+          },
+          {
+            "start_time": "18:01",
+            "end_time": "22:33",
+            "start": "杭州西站",
+            "end": "武汉站",
+            "price": 365.22,
+            "cost": 365.22,
+            "tickets": 1,
+            "transports": [
+              {
+                "start": "晓书馆",
+                "end": "良渚-地铁站",
+                "mode": "walk",
+                "start_time": "16:06",
+                "end_time": "16:22",
+                "cost": 0,
+                "distance": 1.35,
+                "price": 0
+              },
+              {
+                "start": "良渚-地铁站",
+                "end": "火车西站-地铁站",
+                "mode": "metro",
+                "start_time": "16:22",
+                "end_time": "16:39",
+                "cost": 3,
+                "distance": 8.6,
+                "price": 3,
+                "tickets": 1
+              },
+              {
+                "start": "火车西站-地铁站",
+                "end": "杭州西站",
+                "mode": "walk",
+                "start_time": "16:39",
+                "end_time": "16:40",
+                "cost": 0,
+                "distance": 0.12,
+                "price": 0
+              }
+            ],
+            "TrainID": "G3246",
+            "type": "train"
+          }
+        ]
+      }
+    ]
+  },
+  "origin_logical_constraints": [
+    {
+      "id": "origin_logic_0",
+      "source": "origin",
+      "type": "day_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(day_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_1",
+      "source": "origin",
+      "type": "people_count",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=(people_count(plan)==1)"
+      }
+    },
+    {
+      "id": "origin_logic_2",
+      "source": "origin",
+      "type": "budget_total",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "<=",
+      "value": 1400.0,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "total_cost=0 \nfor activity in allactivities(plan):\n    total_cost+=activity_cost(activity)\n    total_cost += innercity_transport_cost(activity_transports(activity))\nresult=(total_cost<=1400)"
+      }
+    },
+    {
+      "id": "origin_logic_3",
+      "source": "origin",
+      "type": "ticket_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {
+        "include_metro": true
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if activity_type(activity) in ['attraction', 'airplane', 'train'] and activity_tickets(activity)!=1: result=False\n  if innercity_transport_type(activity_transports(activity))=='metro'and metro_tickets(activity_transports(activity))!=1: result=False"
+      }
+    },
+    {
+      "id": "origin_logic_4",
+      "source": "origin",
+      "type": "taxi_car_count_match",
+      "scope": {
+        "level": "origin_query"
+      },
+      "target": {},
+      "operator": "==",
+      "value": 1,
+      "params": {},
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "origin",
+        "raw_code": "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+      }
+    }
+  ],
+  "edit_query": "把每人每顿餐饮预算控制在150元以内",
+  "constraints": {
+    "must_include": [],
+    "spatial": {
+      "city": "杭州"
+    },
+    "temporal": [],
+    "resource": {
+      "meal_budget_per_person_per_meal": 150.0,
+      "budget_cap": 150,
+      "activity_type": "meal",
+      "metric": "avg_cost_per_meal_per_person"
+    },
+    "forbidden": [],
+    "semantic": {}
+  },
+  "edit_target_constraints": [
+    {
+      "id": "edit_logic_0",
+      "source": "edit",
+      "type": "activity_budget_limit",
+      "scope": {
+        "level": "edit_query"
+      },
+      "target": {
+        "activity_type": "meal"
+      },
+      "operator": "<=",
+      "value": 150.0,
+      "params": {
+        "metric": "avg_cost_per_meal_per_person",
+        "derived_from": "query_spec"
+      },
+      "is_hard": true,
+      "provenance": {
+        "builder": "hard_truth",
+        "source": "edit"
+      }
+    }
+  ],
+  "edit_target_preferences": [],
+  "origin_preference_tags": [],
+  "edit_target_preference_tags": [],
+  "conflict_set": [
+    [
+      "parameter",
+      "resource",
+      "overflow"
+    ],
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ]
+  ],
+  "primary_conflict": [
+    "parameter",
+    "resource",
+    "overflow"
+  ],
+  "secondary_conflicts": [
+    [
+      "structural",
+      "resource",
+      "overlap"
+    ]
+  ],
+  "query_generation_trace": {
+    "template_id": "structural_resource_overlap__activity_budget_limit__02",
+    "template": "把每人每顿餐饮预算控制在{budget}元以内",
+    "template_str": "把每人每顿餐饮预算控制在{budget}元以内",
+    "constraint_type": "activity_budget_limit",
+    "template_backfilled": true,
+    "template_backfill_source": "benchmark_builder"
+  },
+  "meta": {
+    "target_bucket": [
+      "structural",
+      "resource",
+      "overlap"
+    ],
+    "target_city": "杭州",
+    "start_city": "武汉",
+    "day_count": 1,
+    "requested_constraint_type": [
+      "activity_budget_limit"
+    ],
+    "requested_bucket_names": [
+      "structural_resource_overlap"
+    ],
+    "curated_batch_id": "benchmark_diversity_aug",
+    "curated_from_batch_id": "batch005",
+    "source_seed_sample_id": "sample_000021",
+    "source_seed_path": "./data/data/batches/batch005/batches/structural_resource_overflow/_validation_split/passed/sample_000021.json",
+    "diversity_augmented": true,
+    "diversity_domain": "meal",
+    "constraint_type": "activity_budget_limit",
+    "status": "09_completed",
+    "created_at": "2026-04-28T23:02:54",
+    "target_confirmed": false,
+    "target_confidence": 1.0,
+    "primary_label": [
+      "parameter",
+      "resource",
+      "overflow"
+    ],
+    "merged_from_batch_id": "benchmark_diversity_aug",
+    "merged_from_sample_id": "sample_000064",
+    "merged_from_path": "./data/data/batches/batch005_template_diversity_aug/_curated/passed/sample_000064.json",
+    "source_batch_id": "batch005",
+    "source_sample_id": "sample_000017",
+    "source_sample_path": "./data/data/batches/batch005/batches/structural_resource_overlap/_validation_split/passed/sample_000017.json",
+    "template_diversity_selected": true
+  }
+}

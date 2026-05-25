@@ -1,0 +1,17 @@
+{
+  "uid": "h20241029143754236194",
+  "tag": "human",
+  "start_city": "武汉",
+  "target_city": "南京",
+  "days": 4,
+  "people_number": 2,
+  "limit_rooms": false,
+  "limits_room_type": false,
+  "hard_logic_py": [
+    "result=(day_count(plan)==4)",
+    "result=(people_count(plan)==2)",
+    "result=True\nfor activity in allactivities(plan):\n  if innercity_transport_type(activity_transports(activity))=='taxi'and taxi_cars(activity_transports(activity))!=1: result=False"
+  ],
+  "nature_language": "[当前位置武汉,目标位置南京,旅行人数2,旅行天数4] 我和同学2人打算去南京玩4天，预算1500(不包括车票住宿)，只是玩和吃饭，请你帮忙规划",
+  "nature_language_en": "[Current location: Wuhan, Destination: Nanjing, Number of travelers: 2, Duration of travel: 4 days] My classmate and I are planning to visit Nanjing for 4 days. Our budget is 1500 (excluding transportation and accommodation), just for activities and meals. Please help us plan."
+}
