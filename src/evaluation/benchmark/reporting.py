@@ -10,6 +10,137 @@ def _rate(passed: int, total: int) -> float:
     return passed / total if total else 0.0
 
 
+def aggregate_level3_cascade(results: list[dict[str, Any]]) -> dict[str, Any]:
+    """Aggregate the optional, eligible-only Level3 cascade submetrics."""
+    statuses: dict[str, int] = defaultdict(int)
+    evaluated: list[dict[str, Any]] = []
+    for item in results:
+        level3 = item.get("level3") if isinstance(item, dict) else None
+        if not isinstance(level3, dict):
+            continue
+        cascade = level3.get("cascade") if isinstance(level3, dict) else None
+        status = str(cascade.get("status") or "not_computed") if isinstance(cascade, dict) else "not_computed"
+        statuses[status] += 1
+        if status == "evaluated" and isinstance(cascade, dict):
+            evaluated.append(cascade)
+
+    count_names = (
+        "direct_target", "rollback_required_support", "scope_authorized_completion",
+        "verified_removable", "unresolved",
+    )
+    legacy_count_names = {
+        "rollback_required_support": "hard_required_support",
+        "verified_removable": "avoidable_extra",
+    }
+    count_sums = {
+        name: sum(
+            int(
+                (row.get("counts") or {}).get(
+                    name,
+                    (row.get("counts") or {}).get(legacy_count_names.get(name, ""), 0),
+                )
+                or 0
+            )
+            for row in evaluated
+        )
+        for name in count_names
+    }
+    evaluated_n = len(evaluated)
+    algorithms = {
+        (
+            str((row.get("algorithm") or {}).get("id") or ""),
+            str((row.get("algorithm") or {}).get("version") or ""),
+        )
+        for row in evaluated
+        if isinstance(row.get("algorithm"), dict)
+    }
+
+    def values(field: str) -> list[float]:
+        return [
+            float(row[field])
+            for row in evaluated
+            if isinstance(row.get(field), (int, float))
+            and not isinstance(row.get(field), bool)
+        ]
+
+    def mean(field: str) -> float | None:
+        field_values = values(field)
+        return sum(field_values) / len(field_values) if field_values else None
+
+    total_impact = sum(int(row.get("total_impact_count", 0) or 0) for row in evaluated)
+    proven = (
+        count_sums["direct_target"]
+        + count_sums["rollback_required_support"]
+        + count_sums["verified_removable"]
+    )
+    mean_fields = (
+        "avoidable_lower_rate",
+        "avoidable_upper_rate",
+        "proof_coverage",
+        "rollback_required_support_share",
+        "hard_support_share",
+        "authorized_completion_share",
+        "unresolved_share",
+    )
+    return {
+        "algorithms": [
+            {"id": algorithm_id, "version": version}
+            for algorithm_id, version in sorted(algorithms)
+        ],
+        "definition": (
+            "Verified Removable-Change Rate is conditional on Level 1 and Level 2 "
+            "passing. It is evaluator-relative and is not a third success gate."
+        ),
+        "metric_name": "verified_removable_change_rate",
+        "records": sum(statuses.values()),
+        "evaluated_records": evaluated_n,
+        "not_evaluated_records": statuses.get("not_evaluated", 0),
+        "not_computed_records": statuses.get("not_computed", 0),
+        "status_counts": dict(sorted(statuses.items())),
+        "mean_counts": {
+            name: count_sums[name] / evaluated_n if evaluated_n else None
+            for name in count_names
+        },
+        "pooled_counts": count_sums,
+        "pooled_total_impact_count": total_impact,
+        "mean_effective_n": {
+            field: len(values(field))
+            for field in mean_fields
+        },
+        "mean_avoidable_lower_rate": mean("avoidable_lower_rate"),
+        "mean_avoidable_upper_rate": mean("avoidable_upper_rate"),
+        "mean_proof_coverage": mean("proof_coverage"),
+        "mean_hard_support_share": mean("hard_support_share"),
+        "mean_rollback_required_support_share": (
+            mean("rollback_required_support_share")
+            if values("rollback_required_support_share")
+            else mean("hard_support_share")
+        ),
+        "mean_authorized_completion_share": mean("authorized_completion_share"),
+        "mean_unresolved_share": mean("unresolved_share"),
+        "pooled_avoidable_lower_rate": (
+            count_sums["verified_removable"] / total_impact if total_impact else None
+        ),
+        "pooled_avoidable_upper_rate": (
+            (count_sums["verified_removable"] + count_sums["unresolved"]) / total_impact
+            if total_impact else None
+        ),
+        "pooled_proof_coverage": proven / total_impact if total_impact else None,
+        "mean_verified_removable_change_rate": mean("avoidable_lower_rate"),
+        "pooled_verified_removable_change_rate": (
+            count_sums["verified_removable"] / total_impact if total_impact else None
+        ),
+        "pooled_evaluator_relative_excess_change_rate_lower": (
+            count_sums["verified_removable"] / total_impact if total_impact else None
+        ),
+        "pooled_evaluator_relative_excess_change_rate_upper": (
+            (count_sums["verified_removable"] + count_sums["unresolved"]) / total_impact
+            if total_impact
+            else None
+        ),
+    }
+
+
 def _finalize_support_breakdown(raw: dict[str, dict[str, int]]) -> dict[str, dict[str, float | int]]:
     finalized: dict[str, dict[str, float | int]] = {}
     for key, counts in raw.items():
@@ -192,6 +323,32 @@ def _build_origin_failure_comparison(
 
     edited_passed = bool(feasibility.get("pass"))
     origin_passed = bool(origin.get("pass"))
+
+    relative = feasibility.get("relative_non_regression")
+    if isinstance(relative, dict):
+        attributable = relative.get("new_or_worsened_violations")
+        attributable = attributable if isinstance(attributable, list) else []
+        introduced = sorted({
+            str(item.get("code"))
+            for item in attributable
+            if isinstance(item, dict) and item.get("code")
+        })
+        classifications = sorted({
+            str(item.get("classification"))
+            for item in attributable
+            if isinstance(item, dict) and item.get("classification")
+        })
+        return {
+            "failure_provenance": "edit_introduced" if attributable else "pre_existing",
+            "origin_passed": origin_passed,
+            "edited_passed": edited_passed,
+            "edited_absolute_passed": bool(feasibility.get("absolute_pass")),
+            "scoring_mode": feasibility.get("scoring_mode"),
+            "introduced_violation_codes": introduced,
+            "relative_classifications": classifications,
+            "inherited_violation_count": int(relative.get("inherited_count", 0) or 0),
+            "resolved_violation_count": int(relative.get("resolved_count", 0) or 0),
+        }
 
     def _collect_codes(section: dict[str, Any]) -> set[str]:
         codes: set[str] = set()
@@ -590,11 +747,18 @@ def _build_sample_failure_from_result(result: dict[str, Any]) -> dict[str, Any]:
         else:
             reason_code = "origin_preference_preservation_failed"
 
-        violation_summary = _summarize_violations(
-            feasibility.get("hygiene_violations")
-        ) or _summarize_violations(feasibility.get("quality_violations"))
-        if not violation_summary["top_code"]:
-            violation_summary = _summarize_violations(feasibility.get("quality_violations"))
+        relative = feasibility.get("relative_non_regression")
+        relative_violations = (
+            relative.get("new_or_worsened_violations")
+            if isinstance(relative, dict)
+            else None
+        )
+        if isinstance(relative_violations, list) and relative_violations:
+            violation_summary = _summarize_violations(relative_violations)
+        else:
+            absolute_violations = list(feasibility.get("hygiene_violations") or [])
+            absolute_violations.extend(feasibility.get("quality_violations") or [])
+            violation_summary = _summarize_violations(absolute_violations)
         top_code = violation_summary["top_code"] or reason_code
 
         return {
@@ -707,6 +871,7 @@ def _build_experiment_view(report: dict[str, Any]) -> dict[str, Any]:
     level1 = per_level.get("level1", {}) if isinstance(per_level.get("level1"), dict) else {}
     level2 = per_level.get("level2", {}) if isinstance(per_level.get("level2"), dict) else {}
     level3 = per_level.get("level3", {}) if isinstance(per_level.get("level3"), dict) else {}
+    oracle_scope = report.get("oracle_scope", {}) if isinstance(report.get("oracle_scope"), dict) else {}
     return {
         "level1": {
             "feasibility": _experiment_check(
@@ -769,7 +934,9 @@ def _build_experiment_view(report: dict[str, Any]) -> dict[str, Any]:
             ),
             "averages": level3.get("averages", {}),
             "scope_distribution": level3.get("scope_distribution", {}),
+            "cascade": level3.get("cascade", {}),
         },
+        "diagnostic_oracle_scope": oracle_scope,
     }
 
 
@@ -800,6 +967,14 @@ def aggregate_results(results: list[dict[str, Any]]) -> dict[str, Any]:
     level3_count = sum(1 for item in results if "level3" in item)
 
     feasibility_pass = sum(1 for item in results if item.get("level1", {}).get("feasibility", {}).get("pass"))
+    absolute_feasibility_pass = sum(
+        1
+        for item in results
+        if item.get("level1", {}).get("feasibility", {}).get(
+            "absolute_pass",
+            item.get("level1", {}).get("feasibility", {}).get("pass"),
+        )
+    )
     preservation_pass = sum(
         1
         for item in results
@@ -848,6 +1023,15 @@ def aggregate_results(results: list[dict[str, Any]]) -> dict[str, Any]:
     retention_total = 0.0
     poi_distance_total = 0.0
     change_ratio_total = 0.0
+    oracle_scope_records = 0
+    oracle_scope_success = 0
+    oracle_scope_local_success = 0
+    oracle_scope_expanded = 0
+    oracle_scope_frozen_pass = 0
+    oracle_scope_depth_total = 0
+    oracle_scope_added_total = 0
+    oracle_scope_outside_change_total = 0
+    oracle_scope_breakdown: dict[str, dict[str, int]] = defaultdict(lambda: {"records": 0, "success": 0, "local_success": 0})
 
     for item in results:
         level1 = item.get("level1", {})
@@ -857,6 +1041,26 @@ def aggregate_results(results: list[dict[str, Any]]) -> dict[str, Any]:
         preference_preservation = level1.get("origin_preference_preservation", {})
         logical = level2.get("edit_logical_success", {})
         preference = level2.get("edit_preference_success", {})
+        run_metrics = item.get("run_context", {}).get("metrics", {})
+        if isinstance(run_metrics, dict) and run_metrics.get("oracle_scope"):
+            oracle_scope_records += 1
+            success = bool(run_metrics.get("scope_status") in {"local_success", "expanded_success"})
+            local_success = run_metrics.get("scope_status") == "local_success"
+            expanded = bool(run_metrics.get("scope_expanded"))
+            oracle_scope_success += int(success)
+            oracle_scope_local_success += int(local_success)
+            oracle_scope_expanded += int(expanded)
+            oracle_scope_frozen_pass += int(bool(run_metrics.get("frozen_complement_pass")))
+            oracle_scope_depth_total += int(run_metrics.get("expansion_steps", 0) or 0)
+            oracle_scope_added_total += int(run_metrics.get("added_activity_count", 0) or 0)
+            oracle_scope_outside_change_total += int(run_metrics.get("outside_final_scope_change_count", 0) or 0)
+            day_key = "multi_day" if run_metrics.get("is_multi_day") else "single_day"
+            cascade_value = run_metrics.get("cascade_required")
+            cascade_key = "cascade_required" if cascade_value is True else "local" if cascade_value is False else "unlabeled_cascade"
+            bucket = oracle_scope_breakdown[f"{day_key}:{cascade_key}"]
+            bucket["records"] += 1
+            bucket["success"] += int(success)
+            bucket["local_success"] += int(local_success)
 
         feasibility_reason = str(level1.get("feasibility", {}).get("reason", ""))
         preservation_reason = str(preservation.get("reason", ""))
@@ -959,6 +1163,7 @@ def aggregate_results(results: list[dict[str, Any]]) -> dict[str, Any]:
     preference_canonical_type_breakdown = _finalize_support_breakdown(preference_canonical_breakdown)
     preference_family_support_breakdown = _finalize_support_breakdown(preference_family_breakdown)
     level3_scope_breakdown = _finalize_scope_distribution(scope_distribution, level3_evaluable)
+    level3_cascade = aggregate_level3_cascade(results)
     avg_origin_score_by_facet = {
         key: preference_score_before_sum[key] / preference_score_before_count[key]
         for key in preference_score_before_count
@@ -985,6 +1190,8 @@ def aggregate_results(results: list[dict[str, Any]]) -> dict[str, Any]:
             "level2_records": level2_count,
             "level3_records": level3_count,
             "feasibility_pass_rate": _rate(feasibility_pass, level1_count),
+            "relative_feasibility_pass_rate": _rate(feasibility_pass, level1_count),
+            "absolute_feasibility_pass_rate": _rate(absolute_feasibility_pass, level1_count),
             "origin_logical_preservation_rate": _rate(preservation_pass, level1_count),
             "origin_preference_preservation_rate": _rate(preference_preservation_pass, level1_count),
             "origin_preference_preservation_evaluable_records": preference_preservation_evaluable,
@@ -1013,6 +1220,9 @@ def aggregate_results(results: list[dict[str, Any]]) -> dict[str, Any]:
             "level1": {
                 "records": level1_count,
                 "feasibility": _finalize_check(level1_count, feasibility_pass),
+                "absolute_feasibility": _finalize_check(
+                    level1_count, absolute_feasibility_pass
+                ),
                 "origin_logical_preservation": _finalize_check(level1_count, preservation_pass),
                 "origin_preference_preservation": _finalize_check(level1_count, preference_preservation_pass),
                 "origin_preference_preservation_supported": _finalize_check(
@@ -1056,6 +1266,7 @@ def aggregate_results(results: list[dict[str, Any]]) -> dict[str, Any]:
                     "activity_change_ratio": change_ratio_total / level3_evaluable if level3_evaluable else 0.0,
                 },
                 "scope_distribution": level3_scope_breakdown,
+                "cascade": level3_cascade,
             },
         },
         "per_type_breakdown": {
@@ -1088,6 +1299,24 @@ def aggregate_results(results: list[dict[str, Any]]) -> dict[str, Any]:
         "unsupported_preference_count_by_facet": unsupported_preference_count_by_facet,
         "level3": {
             "scope_distribution": {key: value["count"] for key, value in level3_scope_breakdown.items()},
+            "cascade": level3_cascade,
+        },
+        "oracle_scope": {
+            "diagnostic_only": True,
+            "planner_mode": "oracle_patch_program",
+            "records": oracle_scope_records,
+            "local_success_rate": _rate(oracle_scope_local_success, oracle_scope_records),
+            "eventual_success_rate": _rate(oracle_scope_success, oracle_scope_records),
+            "expansion_rate": _rate(oracle_scope_expanded, oracle_scope_records),
+            "frozen_complement_pass_rate": _rate(oracle_scope_frozen_pass, oracle_scope_records),
+            "avg_expansion_depth": oracle_scope_depth_total / oracle_scope_records if oracle_scope_records else 0.0,
+            "avg_added_activities": oracle_scope_added_total / oracle_scope_records if oracle_scope_records else 0.0,
+            "avg_outside_final_scope_change_count": oracle_scope_outside_change_total / oracle_scope_records if oracle_scope_records else 0.0,
+            "breakdown": {
+                key: {**value, "eventual_success_rate": _rate(value["success"], value["records"]),
+                      "local_success_rate": _rate(value["local_success"], value["records"])}
+                for key, value in sorted(oracle_scope_breakdown.items())
+            },
         },
         "results": results,
     }

@@ -558,6 +558,45 @@ def build_edit_logical_constraints_from_structured_inputs(
         if budget is not None:
             add("ticket_budget_total", budget, operator="<=", params={"derived_from": "query_spec"})
 
+    if ctype == "trip_innercity_transport_duration_total":
+        duration = duration_minutes_value(
+            query_spec.get("transport_duration_cap_min"),
+            semantic_slots.get("transport_duration_cap_min"),
+        )
+        if duration is not None:
+            add(
+                "innercity_transport_duration_total",
+                duration,
+                operator="<=",
+                params={"unit": "minute", "scope": "whole_trip", "derived_from": "query_spec"},
+            )
+
+    if ctype == "trip_walking_distance_total":
+        distance = float_value(
+            query_spec.get("walking_distance_cap_km"),
+            semantic_slots.get("walking_distance_cap_km"),
+        )
+        if distance is not None:
+            add(
+                "walking_distance_total",
+                distance,
+                operator="<=",
+                params={"unit": "km", "scope": "whole_trip", "derived_from": "query_spec"},
+            )
+
+    if ctype == "trip_innercity_transport_cost_total":
+        cost = float_value(
+            query_spec.get("transport_cost_cap"),
+            semantic_slots.get("transport_cost_cap"),
+        )
+        if cost is not None:
+            add(
+                "innercity_transport_cost_total",
+                cost,
+                operator="<=",
+                params={"unit": "CNY", "scope": "whole_trip", "derived_from": "query_spec"},
+            )
+
     if ctype == "required_intercity_transport_type":
         modes = intercity_modes_from_values(
             query_spec.get("intercity_transport_modes"),
@@ -1693,6 +1732,30 @@ def _extract_ticket_budget_limit(edit_query: str) -> Optional[float]:
         match = re.search(pattern, edit_query or "")
         if match:
             return float(match.group(1))
+    return None
+
+
+def _extract_trip_transport_total_limit(edit_query: str, metric: str) -> Optional[float]:
+    text = str(edit_query or "")
+    patterns = {
+        "duration": (
+            r"(?:全程|整个行程|这趟行程)(?:的)?(?:所有|全部)?(?:市内|当地)?交通(?:总)?(?:时长|时间)[^，。；]{0,16}?(?:不要超过|不超过|控制在|别超过|最多)\s*(\d+(?:\.\d+)?)\s*(小时|分钟)",
+        ),
+        "walking_distance": (
+            r"(?:全程|整个行程|这趟行程)(?:的)?(?:所有|全部)?步行(?:总)?距离[^，。；]{0,16}?(?:不要超过|不超过|控制在|别超过|最多)\s*(\d+(?:\.\d+)?)\s*(公里|千米)",
+        ),
+        "cost": (
+            r"(?:全程|整个行程|这趟行程)(?:的)?(?:所有|全部)?(?:市内|当地)?交通(?:总)?(?:费用|花费)[^，。；]{0,16}?(?:不要超过|不超过|控制在|别超过|最多)\s*(\d+(?:\.\d+)?)\s*元",
+        ),
+    }
+    for pattern in patterns.get(metric, ()):
+        match = re.search(pattern, text)
+        if not match:
+            continue
+        value = float(match.group(1))
+        if metric == "duration" and match.group(2) == "小时":
+            value *= 60.0
+        return value
     return None
 
 
@@ -2891,6 +2954,26 @@ def build_edit_logical_constraints(
                 source="edit",
                 operator="<=",
                 params={"derived_from": "edit_query"},
+            )
+        )
+
+    transport_total_specs = (
+        ("duration", "innercity_transport_duration_total", "minute"),
+        ("walking_distance", "walking_distance_total", "km"),
+        ("cost", "innercity_transport_cost_total", "CNY"),
+    )
+    for metric_name, logical_type, unit in transport_total_specs:
+        threshold = _extract_trip_transport_total_limit(text, metric_name)
+        if threshold is None:
+            continue
+        extracted.append(
+            _make_logical(
+                len(extracted),
+                logical_type,
+                threshold,
+                source="edit",
+                operator="<=",
+                params={"unit": unit, "scope": "whole_trip", "derived_from": "edit_query"},
             )
         )
 

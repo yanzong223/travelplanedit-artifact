@@ -184,6 +184,106 @@ def _itinerary(plan: Dict[str, Any]) -> List[Dict[str, Any]]:
     return plan.get("itinerary", []) if isinstance(plan, dict) else []
 
 
+TICKET_BUDGET_SEMANTICS_VERSION = "ticket_budget_total_v2_cost_else_price_times_people"
+
+
+def _ticket_numeric(value: Any) -> Optional[float]:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    parsed = float(value)
+    return parsed if math.isfinite(parsed) else None
+
+
+def _ticket_people_count(plan: Dict[str, Any]) -> float:
+    people = _ticket_numeric(plan.get("people_number")) if isinstance(plan, dict) else None
+    return people if people is not None and people > 0 else 1.0
+
+
+def attraction_ticket_cost(
+    activity: Dict[str, Any],
+    *,
+    people_number: float,
+) -> Dict[str, Any]:
+    """Resolve one attraction's whole-party ticket cost and consistency evidence.
+
+    ``cost`` is authoritative when numeric because benchmark plans store it as an
+    already-aggregated amount.  When it is absent or non-numeric, the fallback is
+    the per-person ``price`` multiplied by the plan-level party size.
+    """
+
+    cost = _ticket_numeric(activity.get("cost"))
+    price = _ticket_numeric(activity.get("price"))
+    expected_from_price = price * people_number if price is not None else None
+    if cost is not None:
+        resolved = cost
+        source = "cost"
+    elif expected_from_price is not None:
+        resolved = expected_from_price
+        source = "price_x_people_number"
+    else:
+        resolved = 0.0
+        source = "missing_price_and_cost"
+
+    consistent: Optional[bool] = None
+    if cost is not None and expected_from_price is not None:
+        consistent = math.isclose(cost, expected_from_price, rel_tol=1e-6, abs_tol=0.01)
+
+    return {
+        "amount": float(resolved),
+        "source": source,
+        "cost": cost,
+        "price": price,
+        "people_number": people_number,
+        "expected_price_times_people": expected_from_price,
+        "price_cost_consistent": consistent,
+    }
+
+
+def summarize_ticket_budget(plan: Dict[str, Any]) -> Dict[str, Any]:
+    """Summarize whole-party attraction tickets for the complete itinerary."""
+
+    people_number = _ticket_people_count(plan)
+    items: List[Dict[str, Any]] = []
+    inconsistencies: List[Dict[str, Any]] = []
+    total = 0.0
+    for day_index, day in enumerate(_itinerary(plan)):
+        if not isinstance(day, dict):
+            continue
+        activities = day.get("activities", [])
+        if not isinstance(activities, list):
+            continue
+        for activity_index, activity in enumerate(activities):
+            if not isinstance(activity, dict) or activity.get("type") != "attraction":
+                continue
+            resolved = attraction_ticket_cost(activity, people_number=people_number)
+            row = {
+                **resolved,
+                "day": day.get("day", day_index + 1),
+                "activity_index": activity_index,
+                "poi_name": _activity_name(activity),
+                "source_path": f"itinerary[{day_index}].activities[{activity_index}]",
+            }
+            items.append(row)
+            total += float(resolved["amount"])
+            if resolved["price_cost_consistent"] is False:
+                inconsistencies.append(row)
+    return {
+        "semantics_version": TICKET_BUDGET_SEMANTICS_VERSION,
+        "people_number": people_number,
+        "total": total,
+        "items": items,
+        "item_count": len(items),
+        "price_cost_inconsistencies": inconsistencies,
+        "price_cost_inconsistency_count": len(inconsistencies),
+    }
+
+
+def ticket_budget_total(plan: Dict[str, Any]) -> float:
+    """Return total attraction-ticket spend for all travellers and all days."""
+
+    return float(summarize_ticket_budget(plan)["total"])
+
+
 def _activity_name(activity: Dict[str, Any]) -> str:
     for key in ("position", "name", "end", "start"):
         value = str(activity.get(key, "") or "").strip()
@@ -236,35 +336,191 @@ def _sum_transport_distance(activity: Dict[str, Any]) -> float:
     return total
 
 
-def extract_cost_breakdown(plan: Dict[str, Any]) -> Dict[str, float]:
-    breakdown = {
-        "food": 0.0,
-        "hotel": 0.0,
-        "attraction": 0.0,
-        "transport": 0.0,
-        "other": 0.0,
-        "total": 0.0,
-    }
-    for day in _itinerary(plan):
-        for activity in day.get("activities", []):
+_COST_CATEGORIES = ("food", "hotel", "attraction", "transport", "other")
+
+
+def _cost_category(activity_type: str) -> str:
+    if activity_type in MEAL_ACTIVITY_TYPES:
+        return "food"
+    if activity_type == "accommodation":
+        return "hotel"
+    if activity_type == "attraction":
+        return "attraction"
+    if activity_type in TRANSPORT_ACTIVITY_TYPES:
+        return "transport"
+    return "other"
+
+
+def _numeric_cost(value: Any) -> Optional[float]:
+    # bool is technically numeric in Python, but it is never a valid price.
+    if isinstance(value, bool) or value is None:
+        return None
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if math.isfinite(parsed) else None
+
+
+def _activity_label(activity: Dict[str, Any], activity_type: str, index: int) -> str:
+    name = _activity_name(activity)
+    if name:
+        return name
+    labels = {"train": "火车", "airplane": "飞机", "flight": "航班"}
+    return labels.get(activity_type, f"活动 {index + 1}")
+
+
+def _cost_formula(
+    item: Dict[str, Any],
+    *,
+    cost: float,
+    activity_type: str,
+    people_count: int,
+) -> tuple[float, float, str]:
+    """Explain a pre-aggregated benchmark cost without changing its value."""
+
+    candidates: list[tuple[str, Any]] = [
+        ("tickets", item.get("tickets")),
+        ("rooms", item.get("rooms")),
+        ("cars", item.get("cars")),
+    ]
+    if activity_type in MEAL_ACTIVITY_TYPES:
+        candidates.append(("people_number", people_count))
+    price = _numeric_cost(item.get("price"))
+    if price is not None:
+        for field_name, raw_quantity in candidates:
+            quantity = _numeric_cost(raw_quantity)
+            if quantity is not None and quantity > 0 and math.isclose(price * quantity, cost, rel_tol=1e-9, abs_tol=1e-6):
+                return price, quantity, f"price × {field_name}"
+    # `cost` is the evaluator's authoritative, already-aggregated amount.
+    return cost, 1.0, "cost (benchmark aggregate)"
+
+
+def summarize_plan_cost(plan: Dict[str, Any]) -> Dict[str, Any]:
+    """Return the benchmark cost aggregate plus participant-safe line items.
+
+    This is the single public aggregation domain used by benchmark budget checks
+    and the Human baseline. Missing prices contribute zero to the legacy benchmark
+    aggregate, but are explicitly reported as unpriced so the Human UI never
+    presents that subtotal as a complete estimate.
+    """
+
+    categories = {category: 0.0 for category in _COST_CATEGORIES}
+    items: list[Dict[str, Any]] = []
+    unpriced: list[Dict[str, Any]] = []
+    people_count = max(int(plan.get("people_number", 1) or 1), 1) if isinstance(plan, dict) else 1
+
+    def add_item(
+        raw: Dict[str, Any],
+        *,
+        category: str,
+        day_number: int,
+        activity_index: int,
+        transport_index: Optional[int],
+        name: str,
+        activity_type: str,
+        source_path: str,
+    ) -> None:
+        cost = _numeric_cost(raw.get("cost")) if "cost" in raw else None
+        base = {
+            "day": day_number,
+            "activity_index": activity_index,
+            "transport_index": transport_index,
+            "name": name,
+            "activity_type": activity_type,
+            "category": category,
+            "source_path": source_path,
+        }
+        if cost is None:
+            detail = {
+                **base,
+                "priced": False,
+                "unit_price": None,
+                "quantity": None,
+                "formula": "missing cost",
+                "subtotal": None,
+            }
+            items.append(detail)
+            unpriced.append(detail)
+            return
+        unit_price, quantity, formula = _cost_formula(
+            raw, cost=cost, activity_type=activity_type, people_count=people_count
+        )
+        categories[category] += cost
+        items.append(
+            {
+                **base,
+                "priced": True,
+                "unit_price": unit_price,
+                "quantity": quantity,
+                "formula": formula,
+                "subtotal": cost,
+            }
+        )
+
+    for day_index, day in enumerate(_itinerary(plan)):
+        if not isinstance(day, dict):
+            continue
+        try:
+            day_number = int(day.get("day", day_index + 1) or day_index + 1)
+        except (TypeError, ValueError):
+            day_number = day_index + 1
+        activities = day.get("activities", [])
+        if not isinstance(activities, list):
+            continue
+        for activity_index, activity in enumerate(activities):
             if not isinstance(activity, dict):
                 continue
-            cost = float(activity.get("cost", 0) or 0.0)
-            transport_cost = sum(float(segment.get("cost", 0) or 0.0) for segment in _transport_segments(activity))
             activity_type = str(activity.get("type", "") or "").strip()
-            if activity_type in MEAL_ACTIVITY_TYPES:
-                breakdown["food"] += cost
-            elif activity_type == "accommodation":
-                breakdown["hotel"] += cost
-            elif activity_type == "attraction":
-                breakdown["attraction"] += cost
-            elif activity_type in TRANSPORT_ACTIVITY_TYPES:
-                breakdown["transport"] += cost
-            else:
-                breakdown["other"] += cost
-            breakdown["transport"] += transport_cost
-            breakdown["total"] += cost + transport_cost
-    return breakdown
+            category = _cost_category(activity_type)
+            activity_path = f"itinerary[{day_index}].activities[{activity_index}]"
+            add_item(
+                activity,
+                category=category,
+                day_number=day_number,
+                activity_index=activity_index,
+                transport_index=None,
+                name=_activity_label(activity, activity_type, activity_index),
+                activity_type=activity_type or "activity",
+                source_path=f"{activity_path}.cost",
+            )
+            for transport_index, segment in enumerate(_transport_segments(activity)):
+                if not isinstance(segment, dict):
+                    continue
+                mode = str(segment.get("mode", segment.get("type", "")) or "").strip() or "transport"
+                start = str(segment.get("start", "") or "").strip()
+                end = str(segment.get("end", "") or "").strip()
+                name = f"{start} → {end}" if start or end else f"市内交通 {transport_index + 1}"
+                add_item(
+                    segment,
+                    category="transport",
+                    day_number=day_number,
+                    activity_index=activity_index,
+                    transport_index=transport_index,
+                    name=name,
+                    activity_type=mode,
+                    source_path=f"{activity_path}.transports[{transport_index}].cost",
+                )
+
+    total = sum(categories.values())
+    priced_count = len(items) - len(unpriced)
+    return {
+        "total": total,
+        "categories": categories,
+        "items": items,
+        "unpriced_items": unpriced,
+        "priced_count": priced_count,
+        "unpriced_count": len(unpriced),
+        "item_count": len(items),
+        "coverage_ratio": priced_count / len(items) if items else 1.0,
+        "status": "incomplete" if unpriced else "complete",
+        "total_kind": "known_subtotal" if unpriced else "complete_total",
+    }
+
+
+def extract_cost_breakdown(plan: Dict[str, Any]) -> Dict[str, float]:
+    summary = summarize_plan_cost(plan)
+    return {**summary["categories"], "total": summary["total"]}
 
 
 def extract_daily_activity_counts(plan: Dict[str, Any]) -> List[int]:
@@ -529,6 +785,113 @@ def extract_walk_transport_stats(plan: Dict[str, Any]) -> Dict[str, float]:
         "segment_count": float(segment_count),
         "total_minutes": total_minutes,
         "total_distance": total_distance,
+    }
+
+
+GLOBAL_TRANSPORT_SEMANTICS_VERSION = "trip_innercity_transport_totals_v1"
+
+
+def _normalized_transport_mode(segment: Dict[str, Any]) -> str:
+    raw = _normalized_lower(segment.get("mode") or segment.get("type"))
+    aliases = {
+        "walking": "walk",
+        "步行": "walk",
+        "地铁": "metro",
+        "subway": "metro",
+        "出租车": "taxi",
+        "打车": "taxi",
+    }
+    return aliases.get(raw, raw)
+
+
+def summarize_innercity_transport_totals(plan: Dict[str, Any]) -> Dict[str, Any]:
+    """Summarize whole-trip local transport duration, walk distance, and cost.
+
+    Every nested ``activity.transports`` item is one local segment. Duration is
+    derived from its start/end clock, walking distance includes only normalized
+    walk segments, and cost uses the segment's numeric aggregate ``cost``.
+    Missing metric fields are reported explicitly so generation can reject
+    incomplete origins instead of treating missing values as zero evidence.
+    """
+
+    items: list[Dict[str, Any]] = []
+    day_totals: Dict[int, Dict[str, float]] = {}
+    missing = {"duration": 0, "distance": 0, "cost": 0, "mode": 0, "endpoints": 0}
+    totals = {"duration_minutes": 0.0, "walking_distance_km": 0.0, "cost": 0.0}
+
+    for day_index, day in enumerate(_itinerary(plan)):
+        if not isinstance(day, dict):
+            continue
+        try:
+            day_number = int(day.get("day", day_index + 1) or day_index + 1)
+        except (TypeError, ValueError):
+            day_number = day_index + 1
+        per_day = day_totals.setdefault(
+            day_number,
+            {"duration_minutes": 0.0, "walking_distance_km": 0.0, "cost": 0.0, "segment_count": 0.0},
+        )
+        activities = day.get("activities", [])
+        if not isinstance(activities, list):
+            continue
+        for activity_index, activity in enumerate(activities):
+            if not isinstance(activity, dict):
+                continue
+            for transport_index, segment in enumerate(_transport_segments(activity)):
+                if not isinstance(segment, dict):
+                    continue
+                mode = _normalized_transport_mode(segment)
+                minutes = duration_minutes(segment.get("start_time"), segment.get("end_time"))
+                distance = _numeric_cost(segment.get("distance"))
+                cost = _numeric_cost(segment.get("cost"))
+                start = str(segment.get("start", "") or "").strip()
+                end = str(segment.get("end", "") or "").strip()
+                if not mode:
+                    missing["mode"] += 1
+                if not start or not end:
+                    missing["endpoints"] += 1
+                if minutes is None:
+                    missing["duration"] += 1
+                else:
+                    totals["duration_minutes"] += float(minutes)
+                    per_day["duration_minutes"] += float(minutes)
+                if distance is None:
+                    missing["distance"] += 1
+                elif mode == "walk":
+                    totals["walking_distance_km"] += float(distance)
+                    per_day["walking_distance_km"] += float(distance)
+                if cost is None:
+                    missing["cost"] += 1
+                else:
+                    totals["cost"] += float(cost)
+                    per_day["cost"] += float(cost)
+                per_day["segment_count"] += 1.0
+                items.append(
+                    {
+                        "day": day_number,
+                        "activity_index": activity_index,
+                        "transport_index": transport_index,
+                        "mode": mode,
+                        "start": start,
+                        "end": end,
+                        "start_time": segment.get("start_time"),
+                        "end_time": segment.get("end_time"),
+                        "duration_minutes": float(minutes) if minutes is not None else None,
+                        "distance_km": float(distance) if distance is not None else None,
+                        "walking_distance_km": float(distance) if distance is not None and mode == "walk" else 0.0,
+                        "cost": float(cost) if cost is not None else None,
+                        "source_path": f"itinerary[{day_index}].activities[{activity_index}].transports[{transport_index}]",
+                    }
+                )
+
+    return {
+        "semantics_version": GLOBAL_TRANSPORT_SEMANTICS_VERSION,
+        **totals,
+        "segment_count": len(items),
+        "contributing_day_count": sum(1 for values in day_totals.values() if values["segment_count"] > 0),
+        "items": items,
+        "day_totals": {str(day): values for day, values in sorted(day_totals.items())},
+        "missing": missing,
+        "complete": all(value == 0 for value in missing.values()),
     }
 
 

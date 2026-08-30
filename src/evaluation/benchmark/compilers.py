@@ -55,15 +55,64 @@ def compile_logical_constraint(constraint: LogicalConstraintObject) -> str | Non
 
     if constraint.type == "ticket_budget_total":
         return (
+            "def _ticket_number(value):\n"
+            "  if value is None or value is True or value is False:\n"
+            "    return None\n"
+            "  try:\n"
+            "    return value+0.0\n"
+            "  except:\n"
+            "    return None\n"
             "def _ticket_cost(activity):\n"
-            "  if 'price' in activity and activity.get('price') is not None:\n"
-            "    return activity.get('price', 0)\n"
-            "  return activity.get('cost', 0)\n"
+            "  _cost=_ticket_number(activity.get('cost'))\n"
+            "  if _cost is not None:\n"
+            "    return _cost\n"
+            "  _price=_ticket_number(activity.get('price'))\n"
+            "  if _price is None:\n"
+            "    return 0.0\n"
+            "  return _price*people_count(plan)\n"
             "ticket_cost=0\n"
+            "ticket_price_cost_inconsistencies=[]\n"
             "for activity in allactivities(plan):\n"
             "  if activity_type(activity)=='attraction':\n"
             "    ticket_cost+=_ticket_cost(activity)\n"
+            "    _cost=_ticket_number(activity.get('cost'))\n"
+            "    _price=_ticket_number(activity.get('price'))\n"
+            "    if _cost is not None and _price is not None:\n"
+            "      _expected=_price*people_count(plan)\n"
+            "      _delta=_cost-_expected\n"
+            "      if _delta < -0.01 or _delta > 0.01:\n"
+            "        ticket_price_cost_inconsistencies.append(activity)\n"
             f"result=(ticket_cost{operator}{float(value)})"
+        )
+
+    if constraint.type == "innercity_transport_duration_total":
+        return (
+            "transport_duration_total=0.0\n"
+            "for activity in allactivities(plan):\n"
+            "  if activity_transports(activity)!=[]:\n"
+            "    transport_duration_total+=innercity_transport_time(activity_transports(activity))\n"
+            f"result=(transport_duration_total{operator}{float(value)})"
+        )
+
+    if constraint.type == "walking_distance_total":
+        return (
+            "walking_distance_total=0.0\n"
+            "for activity in allactivities(plan):\n"
+            "  for _segment in activity_transports(activity):\n"
+            "    _mode=_segment.get('mode', _segment.get('type',''))\n"
+            "    if _mode in ['walk','walking','步行']:\n"
+            "      _distance=_segment.get('distance')\n"
+            "      if _distance is not None:\n"
+            "        walking_distance_total+=_distance+0.0\n"
+            f"result=(walking_distance_total{operator}{float(value)})"
+        )
+
+    if constraint.type == "innercity_transport_cost_total":
+        return (
+            "transport_cost_total=0.0\n"
+            "for activity in allactivities(plan):\n"
+            "  transport_cost_total+=innercity_transport_cost(activity_transports(activity))\n"
+            f"result=(transport_cost_total{operator}{float(value)})"
         )
 
     if constraint.type == "required_intercity_transport_type":

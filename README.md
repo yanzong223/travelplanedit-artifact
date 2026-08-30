@@ -12,7 +12,8 @@ This repository contains the code, data, and analysis scripts used for the Trave
 ├── data_clean/              # validity rules used by generation/evaluation
 ├── data_classify/           # small soft-constraint taxonomy dependency for generation
 ├── src/                     # editing frameworks, LLM client, evaluators, and runtime tools
-├── scripts/                 # one public experiment entrypoint
+├── scripts/                 # public experiment and offline analysis entrypoints
+├── tests/                   # evaluator and attribution regression tests
 ├── Chinatravel/             # trimmed ChinaTravel database/tools dependency
 └── experiments/main_analysis/
 ```
@@ -85,3 +86,19 @@ The paper-facing main table is under:
 ```text
 experiments/main_analysis/
 ```
+
+The artifact also includes the evidence-grounded edit-scope implementation
+under `src/evaluation/` and its offline entrypoints:
+
+```bash
+PYTHONPATH=src uv run python scripts/recompute_matrix_reports_offline.py --help
+PYTHONPATH=src:scripts uv run python scripts/precompute_matrix_cascade_route_evidence.py --help
+```
+
+These commands operate on a frozen task/result manifest supplied by the user.
+The released benchmark data remains under `data/benchmark/`; private study
+submissions and provider outputs are not included.
+
+For the algorithm contract, evaluator semantics, and reproduction commands,
+see `docs/edit_scope_analysis_algorithm.md`, `docs/evaluation.md`, and
+`docs/reproduction.md`.

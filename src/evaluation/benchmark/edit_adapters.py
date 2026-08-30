@@ -87,6 +87,11 @@ def adapt_edit_record(record: dict[str, Any]) -> dict[str, Any]:
             for index, payload in enumerate(ir_to_preference_constraints(canonical_constraint_ir))
             if isinstance(payload, dict)
         ]
+        if not logical_constraints and not preference_constraints:
+            raise ValueError(
+                "canonical_constraint_ir contains no evaluable edit targets; "
+                "repair the IR instead of treating the record as a target-free edit"
+            )
         return {
             "logical_constraints": logical_constraints,
             "preference_constraints": preference_constraints,

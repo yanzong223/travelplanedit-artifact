@@ -10,7 +10,7 @@ from data_clean.rules import evaluate_plan, summarize_violation_codes
 
 from .compilers import compile_logical_constraints
 from .edit_adapters import adapt_edit_record
-from .level3 import evaluate_level3
+from .level3 import attach_level3_cascade, evaluate_level3
 from .models import (
     LogicalConstraintObject,
     PreferenceConstraintObject,
@@ -19,6 +19,7 @@ from .models import (
 )
 from .origin_adapters import adapt_origin_query
 from .preference_scorers import evaluate_preference_target, score_preference_baseline
+from .relative_feasibility import SCORING_MODE, compare_origin_relative_feasibility
 from .verifiers import verify_constraints
 from utils.chinatravel_plan import validate_chinatravel_plan
 
@@ -38,6 +39,9 @@ def _constraint_key(constraint: LogicalConstraintObject) -> tuple[Any, ...]:
 _VALUE_INSENSITIVE_TYPES = {
     "budget_total",
     "ticket_budget_total",
+    "innercity_transport_duration_total",
+    "walking_distance_total",
+    "innercity_transport_cost_total",
     "day_count",
     "people_count",
 }
@@ -167,11 +171,26 @@ def _evaluate_origin_preference_preservation(
 
     total = len(preserved_preferences)
     unsupported = total - supported_count
-    passed = bool(supported_count) and broken_count == 0
-    reason = "ok" if passed else "no_supported_origin_preferences" if supported_count == 0 else "origin_preference_degraded"
+    applicable = total > 0
+    evaluable = supported_count > 0
+    # An empty preservation set is vacuously satisfied: there is no origin
+    # preference for the edit to preserve. Keep scorer-coverage failures
+    # distinct—preferences that exist but cannot be scored are still not safe
+    # to pass through the Level1 gate.
+    if not applicable:
+        passed = True
+        reason = "not_applicable_no_origin_preferences"
+    elif not evaluable:
+        passed = False
+        reason = "no_supported_origin_preferences"
+    else:
+        passed = broken_count == 0
+        reason = "ok" if passed else "origin_preference_degraded"
     return {
         "pass": passed,
         "reason": reason,
+        "applicable": applicable,
+        "evaluable": evaluable,
         "scorer_id": SCORER_ID,
         "scorer_version": SCORER_VERSION,
         "total_preferences": total,
@@ -201,8 +220,11 @@ def evaluate_level1(
         }
 
     feasibility_eval = evaluate_plan(edited_plan)
+    absolute_feasibility_pass = feasibility_eval.hygiene_pass and feasibility_eval.quality_pass
     feasibility = {
-        "pass": feasibility_eval.hygiene_pass and feasibility_eval.quality_pass,
+        "pass": absolute_feasibility_pass,
+        "absolute_pass": absolute_feasibility_pass,
+        "scoring_mode": "absolute_chinatravel",
         "hygiene_pass": feasibility_eval.hygiene_pass,
         "quality_pass": feasibility_eval.quality_pass,
         "hygiene_violations": [item.to_dict() for item in feasibility_eval.hygiene_violations],
@@ -219,6 +241,15 @@ def evaluate_level1(
             "hygiene_violations": [item.to_dict() for item in origin_feasibility_eval.hygiene_violations],
             "quality_violations": [item.to_dict() for item in origin_feasibility_eval.quality_violations],
         }
+        relative_feasibility = compare_origin_relative_feasibility(
+            origin_plan,
+            edited_plan,
+            origin_feasibility_eval,
+            feasibility_eval,
+        )
+        feasibility["pass"] = relative_feasibility["pass"]
+        feasibility["scoring_mode"] = SCORING_MODE
+        feasibility["relative_non_regression"] = relative_feasibility
 
     origin_bundle = adapt_origin_query(origin_payload)
     preserved_constraints = [
@@ -259,6 +290,16 @@ def evaluate_level1(
             "quality": summarize_violation_codes(feasibility_eval.quality_violations),
         },
     }
+    if isinstance(feasibility.get("relative_non_regression"), dict):
+        relative_violations = feasibility["relative_non_regression"].get(
+            "new_or_worsened_violations", []
+        )
+        relative_counts: dict[str, int] = {}
+        for item in relative_violations:
+            code = item.get("code") if isinstance(item, dict) else None
+            if isinstance(code, str) and code:
+                relative_counts[code] = relative_counts.get(code, 0) + 1
+        diagnostics["relative_feasibility_violation_counts"] = relative_counts
     return {
         "pass": feasibility["pass"] and preservation["pass"] and preference_preservation["pass"],
         "feasibility": feasibility,
@@ -336,6 +377,7 @@ def evaluate_record(
     *,
     origin_query: dict[str, Any] | None = None,
     level: str = "all",
+    cascade_result: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     edited_plan = record.get("edited_plan")
     origin_plan = record.get("original_plan") or record.get("origin_plan")
@@ -450,7 +492,7 @@ def evaluate_record(
             },
         }
         if level in {"3", "all"}:
-            result["level3"] = {
+            result["level3"] = attach_level3_cascade({
                 "eligible": False,
                 "reason": f"infeasible_detection: {infeasible_reason}",
                 "scope_level": 0,
@@ -460,6 +502,8 @@ def evaluate_record(
                 "compositional_count": 0,
                 "atomic_counts": {
                     "change_time": 0,
+                    "change_transport": 0,
+                    "change_attribute": 0,
                     "insert": 0,
                     "delete": 0,
                     "replace": 0,
@@ -472,7 +516,7 @@ def evaluate_record(
                 "matched_pairs": [],
                 "unmatched_origin": [],
                 "unmatched_edited": [],
-            }
+            }, None)
         return result
     if plan_issues:
         invalid_reason = "; ".join(plan_issues)
@@ -538,7 +582,7 @@ def evaluate_record(
             },
         }
         if level in {"3", "all"}:
-            result["level3"] = {
+            result["level3"] = attach_level3_cascade({
                 "eligible": False,
                 "reason": f"invalid_edited_plan: {invalid_reason}",
                 "scope_level": 0,
@@ -548,6 +592,8 @@ def evaluate_record(
                 "compositional_count": 0,
                 "atomic_counts": {
                     "change_time": 0,
+                    "change_transport": 0,
+                    "change_attribute": 0,
                     "insert": 0,
                     "delete": 0,
                     "replace": 0,
@@ -560,7 +606,7 @@ def evaluate_record(
                 "matched_pairs": [],
                 "unmatched_origin": [],
                 "unmatched_edited": [],
-            }
+            }, None)
         return result
 
     if level in {"1", "3", "all"}:
@@ -578,7 +624,10 @@ def evaluate_record(
     if level in {"2", "all"} and level2_result is not None:
         result["level2"] = level2_result
     if level in {"3", "all"}:
-        result["level3"] = evaluate_level3(origin_plan, edited_plan, level1_result, level2_result)
+        result["level3"] = evaluate_level3(
+            origin_plan, edited_plan, level1_result, level2_result,
+            cascade_result=cascade_result,
+        )
     return result
 
 
@@ -586,5 +635,11 @@ def evaluate_record(
 class BenchmarkEvaluator:
     level: str = "all"
 
-    def evaluate(self, record: dict[str, Any], *, origin_query: dict[str, Any] | None = None) -> dict[str, Any]:
-        return evaluate_record(record, origin_query=origin_query, level=self.level)
+    def evaluate(
+        self, record: dict[str, Any], *, origin_query: dict[str, Any] | None = None,
+        cascade_result: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        return evaluate_record(
+            record, origin_query=origin_query, level=self.level,
+            cascade_result=cascade_result,
+        )

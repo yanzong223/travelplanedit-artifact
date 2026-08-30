@@ -9,6 +9,7 @@ from typing import Any, Callable
 
 from .compilers import compile_logical_constraint
 from .models import LogicalConstraintObject, VerificationResult
+from .plan_features import summarize_innercity_transport_totals, summarize_ticket_budget
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 CHINATRAVEL_ROOT = PROJECT_ROOT / "Chinatravel" / "ChinaTravel"
@@ -452,12 +453,35 @@ def _direct_verify(plan: dict[str, Any], constraint: LogicalConstraintObject) ->
         return True, _compare(operator, actual, float(value)), "ok", {"actual": actual}
 
     if constraint.type == "ticket_budget_total":
-        actual = sum(
-            _activity_cost_like(activity, prefer_price=True)
-            for activity in activities
-            if activity.get("type") == "attraction"
-        )
-        return True, _compare(operator, actual, float(value)), "ok", {"actual": actual}
+        summary = summarize_ticket_budget(plan)
+        actual = float(summary["total"])
+        return True, _compare(operator, actual, float(value)), "ok", {
+            "actual": actual,
+            "ticket_budget_semantics_version": summary["semantics_version"],
+            "people_number": summary["people_number"],
+            "ticket_items": summary["items"],
+            "price_cost_inconsistencies": summary["price_cost_inconsistencies"],
+        }
+
+    transport_metric_by_type = {
+        "innercity_transport_duration_total": "duration_minutes",
+        "walking_distance_total": "walking_distance_km",
+        "innercity_transport_cost_total": "cost",
+    }
+    if constraint.type in transport_metric_by_type:
+        summary = summarize_innercity_transport_totals(plan)
+        metric = transport_metric_by_type[constraint.type]
+        actual = float(summary[metric])
+        return True, _compare(operator, actual, float(value)), "ok", {
+            "actual": actual,
+            "metric": metric,
+            "transport_semantics_version": summary["semantics_version"],
+            "segment_count": summary["segment_count"],
+            "contributing_day_count": summary["contributing_day_count"],
+            "complete": summary["complete"],
+            "missing": summary["missing"],
+            "day_totals": summary["day_totals"],
+        }
 
     if constraint.type == "required_intercity_transport_type":
         actual = {activity.get("type", "") for activity in activities if activity.get("type") in _INTERCITY_TYPES}

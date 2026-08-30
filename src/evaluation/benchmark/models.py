@@ -167,6 +167,7 @@ class Level3EvaluationResult:
     matched_pairs: List[Dict[str, Any]] = field(default_factory=list)
     unmatched_origin: List[Dict[str, Any]] = field(default_factory=list)
     unmatched_edited: List[Dict[str, Any]] = field(default_factory=list)
+    cascade: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)

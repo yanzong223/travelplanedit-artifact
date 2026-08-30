@@ -22,6 +22,7 @@ ATTRACTION_TYPES = {"attraction"}
 class _DefaultCatalog:
     def __init__(self) -> None:
         self._poi = None
+        self._attractions = None
 
     @property
     def poi(self):
@@ -30,6 +31,14 @@ class _DefaultCatalog:
 
             self._poi = Poi()
         return self._poi
+
+    @property
+    def attractions(self):
+        if self._attractions is None:
+            from chinatravel.environment.tools.attractions.apis import Attractions
+
+            self._attractions = Attractions()
+        return self._attractions
 
 
 def assess_commute_cap_insertion_feasibility(
@@ -103,6 +112,193 @@ def assess_commute_cap_insertion_feasibility(
         "target_city": target_city,
         "blocking_reasons": blocking,
         "results": all_results,
+    }
+
+
+def assess_commute_cap_replan_feasibility(
+    *,
+    origin_plan: Dict[str, Any],
+    origin_logical_constraints: Optional[Sequence[Dict[str, Any]]] = None,
+    edit_target_constraints: Optional[Sequence[Dict[str, Any]]] = None,
+    constraints: Optional[Dict[str, Any]] = None,
+    query_generation_trace: Optional[Dict[str, Any]] = None,
+    catalog: Optional[Any] = None,
+) -> Dict[str, Any]:
+    """Check a commute cap under full re-planning of non-required attractions.
+
+    Only POIs explicitly required by the origin or edit constraints are fixed.
+    Attractions that merely happened to occur in ``origin_plan`` are
+    replaceable and therefore cannot be used to prove the edit infeasible.
+    """
+
+    constraints = constraints if isinstance(constraints, dict) else {}
+    trace = query_generation_trace if isinstance(query_generation_trace, dict) else {}
+    catalog = catalog or _DefaultCatalog()
+    threshold = _extract_threshold(
+        edit_target_constraints,
+        constraints,
+        trace,
+        {},
+        "",
+    )
+    edit_required = _extract_required_attractions(
+        edit_target_constraints,
+        {},
+        trace,
+        {},
+    )
+    if threshold is None or not edit_required:
+        return {
+            "applicable": False,
+            "skipped": True,
+            "pass": True,
+            "status": "not_applicable",
+            "reason_code": "not_applicable",
+            "reason": "requires edit required_attraction_name and adjacent_travel_time_cap",
+        }
+
+    city = str(
+        origin_plan.get("target_city")
+        or _extract_city(constraints, trace, {})
+        or ""
+    ).strip()
+    if not city:
+        return _unknown(
+            "missing_target_city",
+            "target city missing",
+            threshold,
+            edit_required,
+        )
+
+    origin_required = _extract_hard_required_attractions(
+        origin_logical_constraints
+    )
+    all_required = _dedupe(origin_required + edit_required)
+    required_coords: Dict[str, Tuple[float, float]] = {}
+    missing_required: List[str] = []
+    for name in all_required:
+        coord = _resolve_coord(catalog, city, name)
+        if coord is None:
+            missing_required.append(name)
+        else:
+            required_coords[name] = coord
+    if missing_required:
+        return _unknown(
+            "required_poi_coord_missing",
+            f"missing coordinates for required POIs: {', '.join(missing_required)}",
+            threshold,
+            all_required,
+        )
+
+    candidate_coords = _catalog_attraction_coords(
+        catalog=catalog,
+        city=city,
+        required_coords=required_coords,
+    )
+    nearby_evidence: List[Dict[str, Any]] = []
+    for name in edit_required:
+        coord = required_coords[name]
+        nearby = sorted(
+            (
+                (_edge(name, coord, candidate_name, candidate_coord), candidate_name)
+                for candidate_name, candidate_coord in candidate_coords.items()
+                if candidate_name != name
+            ),
+            key=lambda item: item[0]["estimated_minutes"],
+        )
+        eligible = [
+            {"name": candidate_name, **edge}
+            for edge, candidate_name in nearby
+            if edge["estimated_minutes"] <= threshold
+        ]
+        nearby_evidence.append(
+            {
+                "required_poi": name,
+                "nearby_candidate_count": len(eligible),
+                "nearby_examples": eligible[:5],
+            }
+        )
+
+    day_count = _effective_day_count(
+        origin_plan,
+        origin_logical_constraints,
+        edit_target_constraints,
+    )
+    same_day_groups = _same_day_required_groups(
+        all_required=all_required,
+        day_count=day_count,
+        origin_constraints=origin_logical_constraints,
+        edit_constraints=edit_target_constraints,
+    )
+    blocking: List[Dict[str, Any]] = []
+    group_evidence: List[Dict[str, Any]] = []
+    for day, names in same_day_groups:
+        connected, reachable = _required_group_connected(
+            names=names,
+            candidate_coords=candidate_coords,
+            threshold=threshold,
+        )
+        group_evidence.append(
+            {
+                "day": day,
+                "required_pois": names,
+                "connected_through_replan_candidates": connected,
+                "reachable_required_pois": reachable,
+            }
+        )
+        if not connected:
+            detail = group_evidence[-1]
+            blocking.append(
+                _block(
+                    "infeasible_by_spatial_bound",
+                    "commute_cap_replan_disconnected_required_pois",
+                    (
+                        "same-day hard-required POIs cannot be connected by "
+                        f"attraction candidates within {threshold} minutes"
+                    ),
+                    ", ".join(names),
+                    threshold,
+                    detail,
+                )
+            )
+
+    pass_all = not blocking
+    return {
+        "applicable": True,
+        "skipped": False,
+        "pass": pass_all,
+        "status": (
+            "feasible_by_constructive_probe"
+            if pass_all
+            else "infeasible_by_spatial_bound"
+        ),
+        "reason_code": (
+            "ok"
+            if pass_all
+            else "commute_cap_replan_disconnected_required_pois"
+        ),
+        "reason": (
+            "non-required origin attractions can be replaced around edit-required POIs"
+            if pass_all
+            else str(blocking[0]["message"])
+        ),
+        "threshold_minutes": threshold,
+        "target_city": city,
+        "origin_hard_required_attractions": origin_required,
+        "edit_required_attractions": edit_required,
+        "ignored_origin_itinerary_attractions": sorted(
+            {
+                item["name"]
+                for day in _attraction_days(origin_plan)
+                for item in day["attractions"]
+                if item["name"] not in origin_required
+            }
+        ),
+        "candidate_inventory_count": len(candidate_coords),
+        "nearby_candidates": nearby_evidence,
+        "same_day_required_groups": group_evidence,
+        "policy": "replan_non_required_origin_attractions",
+        "blocking_reasons": blocking,
     }
 
 
@@ -356,6 +552,134 @@ def _extract_required_attractions(
             if isinstance(value, str) and value.strip():
                 names.append(value)
     return _dedupe(names)
+
+
+def _extract_hard_required_attractions(
+    constraints: Optional[Sequence[Dict[str, Any]]],
+) -> List[str]:
+    names: List[str] = []
+    for item in constraints or []:
+        if not isinstance(item, dict):
+            continue
+        constraint_type = str(item.get("type") or "")
+        if constraint_type == "required_attraction_name":
+            value = item.get("value")
+            values = (
+                value
+                if isinstance(value, Sequence) and not isinstance(value, (str, bytes))
+                else [value]
+            )
+            names.extend(str(part) for part in values if str(part or "").strip())
+        elif constraint_type == "poi_day_binding":
+            target = item.get("target") if isinstance(item.get("target"), dict) else {}
+            name = str(target.get("poi_name") or "").strip()
+            if name:
+                names.append(name)
+    return _dedupe(names)
+
+
+def _catalog_attraction_coords(
+    *,
+    catalog: Any,
+    city: str,
+    required_coords: Dict[str, Tuple[float, float]],
+) -> Dict[str, Tuple[float, float]]:
+    coords = dict(required_coords)
+    try:
+        frame = catalog.attractions.data[city]
+    except Exception:
+        return coords
+    if not hasattr(frame, "columns") or "name" not in frame.columns:
+        return coords
+    for raw_name in frame["name"].dropna().astype(str).tolist():
+        name = str(raw_name).strip()
+        if not name or name in coords:
+            continue
+        coord = _resolve_coord(catalog, city, name)
+        if coord is not None:
+            coords[name] = coord
+    return coords
+
+
+def _effective_day_count(
+    origin_plan: Dict[str, Any],
+    origin_constraints: Optional[Sequence[Dict[str, Any]]],
+    edit_constraints: Optional[Sequence[Dict[str, Any]]],
+) -> int:
+    for items in (edit_constraints or [], origin_constraints or []):
+        for item in reversed(items):
+            if (
+                isinstance(item, dict)
+                and str(item.get("type") or "") == "day_count"
+            ):
+                value = _as_int(item.get("value"))
+                if value is not None and value > 0:
+                    return value
+    itinerary = origin_plan.get("itinerary")
+    return len(itinerary) if isinstance(itinerary, list) and itinerary else 1
+
+
+def _same_day_required_groups(
+    *,
+    all_required: Sequence[str],
+    day_count: int,
+    origin_constraints: Optional[Sequence[Dict[str, Any]]],
+    edit_constraints: Optional[Sequence[Dict[str, Any]]],
+) -> List[Tuple[Optional[int], List[str]]]:
+    if day_count <= 1:
+        names = _dedupe(all_required)
+        return [(1, names)] if len(names) > 1 else []
+
+    by_day: Dict[int, List[str]] = {}
+    for item in list(origin_constraints or []) + list(edit_constraints or []):
+        if not isinstance(item, dict) or str(item.get("type") or "") != "poi_day_binding":
+            continue
+        target = item.get("target") if isinstance(item.get("target"), dict) else {}
+        name = str(target.get("poi_name") or "").strip()
+        day = _as_int(item.get("value"))
+        if name and day is not None and day > 0:
+            by_day.setdefault(day, []).append(name)
+    return [
+        (day, names)
+        for day, raw_names in sorted(by_day.items())
+        if len(names := _dedupe(raw_names)) > 1
+    ]
+
+
+def _required_group_connected(
+    *,
+    names: Sequence[str],
+    candidate_coords: Dict[str, Tuple[float, float]],
+    threshold: int,
+) -> Tuple[bool, List[str]]:
+    required = _dedupe(names)
+    if len(required) <= 1:
+        return True, required
+    if any(name not in candidate_coords for name in required):
+        return False, [
+            name for name in required if name in candidate_coords
+        ]
+
+    queue = [required[0]]
+    visited = {required[0]}
+    all_names = list(candidate_coords)
+    while queue:
+        current = queue.pop(0)
+        current_coord = candidate_coords[current]
+        for candidate in all_names:
+            if candidate in visited:
+                continue
+            edge = _edge(
+                current,
+                current_coord,
+                candidate,
+                candidate_coords[candidate],
+            )
+            if edge["estimated_minutes"] <= threshold:
+                visited.add(candidate)
+                queue.append(candidate)
+    reachable_required = [name for name in required if name in visited]
+    return len(reachable_required) == len(required), reachable_required
 
 
 def _extract_city(constraints: Dict[str, Any], trace: Dict[str, Any], fallback: Dict[str, Any]) -> Optional[str]:

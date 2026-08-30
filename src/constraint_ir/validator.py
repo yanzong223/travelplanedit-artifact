@@ -51,6 +51,8 @@ def validate_canonical_constraint_ir(canonical_ir: Dict[str, Any] | None) -> Tup
         errors.append("canonical_constraint_ir.source missing")
     if not ir.root:
         errors.append("canonical_constraint_ir.root missing")
+    if not ir.nodes and not ir.preference_hints:
+        errors.append("canonical_constraint_ir has no evaluable hard or preference targets")
     root_type = str(ir.root.get("node_type", "") or "")
     if not isinstance(ir.root.get("children", []), list):
         errors.append("canonical_constraint_ir.root.children must be a list")

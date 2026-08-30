@@ -4,12 +4,201 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 from dataclasses import dataclass
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from typing import Any
+import unicodedata
 
 from .models import InferredAtomicOp, InferredEditSequence, MatchedActivityPair
 
 _MEAL_TYPES = {"breakfast", "breakfest", "lunch", "dinner"}
 _INTERCITY_TYPES = {"train", "airplane"}
+_PARAMETER_OP_TYPES = {"change_time", "change_transport", "change_attribute"}
+_ACTIVITY_MATCH_KEYS = {
+    "type", "position", "start", "end", "TrainID", "FlightID", "start_time", "end_time",
+    "transports",
+}
+_NUMERIC_ATTRIBUTE_KEYS = {"cost", "price", "tickets", "room_type", "rooms"}
+_TRANSPORT_ENDPOINT_KEYS = {"start", "end"}
+_TRANSPORT_TIME_KEYS = {"start_time", "end_time"}
+_TRANSPORT_COST_KEYS = {"cost", "price", "tickets", "cars"}
+_TRANSPORT_MODE_ALIASES = {
+    "subway": "metro",
+    "underground": "metro",
+    "walking": "walk",
+    "on foot": "walk",
+    "cab": "taxi",
+    "taxicab": "taxi",
+}
+_MISSING = object()
+
+
+def _normalize_text(value: Any) -> str:
+    text = unicodedata.normalize("NFKC", str(value or ""))
+    return " ".join(text.casefold().split())
+
+
+def _normalize_number(value: Any) -> str | None:
+    if value is None or value == "" or isinstance(value, bool):
+        return None
+    try:
+        number = Decimal(str(value)).quantize(Decimal("0.000001"), rounding=ROUND_HALF_UP)
+    except (InvalidOperation, TypeError, ValueError):
+        return None
+    normalized = format(number.normalize(), "f")
+    return "0" if normalized in {"-0", ""} else normalized
+
+
+def _normalize_time(value: Any) -> int | str | None:
+    text = _normalize_text(value)
+    if not text:
+        return None
+    if ":" not in text:
+        return text
+    try:
+        hour, minute = text.split(":", 2)[:2]
+        return int(hour) * 60 + int(minute)
+    except (TypeError, ValueError):
+        return text
+
+
+def _normalize_value(value: Any, *, key: str = "") -> Any:
+    if value is _MISSING:
+        return ("missing",)
+    if key in _NUMERIC_ATTRIBUTE_KEYS or key in _TRANSPORT_COST_KEYS or key == "distance":
+        number = _normalize_number(value)
+        if number is not None:
+            return ("number", number)
+    if key in _TRANSPORT_TIME_KEYS:
+        return ("time", _normalize_time(value))
+    if isinstance(value, dict):
+        return tuple(
+            (str(item_key), _normalize_value(item_value, key=str(item_key)))
+            for item_key, item_value in sorted(value.items(), key=lambda item: str(item[0]))
+        )
+    if isinstance(value, (list, tuple)):
+        return tuple(_normalize_value(item) for item in value)
+    if isinstance(value, str):
+        return ("text", _normalize_text(value))
+    if isinstance(value, (int, float, Decimal)) and not isinstance(value, bool):
+        number = _normalize_number(value)
+        return ("number", number) if number is not None else value
+    return value
+
+
+def _normalize_transport_mode(value: Any) -> str:
+    mode = _normalize_text(value)
+    return _TRANSPORT_MODE_ALIASES.get(mode, mode)
+
+
+def _transport_semantic_legs(value: Any) -> tuple[Any, ...]:
+    if value in (None, []):
+        return ()
+    if not isinstance(value, list):
+        return (("invalid_transport_container", _normalize_value(value)),)
+    legs: list[Any] = []
+    for leg in value:
+        if not isinstance(leg, dict):
+            legs.append(("invalid_transport_leg", _normalize_value(leg)))
+            continue
+        semantic: list[tuple[str, Any]] = []
+        for key in (
+            "start", "end", "mode", "start_time", "end_time", "distance",
+            "cost", "price", "tickets", "cars",
+        ):
+            if key not in leg:
+                continue
+            if key == "mode":
+                normalized = ("text", _normalize_transport_mode(leg[key]))
+            elif key in _TRANSPORT_ENDPOINT_KEYS:
+                normalized = ("text", _normalize_text(leg[key]))
+            else:
+                normalized = _normalize_value(leg[key], key=key)
+            semantic.append((key, normalized))
+        legs.append(tuple(semantic))
+    return tuple(legs)
+
+
+def _transport_change_dimensions(before: Any, after: Any) -> list[str]:
+    before_legs = before if isinstance(before, list) else []
+    after_legs = after if isinstance(after, list) else []
+    dimensions: set[str] = set()
+    if not isinstance(before, list) or not isinstance(after, list) or len(before_legs) != len(after_legs):
+        dimensions.add("topology")
+    for left, right in zip(before_legs, after_legs):
+        if not isinstance(left, dict) or not isinstance(right, dict):
+            if _normalize_value(left) != _normalize_value(right):
+                dimensions.add("other_semantic")
+            continue
+        if any(
+            _normalize_text(left.get(key)) != _normalize_text(right.get(key))
+            for key in _TRANSPORT_ENDPOINT_KEYS
+        ):
+            dimensions.add("endpoint")
+        if _normalize_transport_mode(left.get("mode")) != _normalize_transport_mode(right.get("mode")):
+            dimensions.add("mode")
+        if any(
+            _normalize_time(left.get(key)) != _normalize_time(right.get(key))
+            for key in _TRANSPORT_TIME_KEYS
+        ):
+            dimensions.add("duration_or_timing")
+        if any(
+            _normalize_value(left.get(key, _MISSING), key=key)
+            != _normalize_value(right.get(key, _MISSING), key=key)
+            for key in _TRANSPORT_COST_KEYS
+        ):
+            dimensions.add("cost_or_capacity")
+        if _normalize_value(left.get("distance", _MISSING), key="distance") != _normalize_value(
+            right.get("distance", _MISSING), key="distance"
+        ):
+            dimensions.add("distance")
+    if _transport_semantic_legs(before) != _transport_semantic_legs(after) and not dimensions:
+        dimensions.add("other_semantic")
+    return sorted(dimensions)
+
+
+def _activity_payload_details(before: dict[str, Any], after: dict[str, Any]) -> dict[str, Any]:
+    before_transport = before.get("transports", [])
+    after_transport = after.get("transports", [])
+    transport_raw_changed = before_transport != after_transport
+    transport_semantic_changed = (
+        _transport_semantic_legs(before_transport) != _transport_semantic_legs(after_transport)
+    )
+
+    attribute_fields = sorted((set(before) | set(after)) - _ACTIVITY_MATCH_KEYS)
+    changed_attribute_fields: list[str] = []
+    format_only_attribute_fields: list[str] = []
+    for key in attribute_fields:
+        raw_before = before.get(key, _MISSING)
+        raw_after = after.get(key, _MISSING)
+        if raw_before == raw_after:
+            continue
+        normalized_before = _normalize_value(raw_before, key=key)
+        normalized_after = _normalize_value(raw_after, key=key)
+        if normalized_before == normalized_after:
+            format_only_attribute_fields.append(key)
+        else:
+            changed_attribute_fields.append(key)
+
+    if not transport_raw_changed:
+        transport_kind = "none"
+    elif transport_semantic_changed:
+        transport_kind = "semantic"
+    else:
+        transport_kind = "format_or_metadata_only"
+    return {
+        "transport_raw_changed": transport_raw_changed,
+        "transport_semantic_changed": transport_semantic_changed,
+        "transport_change_kind": transport_kind,
+        "transport_change_dimensions": (
+            _transport_change_dimensions(before_transport, after_transport)
+            if transport_semantic_changed
+            else []
+        ),
+        "attribute_raw_changed": bool(changed_attribute_fields or format_only_attribute_fields),
+        "attribute_semantic_changed": bool(changed_attribute_fields),
+        "changed_attribute_fields": changed_attribute_fields,
+        "format_only_attribute_fields": format_only_attribute_fields,
+    }
 
 
 @dataclass(slots=True)
@@ -79,7 +268,7 @@ def _flatten_plan(plan: dict[str, Any]) -> list[_ActivityRecord]:
                     position=str(activity.get("position", "")),
                     start=str(activity.get("start", "")),
                     end=str(activity.get("end", "")),
-                    train_id=str(activity.get("TrainID", "")),
+                    train_id=str(activity.get("TrainID") or activity.get("FlightID") or ""),
                 )
             )
     return records
@@ -157,7 +346,7 @@ def _pair_exact(
                 edited_day=edited.day,
                 origin_index=origin.index,
                 edited_index=edited.index,
-                details={"token": origin.token},
+                details={"token": origin.token, **_activity_payload_details(origin.activity, edited.activity)},
             )
         )
     return matched_pairs, matched_origin, matched_edited
@@ -202,6 +391,7 @@ def _pair_same_identity(
                     "token": origin.token,
                     "time_changed": not _same_time(origin, edited),
                     "day_changed": origin.day != edited.day,
+                    **_activity_payload_details(origin.activity, edited.activity),
                 },
             )
         )
@@ -223,7 +413,11 @@ def _pair_replace(
         for edited in edited_remaining:
             if edited.ref in matched_edited:
                 continue
-            if origin.day != edited.day or origin.type != edited.type:
+            same_activity_family = (
+                origin.type == edited.type
+                or {origin.type, edited.type} <= _INTERCITY_TYPES
+            )
+            if origin.day != edited.day or not same_activity_family:
                 continue
             if origin.identity_key == edited.identity_key:
                 continue
@@ -351,6 +545,37 @@ def infer_edit_sequence(origin_plan: dict[str, Any], edited_plan: dict[str, Any]
     changed_origin_refs: set[str] = set(reorder_changed_refs)
     compositional_refs: set[str] = set()
 
+    for pair in retained_pairs:
+        if pair.details.get("transport_semantic_changed"):
+            atomic_ops.append(
+                InferredAtomicOp(
+                    op_type="change_transport",
+                    scope="parameter",
+                    origin_refs=[pair.origin_ref],
+                    edited_refs=[pair.edited_ref],
+                    details={
+                        "day": pair.origin_day,
+                        "change_kind": pair.details.get("transport_change_kind"),
+                        "dimensions": pair.details.get("transport_change_dimensions", []),
+                    },
+                )
+            )
+            changed_origin_refs.add(pair.origin_ref)
+        if pair.details.get("attribute_semantic_changed"):
+            atomic_ops.append(
+                InferredAtomicOp(
+                    op_type="change_attribute",
+                    scope="parameter",
+                    origin_refs=[pair.origin_ref],
+                    edited_refs=[pair.edited_ref],
+                    details={
+                        "day": pair.origin_day,
+                        "fields": pair.details.get("changed_attribute_fields", []),
+                    },
+                )
+            )
+            changed_origin_refs.add(pair.origin_ref)
+
     for pair in identity_pairs:
         if pair.origin_day != pair.edited_day:
             atomic_ops.append(
@@ -425,7 +650,7 @@ def infer_edit_sequence(origin_plan: dict[str, Any], edited_plan: dict[str, Any]
     scope_level = 0
     if day_count_changed or any(item.scope == "compositional" for item in atomic_ops):
         scope_level = 2
-    elif any(item.op_type != "change_time" for item in atomic_ops):
+    elif any(item.op_type not in _PARAMETER_OP_TYPES for item in atomic_ops):
         scope_level = 1
     scope_name = {0: "parameter", 1: "structural", 2: "compositional"}[scope_level]
 
@@ -458,7 +683,7 @@ def sequence_metrics(origin_plan: dict[str, Any], edited_plan: dict[str, Any], s
     changed_activity_count = len(changed_origin_refs) + inserted_count
     origin_total = max(origin_count, 1)
     return {
-        "parameter_count": atomic_counter.get("change_time", 0),
+        "parameter_count": sum(atomic_counter.get(name, 0) for name in _PARAMETER_OP_TYPES),
         "structural_count": atomic_counter.get("insert", 0)
         + atomic_counter.get("delete", 0)
         + atomic_counter.get("replace", 0)
@@ -466,6 +691,8 @@ def sequence_metrics(origin_plan: dict[str, Any], edited_plan: dict[str, Any], s
         "compositional_count": compositional_count,
         "atomic_counts": {
             "change_time": atomic_counter.get("change_time", 0),
+            "change_transport": atomic_counter.get("change_transport", 0),
+            "change_attribute": atomic_counter.get("change_attribute", 0),
             "insert": atomic_counter.get("insert", 0),
             "delete": atomic_counter.get("delete", 0),
             "replace": atomic_counter.get("replace", 0),

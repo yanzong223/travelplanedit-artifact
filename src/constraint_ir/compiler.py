@@ -298,6 +298,45 @@ def _build_structured_hard_constraints(
         if budget is not None:
             add("ticket_budget_total", budget, operator="<=", params={"derived_from": "query_spec"})
 
+    if ctype == "trip_innercity_transport_duration_total":
+        duration = duration_minutes_value(
+            query_spec.get("transport_duration_cap_min"),
+            semantic_slots.get("transport_duration_cap_min"),
+        )
+        if duration is not None:
+            add(
+                "innercity_transport_duration_total",
+                duration,
+                operator="<=",
+                params={"unit": "minute", "scope": "whole_trip", "derived_from": "query_spec"},
+            )
+
+    if ctype == "trip_walking_distance_total":
+        distance = float_value(
+            query_spec.get("walking_distance_cap_km"),
+            semantic_slots.get("walking_distance_cap_km"),
+        )
+        if distance is not None:
+            add(
+                "walking_distance_total",
+                distance,
+                operator="<=",
+                params={"unit": "km", "scope": "whole_trip", "derived_from": "query_spec"},
+            )
+
+    if ctype == "trip_innercity_transport_cost_total":
+        cost = float_value(
+            query_spec.get("transport_cost_cap"),
+            semantic_slots.get("transport_cost_cap"),
+        )
+        if cost is not None:
+            add(
+                "innercity_transport_cost_total",
+                cost,
+                operator="<=",
+                params={"unit": "CNY", "scope": "whole_trip", "derived_from": "query_spec"},
+            )
+
     if ctype == "required_intercity_transport_type":
         raw_modes: List[Any] = []
         for payload in (

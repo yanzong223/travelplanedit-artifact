@@ -35,6 +35,8 @@ _EXPORT_MAP = {
     "adapt_legacy_edit_record": (".edit_adapters", "adapt_legacy_edit_record"),
     "adapt_origin_query": (".origin_adapters", "adapt_origin_query"),
     "aggregate_results": (".reporting", "aggregate_results"),
+    "aggregate_level3_cascade": (".reporting", "aggregate_level3_cascade"),
+    "attach_level3_cascade": (".level3", "attach_level3_cascade"),
     "attach_report_views": (".reporting", "attach_report_views"),
     "evaluate_level3": (".level3", "evaluate_level3"),
     "evaluate_level1": (".levels", "evaluate_level1"),
